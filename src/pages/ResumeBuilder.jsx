@@ -1,0 +1,364 @@
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { questions } from '../data/questions';
+import { generateLatexResume } from '../utils/latexGenerator';
+import { downloadPdf } from '../utils/pdfGenerator';
+import './ResumeBuilder.css';
+
+const ResumeBuilder = () => {
+  const [currentStep, setCurrentStep] = useState(0);
+  const [formData, setFormData] = useState({});
+  const [experienceList, setExperienceList] = useState([]);
+  const [projectsList, setProjectsList] = useState([]);
+  const [showDownloadModal, setShowDownloadModal] = useState(false);
+
+  const currentQuestion = questions[currentStep];
+  const progress = ((currentStep + 1) / questions.length) * 100;
+
+  const handleInputChange = (fieldName, value) => {
+    setFormData(prev => ({
+      ...prev,
+      [currentQuestion.id]: {
+        ...prev[currentQuestion.id],
+        [fieldName]: value
+      }
+    }));
+  };
+
+  const handleNext = () => {
+    // Save current section data
+    if (currentQuestion.id === 'experience') {
+      setExperienceList(prev => [...prev, formData.experience]);
+      setFormData(prev => ({ ...prev, experience: {} }));
+    } else if (currentQuestion.id === 'projects') {
+      setProjectsList(prev => [...prev, formData.projects]);
+      setFormData(prev => ({ ...prev, projects: {} }));
+    }
+
+    if (currentStep < questions.length - 1) {
+      setCurrentStep(prev => prev + 1);
+    } else {
+      // Show download modal
+      setShowDownloadModal(true);
+    }
+  };
+
+  const handleBack = () => {
+    if (currentStep > 0) {
+      setCurrentStep(prev => prev - 1);
+    }
+  };
+
+  const getResumeData = () => {
+    return {
+      ...formData,
+      experienceList,
+      projectsList
+    };
+  };
+
+  const handleDownloadLatex = () => {
+    const latexCode = generateLatexResume(getResumeData());
+    const blob = new Blob([latexCode], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'resume.tex';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  const handleCopyToClipboard = () => {
+    const latexCode = generateLatexResume(getResumeData());
+    navigator.clipboard.writeText(latexCode).then(() => {
+      alert('LaTeX code copied to clipboard!');
+    });
+  };
+
+  const handleOpenInOverleaf = () => {
+    const latexCode = generateLatexResume(getResumeData());
+    const encoded = encodeURIComponent(latexCode);
+    // Overleaf's URL scheme for new documents
+    const overleafUrl = `https://www.overleaf.com/docs?snip_uri=data:application/x-tex,${encoded}`;
+    window.open(overleafUrl, '_blank');
+  };
+
+  const handleDownloadPdf = () => {
+    downloadPdf(getResumeData());
+  };
+
+  const currentSectionData = formData[currentQuestion.id] || {};
+
+  return (
+    <div className="resume-builder">
+      {/* Header */}
+      <header className="builder-header">
+        <div className="builder-header-content">
+          <div className="builder-logo">ResumeBuilder</div>
+          <div className="progress-container">
+            <div className="progress-bar">
+              <motion.div
+                className="progress-fill"
+                initial={{ width: 0 }}
+                animate={{ width: `${progress}%` }}
+                transition={{ duration: 0.3 }}
+              />
+            </div>
+            <span className="progress-text">{currentStep + 1} of {questions.length}</span>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <div className="builder-content">
+        <div className="container builder-grid">
+          {/* Form Section */}
+          <div className="form-section">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentStep}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.3 }}
+                className="question-card"
+              >
+                <h2 className="question-title">{currentQuestion.title}</h2>
+                <p className="question-subtitle">{currentQuestion.subtitle}</p>
+
+                <div className="form-fields">
+                  {currentQuestion.fields.map((field, index) => (
+                    <div key={index} className="form-field">
+                      <label className="field-label">
+                        {field.label}
+                        {field.required && <span className="required">*</span>}
+                      </label>
+                      {field.type === 'textarea' ? (
+                        <textarea
+                          className="field-input"
+                          placeholder={field.placeholder}
+                          rows={field.rows || 3}
+                          value={currentSectionData[field.name] || ''}
+                          onChange={(e) => handleInputChange(field.name, e.target.value)}
+                        />
+                      ) : (
+                        <input
+                          type={field.type}
+                          className="field-input"
+                          placeholder={field.placeholder}
+                          value={currentSectionData[field.name] || ''}
+                          onChange={(e) => handleInputChange(field.name, e.target.value)}
+                        />
+                      )}
+                    </div>
+                  ))}
+                </div>
+
+                <div className="button-row">
+                  <button
+                    className="back-btn"
+                    onClick={handleBack}
+                    disabled={currentStep === 0}
+                  >
+                    ← Back
+                  </button>
+                  <button className="next-btn" onClick={handleNext}>
+                    {currentStep < questions.length - 1 ? 'Next →' : 'Download Resume'}
+                  </button>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Preview Section */}
+          <div className="preview-section">
+            <h3 className="preview-title">Live Preview</h3>
+            <div className="preview-card">
+              <div className="resume-preview">
+                {/* Header */}
+                {formData.personal && formData.personal.fullName && (
+                  <div className="preview-header">
+                    <h1 className="preview-name">{formData.personal.fullName || 'Your Name'}</h1>
+                    <div className="preview-contact">
+                      {formData.personal.phone && <span>{formData.personal.phone}</span>}
+                      {formData.personal.email && <span> | {formData.personal.email}</span>}
+                      {formData.personal.linkedin && <span> | {formData.personal.linkedin}</span>}
+                      {formData.personal.github && <span> | {formData.personal.github}</span>}
+                    </div>
+                  </div>
+                )}
+
+                {/* Education */}
+                {formData.education && Object.keys(formData.education).length > 0 && (
+                  <div className="preview-section-block">
+                    <h3 className="preview-section-title">Education</h3>
+                    <div className="preview-section-content">
+                      <div className="preview-item-header">
+                        <strong>{formData.education.university}</strong>
+                        <span className="preview-date">
+                          {formData.education.location}
+                        </span>
+                      </div>
+                      <div className="preview-item-subheader">
+                        <span>{formData.education.degree}</span>
+                        <span className="preview-date">
+                          {formData.education.startDate} – {formData.education.endDate}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Experience */}
+                {experienceList.length > 0 && (
+                  <div className="preview-section-block">
+                    <h3 className="preview-section-title">Experience</h3>
+                    {experienceList.map((exp, index) => (
+                      <div key={index} className="preview-section-content">
+                        <div className="preview-item-header">
+                          <strong>{exp.position}</strong>
+                          <span className="preview-date">
+                            {exp.startDate} – {exp.endDate}
+                          </span>
+                        </div>
+                        <div className="preview-item-subheader">
+                          <span>{exp.company}</span>
+                          <span className="preview-date">{exp.location}</span>
+                        </div>
+                        <div className="preview-bullets">
+                          {exp.responsibilities?.split('\n').filter(line => line.trim()).map((item, i) => (
+                            <div key={i}>{item.replace(/^[•\-\*]\s*/, '')}</div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Projects */}
+                {projectsList.length > 0 && (
+                  <div className="preview-section-block">
+                    <h3 className="preview-section-title">Projects</h3>
+                    {projectsList.map((project, index) => (
+                      <div key={index} className="preview-section-content">
+                        <div className="preview-project-header">
+                          <span className="preview-project-title">{project.projectName}</span>
+                          {' | '}
+                          <span className="preview-project-tech">{project.technologies}</span>
+                          {(project.startDate || project.endDate) && (
+                            <>
+                              {' '}
+                              <span className="preview-date">
+                                {project.startDate} – {project.endDate}
+                              </span>
+                            </>
+                          )}
+                        </div>
+                        <div className="preview-bullets">
+                          {project.description?.split('\n').filter(line => line.trim()).map((item, i) => (
+                            <div key={i}>{item.replace(/^[•\-\*]\s*/, '')}</div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Skills */}
+                {formData.skills && Object.keys(formData.skills).length > 0 && (
+                  <div className="preview-section-block">
+                    <h3 className="preview-section-title">Technical Skills</h3>
+                    <div className="preview-section-content preview-skills-content">
+                      {formData.skills.languages && (
+                        <div><strong>Languages:</strong> {formData.skills.languages}</div>
+                      )}
+                      {formData.skills.frameworks && (
+                        <div><strong>Frameworks:</strong> {formData.skills.frameworks}</div>
+                      )}
+                      {formData.skills.tools && (
+                        <div><strong>Developer Tools:</strong> {formData.skills.tools}</div>
+                      )}
+                      {formData.skills.databases && (
+                        <div><strong>Libraries:</strong> {formData.skills.databases}</div>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Download Modal */}
+      <AnimatePresence>
+        {showDownloadModal && (
+          <motion.div
+            className="modal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowDownloadModal(false)}
+          >
+            <motion.div
+              className="modal-content"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="modal-header">
+                <h2 className="modal-title">Download Your Resume</h2>
+                <p className="modal-subtitle">Choose how you want to export your resume</p>
+              </div>
+
+              <div className="download-options">
+                <button className="download-option" onClick={handleDownloadPdf}>
+                  <span className="download-icon">📥</span>
+                  <div className="download-info">
+                    <div className="download-title">Download PDF</div>
+                    <div className="download-desc">Get a ready-to-submit PDF file instantly</div>
+                  </div>
+                </button>
+
+                <button className="download-option" onClick={handleDownloadLatex}>
+                  <span className="download-icon">📄</span>
+                  <div className="download-info">
+                    <div className="download-title">Download LaTeX File</div>
+                    <div className="download-desc">Get the .tex file to compile locally or upload to Overleaf</div>
+                  </div>
+                </button>
+
+                <button className="download-option" onClick={handleOpenInOverleaf}>
+                  <span className="download-icon">🚀</span>
+                  <div className="download-info">
+                    <div className="download-title">Open in Overleaf</div>
+                    <div className="download-desc">Instantly open your resume in Overleaf to compile to PDF</div>
+                  </div>
+                </button>
+
+                <button className="download-option" onClick={handleCopyToClipboard}>
+                  <span className="download-icon">📋</span>
+                  <div className="download-info">
+                    <div className="download-title">Copy to Clipboard</div>
+                    <div className="download-desc">Copy the LaTeX code to paste anywhere</div>
+                  </div>
+                </button>
+              </div>
+
+              <div className="modal-footer">
+                <button className="modal-close-btn" onClick={() => setShowDownloadModal(false)}>
+                  Close
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+export default ResumeBuilder;
