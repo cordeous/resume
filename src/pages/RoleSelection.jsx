@@ -96,7 +96,6 @@ const RoleSelection = ({ onRoleSelect }) => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.5 }}
             >
-            <>
               <h1 className="role-title">{t('role.title')}</h1>
               <p className="role-subtitle">{t('role.subtitle')}</p>
 
