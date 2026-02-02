@@ -1,0 +1,158 @@
+.app-showcase {
+  padding: 60px 0;
+}
+
+.showcase-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 40px;
+}
+
+.showcase-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.showcase-screen {
+  margin-bottom: 24px;
+  width: 100%;
+  max-width: 320px;
+}
+
+.screen-mockup {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(26, 25, 24, 0.12);
+}
+
+.screen-header {
+  background: var(--bg-muted);
+  padding: 12px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.screen-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.screen-dots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--border-strong);
+}
+
+.screen-content {
+  padding: 32px 24px;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Form Mockup */
+.form-mockup {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mockup-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.mockup-title.small {
+  font-size: 14px;
+  margin: 4px 0;
+}
+
+.mockup-field {
+  height: 40px;
+  background: var(--bg-muted);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+}
+
+.mockup-field.short {
+  width: 60%;
+}
+
+/* Resume Mockup */
+.resume-mockup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mockup-header {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.mockup-line {
+  height: 8px;
+  background: var(--bg-muted);
+  border-radius: 4px;
+}
+
+.mockup-line.short {
+  width: 70%;
+}
+
+.mockup-section-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: 12px;
+  padding-bottom: 4px;
+  border-bottom: 2px solid var(--accent-primary);
+}
+
+/* Download Mockup */
+.download-mockup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.download-icon {
+  font-size: 40px;
+}
+
+/* Showcase Text */
+.showcase-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.showcase-desc {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .showcase-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .screen-content {
+    min-height: 240px;
+    padding: 24px 16px;
+  }
+}

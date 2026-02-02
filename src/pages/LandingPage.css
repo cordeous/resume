@@ -41,6 +41,12 @@
   color: var(--text-primary);
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
 .sign-in-btn {
   padding: 12px 24px;
   border-radius: var(--radius-sm);
@@ -156,12 +162,17 @@
 
 /* Sections */
 .how-it-works,
+.career-benefits,
 .features {
   padding: var(--spacing-3xl) 0;
 }
 
 .how-it-works {
   background: var(--bg-surface);
+}
+
+.career-benefits {
+  background: var(--bg-primary);
 }
 
 .section-header {
@@ -183,10 +194,43 @@
 }
 
 .steps-grid,
+.benefits-grid,
 .features-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 32px;
+}
+
+.steps-grid.simple {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.benefits-grid.compact,
+.features-grid.simple {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .steps-grid.simple {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .benefits-grid.compact {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .features-grid.simple {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .benefits-grid.compact {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 .step-card {
@@ -224,6 +268,7 @@
   line-height: 1.6;
 }
 
+.benefit-card,
 .feature-card {
   padding: 32px;
   border-radius: var(--radius-lg);
@@ -237,16 +282,40 @@
   cursor: pointer;
 }
 
+.benefit-icon,
+.feature-icon {
+  font-size: 40px;
+  line-height: 1;
+}
+
+.benefit-card.compact,
+.feature-card.compact {
+  padding: 24px;
+  text-align: center;
+}
+
+.benefit-title,
 .feature-title {
   font-size: 22px;
   font-weight: 600;
   color: var(--text-primary);
 }
 
+.benefit-card.compact .benefit-title,
+.feature-card.compact .feature-title {
+  font-size: 18px;
+}
+
+.benefit-desc,
 .feature-desc {
   font-size: 16px;
   color: var(--text-secondary);
   line-height: 1.6;
+}
+
+.benefit-card.compact .benefit-desc,
+.feature-card.compact .feature-desc {
+  font-size: 14px;
 }
 
 /* Final CTA */
@@ -375,6 +444,7 @@
   }
 
   .steps-grid,
+  .benefits-grid,
   .features-grid {
     grid-template-columns: 1fr;
     gap: 24px;

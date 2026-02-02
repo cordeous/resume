@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import ResumePreview from '../components/ResumePreview';
+import LanguageSwitcher from '../components/LanguageSwitcher';
+import AppShowcase from '../components/AppShowcase';
 import './LandingPage.css';
 
 const LandingPage = () => {
@@ -47,7 +49,10 @@ const LandingPage = () => {
             <a href="#features" onClick={(e) => handleSmoothScroll(e, '#features')}>Features</a>
             <a href="#pricing" onClick={(e) => handleSmoothScroll(e, '#pricing')}>Pricing</a>
           </nav>
-          <button className="sign-in-btn">Sign In</button>
+          <div className="header-actions">
+            <LanguageSwitcher />
+            <button className="sign-in-btn">Sign In</button>
+          </div>
         </div>
       </motion.header>
 
@@ -84,7 +89,7 @@ const LandingPage = () => {
           >
             <button
               className="primary-btn"
-              onClick={() => navigate('/builder')}
+              onClick={() => navigate('/role-selection')}
             >
               Build My Resume →
             </button>
@@ -115,7 +120,7 @@ const LandingPage = () => {
             <p className="section-subtitle">Three simple steps to your perfect resume</p>
           </motion.div>
           <motion.div
-            className="steps-grid"
+            className="steps-grid simple"
             variants={staggerChildren}
             initial="initial"
             whileInView="animate"
@@ -125,19 +130,19 @@ const LandingPage = () => {
               {
                 num: '1',
                 title: 'Answer Questions',
-                desc: 'Tell us about your education, experience, skills, and projects through our guided questionnaire.',
+                desc: 'Fill out a guided form with your information',
                 color: '#3D8A5A'
               },
               {
                 num: '2',
-                title: 'Preview & Edit',
-                desc: 'Review your generated resume and make any adjustments before downloading.',
+                title: 'Preview in Real-Time',
+                desc: 'See your resume update instantly as you type',
                 color: '#D89575'
               },
               {
                 num: '3',
                 title: 'Download & Apply',
-                desc: 'Export your perfectly formatted resume as PDF and start applying to your dream jobs.',
+                desc: 'Export as PDF, LaTeX, or open in Overleaf',
                 color: '#3D8A5A'
               }
             ].map((step, index) => (
@@ -152,6 +157,66 @@ const LandingPage = () => {
                 </div>
                 <h3 className="step-title">{step.title}</h3>
                 <p className="step-desc">{step.desc}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Add App Showcase */}
+          <AppShowcase />
+        </div>
+      </section>
+
+      {/* Career Benefits */}
+      <section className="career-benefits">
+        <div className="container">
+          <motion.div
+            className="section-header"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="section-title">Why It Matters</h2>
+            <p className="section-subtitle">Get more interviews with a professional resume</p>
+          </motion.div>
+          <motion.div
+            className="benefits-grid compact"
+            variants={staggerChildren}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+          >
+            {[
+              {
+                icon: '🎯',
+                title: 'Pass ATS',
+                desc: '90%+ of companies use ATS filters'
+              },
+              {
+                icon: '💼',
+                title: 'Stand Out',
+                desc: 'Professional LaTeX typography'
+              },
+              {
+                icon: '📈',
+                title: 'More Callbacks',
+                desc: '40% increase in interview requests'
+              },
+              {
+                icon: '⚡',
+                title: 'Save Time',
+                desc: 'Build in under 10 minutes'
+              }
+            ].map((benefit, index) => (
+              <motion.div
+                key={index}
+                className="benefit-card compact"
+                variants={fadeIn}
+                whileHover={{ y: -5, transition: { duration: 0.2 } }}
+              >
+                <div className="benefit-icon">{benefit.icon}</div>
+                <h3 className="benefit-title">{benefit.title}</h3>
+                <p className="benefit-desc">{benefit.desc}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -172,7 +237,7 @@ const LandingPage = () => {
             <p className="section-subtitle">Professional results powered by LaTeX typography</p>
           </motion.div>
           <motion.div
-            className="features-grid"
+            className="features-grid simple"
             variants={staggerChildren}
             initial="initial"
             whileInView="animate"
@@ -180,28 +245,43 @@ const LandingPage = () => {
           >
             {[
               {
+                icon: '📐',
                 title: 'LaTeX Quality',
-                desc: 'Industry-standard formatting using the same LaTeX engine trusted by academics and professionals worldwide.'
+                desc: 'Professional typography trusted worldwide'
               },
               {
-                title: 'No Design Skills Needed',
-                desc: 'Just answer questions about your background. We handle all the typography, spacing, and formatting automatically.'
+                icon: '👁️',
+                title: 'Live Preview',
+                desc: 'See changes instantly as you type'
               },
               {
-                title: 'ATS-Friendly',
-                desc: 'Clean, parseable format that passes Applicant Tracking Systems while maintaining professional appearance.'
+                icon: '📦',
+                title: 'Multiple Formats',
+                desc: 'PDF, LaTeX, or Overleaf export'
               },
               {
-                title: 'Instant PDF Export',
-                desc: 'Download your resume as a PDF ready to submit to employers. No watermarks, no signup required.'
+                icon: '🤖',
+                title: 'Smart Suggestions',
+                desc: 'Role-based resume improvements'
+              },
+              {
+                icon: '➕',
+                title: 'Unlimited Entries',
+                desc: 'Add multiple jobs, schools, projects'
+              },
+              {
+                icon: '🌐',
+                title: 'Bilingual',
+                desc: 'English and Spanish support'
               }
             ].map((feature, index) => (
               <motion.div
                 key={index}
-                className="feature-card"
+                className="feature-card compact"
                 variants={fadeIn}
                 whileHover={{ y: -5, transition: { duration: 0.2 } }}
               >
+                <div className="feature-icon">{feature.icon}</div>
                 <h3 className="feature-title">{feature.title}</h3>
                 <p className="feature-desc">{feature.desc}</p>
               </motion.div>
@@ -239,7 +319,7 @@ const LandingPage = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => navigate('/builder')}
+            onClick={() => navigate('/role-selection')}
           >
             Get Started Free
           </motion.button>

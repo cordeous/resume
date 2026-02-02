@@ -1,5 +1,5 @@
 export const generateLatexResume = (data) => {
-  const { personal, education, experienceList, skills, projectsList } = data;
+  const { personal, education, educationList, experienceList, skills, projectsList } = data;
 
   // Extract contact info
   const phone = personal?.phone || 'xxx-xxx-xxxx';
@@ -7,13 +7,14 @@ export const generateLatexResume = (data) => {
   const linkedin = personal?.linkedin ? `linkedin.com/in/${personal.linkedin.split('/').pop()}` : 'linkedin.com/in/username';
   const github = personal?.github ? `github.com/${personal.github.split('/').pop()}` : 'github.com/username';
 
-  // Generate education section
-  const educationSection = education ? `
+  // Generate education section - support both educationList and single education
+  const educationEntries = educationList && educationList.length > 0 ? educationList : (education ? [education] : []);
+  const educationSection = educationEntries.length > 0 ? `
 \\section{Education}
   \\resumeSubHeadingListStart
-    \\resumeSubheading
-      {${education.university || 'University Name'}}{${education.location || 'City, State'}}
-      {${education.degree || 'Degree'}}{${education.startDate || 'Start'} -- ${education.endDate || 'End'}}
+${educationEntries.map(edu => `    \\resumeSubheading
+      {${edu.university || 'University Name'}}{${edu.location || 'City, State'}}
+      {${edu.degree || 'Degree'}}{${edu.startDate || 'Start'} -- ${edu.endDate || 'End'}}`).join('\n')}
   \\resumeSubHeadingListEnd
 ` : '';
 

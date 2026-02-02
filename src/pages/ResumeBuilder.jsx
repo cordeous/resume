@@ -1,13 +1,17 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { questions } from '../data/questions';
 import { generateLatexResume } from '../utils/latexGenerator';
 import { downloadPdf } from '../utils/pdfGenerator';
+import LanguageSwitcher from '../components/LanguageSwitcher';
 import './ResumeBuilder.css';
 
 const ResumeBuilder = () => {
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({});
+  const [educationList, setEducationList] = useState([]);
   const [experienceList, setExperienceList] = useState([]);
   const [projectsList, setProjectsList] = useState([]);
   const [showDownloadModal, setShowDownloadModal] = useState(false);
@@ -25,12 +29,29 @@ const ResumeBuilder = () => {
     }));
   };
 
-  const handleNext = () => {
-    // Save current section data
-    if (currentQuestion.id === 'experience') {
+  const handleAddAnother = () => {
+    // Save current entry and clear form without moving to next step
+    if (currentQuestion.id === 'education' && formData.education && Object.keys(formData.education).length > 0) {
+      setEducationList(prev => [...prev, formData.education]);
+      setFormData(prev => ({ ...prev, education: {} }));
+    } else if (currentQuestion.id === 'experience' && formData.experience && Object.keys(formData.experience).length > 0) {
       setExperienceList(prev => [...prev, formData.experience]);
       setFormData(prev => ({ ...prev, experience: {} }));
-    } else if (currentQuestion.id === 'projects') {
+    } else if (currentQuestion.id === 'projects' && formData.projects && Object.keys(formData.projects).length > 0) {
+      setProjectsList(prev => [...prev, formData.projects]);
+      setFormData(prev => ({ ...prev, projects: {} }));
+    }
+  };
+
+  const handleNext = () => {
+    // Save current section data before moving forward
+    if (currentQuestion.id === 'education' && formData.education && Object.keys(formData.education).length > 0) {
+      setEducationList(prev => [...prev, formData.education]);
+      setFormData(prev => ({ ...prev, education: {} }));
+    } else if (currentQuestion.id === 'experience' && formData.experience && Object.keys(formData.experience).length > 0) {
+      setExperienceList(prev => [...prev, formData.experience]);
+      setFormData(prev => ({ ...prev, experience: {} }));
+    } else if (currentQuestion.id === 'projects' && formData.projects && Object.keys(formData.projects).length > 0) {
       setProjectsList(prev => [...prev, formData.projects]);
       setFormData(prev => ({ ...prev, projects: {} }));
     }
@@ -52,6 +73,7 @@ const ResumeBuilder = () => {
   const getResumeData = () => {
     return {
       ...formData,
+      educationList,
       experienceList,
       projectsList
     };
@@ -96,7 +118,12 @@ const ResumeBuilder = () => {
       {/* Header */}
       <header className="builder-header">
         <div className="builder-header-content">
-          <div className="builder-logo">ResumeBuilder</div>
+          <div className="builder-header-left">
+            <button className="home-btn" onClick={() => navigate('/')} title="Back to home">
+              ← Home
+            </button>
+            <div className="builder-logo">ResumeBuilder</div>
+          </div>
           <div className="progress-container">
             <div className="progress-bar">
               <motion.div
@@ -108,6 +135,7 @@ const ResumeBuilder = () => {
             </div>
             <span className="progress-text">{currentStep + 1} of {questions.length}</span>
           </div>
+          <LanguageSwitcher />
         </div>
       </header>
 
@@ -164,9 +192,16 @@ const ResumeBuilder = () => {
                   >
                     ← Back
                   </button>
-                  <button className="next-btn" onClick={handleNext}>
-                    {currentStep < questions.length - 1 ? 'Next →' : 'Download Resume'}
-                  </button>
+                  <div className="button-group">
+                    {(currentQuestion.id === 'education' || currentQuestion.id === 'experience' || currentQuestion.id === 'projects') && (
+                      <button className="add-another-btn" onClick={handleAddAnother}>
+                        + Add Another
+                      </button>
+                    )}
+                    <button className="next-btn" onClick={handleNext}>
+                      {currentStep < questions.length - 1 ? 'Next →' : 'Download Resume'}
+                    </button>
+                  </div>
                 </div>
               </motion.div>
             </AnimatePresence>
@@ -191,28 +226,47 @@ const ResumeBuilder = () => {
                 )}
 
                 {/* Education */}
-                {formData.education && Object.keys(formData.education).length > 0 && (
+                {(educationList.length > 0 || (formData.education && Object.keys(formData.education).length > 0)) && (
                   <div className="preview-section-block">
                     <h3 className="preview-section-title">Education</h3>
-                    <div className="preview-section-content">
-                      <div className="preview-item-header">
-                        <strong>{formData.education.university}</strong>
-                        <span className="preview-date">
-                          {formData.education.location}
-                        </span>
+                    {educationList.map((edu, index) => (
+                      <div key={index} className="preview-section-content">
+                        <div className="preview-item-header">
+                          <strong>{edu.university}</strong>
+                          <span className="preview-date">
+                            {edu.location}
+                          </span>
+                        </div>
+                        <div className="preview-item-subheader">
+                          <span>{edu.degree}</span>
+                          <span className="preview-date">
+                            {edu.startDate} – {edu.endDate}
+                          </span>
+                        </div>
                       </div>
-                      <div className="preview-item-subheader">
-                        <span>{formData.education.degree}</span>
-                        <span className="preview-date">
-                          {formData.education.startDate} – {formData.education.endDate}
-                        </span>
+                    ))}
+                    {/* Show current entry being edited */}
+                    {formData.education && Object.keys(formData.education).length > 0 && (
+                      <div className="preview-section-content">
+                        <div className="preview-item-header">
+                          <strong>{formData.education.university || 'University'}</strong>
+                          <span className="preview-date">
+                            {formData.education.location}
+                          </span>
+                        </div>
+                        <div className="preview-item-subheader">
+                          <span>{formData.education.degree || 'Degree'}</span>
+                          <span className="preview-date">
+                            {formData.education.startDate && `${formData.education.startDate} – ${formData.education.endDate || 'Present'}`}
+                          </span>
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </div>
                 )}
 
                 {/* Experience */}
-                {experienceList.length > 0 && (
+                {(experienceList.length > 0 || (formData.experience && Object.keys(formData.experience).length > 0)) && (
                   <div className="preview-section-block">
                     <h3 className="preview-section-title">Experience</h3>
                     {experienceList.map((exp, index) => (
@@ -234,11 +288,33 @@ const ResumeBuilder = () => {
                         </div>
                       </div>
                     ))}
+                    {/* Show current entry being edited */}
+                    {formData.experience && Object.keys(formData.experience).length > 0 && (
+                      <div className="preview-section-content">
+                        <div className="preview-item-header">
+                          <strong>{formData.experience.position || 'Position'}</strong>
+                          <span className="preview-date">
+                            {formData.experience.startDate && `${formData.experience.startDate} – ${formData.experience.endDate || 'Present'}`}
+                          </span>
+                        </div>
+                        <div className="preview-item-subheader">
+                          <span>{formData.experience.company || 'Company'}</span>
+                          <span className="preview-date">{formData.experience.location}</span>
+                        </div>
+                        {formData.experience.responsibilities && (
+                          <div className="preview-bullets">
+                            {formData.experience.responsibilities.split('\n').filter(line => line.trim()).map((item, i) => (
+                              <div key={i}>{item.replace(/^[•\-\*]\s*/, '')}</div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
                 )}
 
                 {/* Projects */}
-                {projectsList.length > 0 && (
+                {(projectsList.length > 0 || (formData.projects && Object.keys(formData.projects).length > 0)) && (
                   <div className="preview-section-block">
                     <h3 className="preview-section-title">Projects</h3>
                     {projectsList.map((project, index) => (
@@ -263,6 +339,35 @@ const ResumeBuilder = () => {
                         </div>
                       </div>
                     ))}
+                    {/* Show current entry being edited */}
+                    {formData.projects && Object.keys(formData.projects).length > 0 && (
+                      <div className="preview-section-content">
+                        <div className="preview-project-header">
+                          <span className="preview-project-title">{formData.projects.projectName || 'Project Name'}</span>
+                          {formData.projects.technologies && (
+                            <>
+                              {' | '}
+                              <span className="preview-project-tech">{formData.projects.technologies}</span>
+                            </>
+                          )}
+                          {(formData.projects.startDate || formData.projects.endDate) && (
+                            <>
+                              {' '}
+                              <span className="preview-date">
+                                {formData.projects.startDate} – {formData.projects.endDate}
+                              </span>
+                            </>
+                          )}
+                        </div>
+                        {formData.projects.description && (
+                          <div className="preview-bullets">
+                            {formData.projects.description.split('\n').filter(line => line.trim()).map((item, i) => (
+                              <div key={i}>{item.replace(/^[•\-\*]\s*/, '')}</div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
                 )}
 

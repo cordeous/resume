@@ -74,6 +74,8 @@ const resources = {
       "role.other": "Other",
       "role.continue": "Continue",
       "role.skip": "Skip for now",
+      "role.feedback.title": "Perfect!",
+      "role.feedback.text": "Building your resume for:",
 
       // Download Modal
       "download.title": "Download Your Resume",
@@ -169,6 +171,8 @@ const resources = {
       "role.other": "Otro",
       "role.continue": "Continuar",
       "role.skip": "Omitir por ahora",
+      "role.feedback.title": "¡Perfecto!",
+      "role.feedback.text": "Creando tu currículum para:",
 
       // Download Modal
       "download.title": "Descargar Tu Currículum",

@@ -1,7 +1,7 @@
 import { jsPDF } from 'jspdf';
 
 export const generatePdfResume = (data) => {
-  const { personal, education, experienceList, skills, projectsList } = data;
+  const { personal, education, educationList, experienceList, skills, projectsList } = data;
 
   // Create new PDF document (Letter size: 8.5" x 11")
   const doc = new jsPDF({
@@ -50,8 +50,9 @@ export const generatePdfResume = (data) => {
     yPos += 0.35;
   }
 
-  // Education Section
-  if (education && Object.keys(education).length > 0) {
+  // Education Section - support both educationList and single education
+  const educationEntries = educationList && educationList.length > 0 ? educationList : (education && Object.keys(education).length > 0 ? [education] : []);
+  if (educationEntries.length > 0) {
     // Section header with line
     doc.setFont('times', 'bold');
     doc.setFontSize(11);
@@ -60,20 +61,29 @@ export const generatePdfResume = (data) => {
     doc.line(leftMargin, yPos + 0.05, rightMargin, yPos + 0.05);
     yPos += 0.25;
 
-    // University name and location
-    doc.setFont('times', 'bold');
-    doc.setFontSize(11);
-    doc.text(education.university || '', leftMargin, yPos);
-    doc.setFont('times', 'italic');
-    doc.text(education.location || '', rightMargin, yPos, { align: 'right' });
-    yPos += 0.15;
+    educationEntries.forEach((edu, index) => {
+      // University name and location
+      doc.setFont('times', 'bold');
+      doc.setFontSize(11);
+      doc.text(edu.university || '', leftMargin, yPos);
+      doc.setFont('times', 'italic');
+      doc.text(edu.location || '', rightMargin, yPos, { align: 'right' });
+      yPos += 0.15;
 
-    // Degree and dates
-    doc.setFont('times', 'italic');
-    doc.setFontSize(10);
-    doc.text(education.degree || '', leftMargin, yPos);
-    doc.text(`${education.startDate} – ${education.endDate}`, rightMargin, yPos, { align: 'right' });
-    yPos += 0.3;
+      // Degree and dates
+      doc.setFont('times', 'italic');
+      doc.setFontSize(10);
+      doc.text(edu.degree || '', leftMargin, yPos);
+      doc.text(`${edu.startDate} – ${edu.endDate}`, rightMargin, yPos, { align: 'right' });
+      yPos += 0.25;
+
+      // Add space between entries if not the last one
+      if (index < educationEntries.length - 1) {
+        yPos += 0.05;
+      }
+    });
+
+    yPos += 0.05;
   }
 
   // Experience Section
