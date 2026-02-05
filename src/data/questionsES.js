@@ -59,5 +59,17 @@ export const questionsES = [
       { name: 'endDate', label: 'Fecha de Finalización', type: 'text', placeholder: 'Mayo 2020', required: false },
       { name: 'description', label: 'Descripción del Proyecto (puntos, uno por línea)', type: 'textarea', placeholder: '• Construí una aplicación web full-stack...\\n• Implementé autenticación de usuarios...\\n• Desplegué en AWS...', required: true, rows: 4 },
     ]
+  },
+  {
+    id: 'certifications',
+    title: 'Certificaciones y Logros',
+    subtitle: 'Opcional: Agrega tus certificaciones, premios o logros',
+    optional: true,
+    fields: [
+      { name: 'name', label: 'Nombre de Certificación/Logro', type: 'text', placeholder: 'AWS Certified Developer Associate', required: true },
+      { name: 'issuer', label: 'Organización Emisora', type: 'text', placeholder: 'Amazon Web Services', required: false },
+      { name: 'date', label: 'Fecha Obtenida', type: 'text', placeholder: 'Junio 2023', required: false },
+      { name: 'description', label: 'Descripción (opcional)', type: 'textarea', placeholder: 'Breve descripción o detalles sobre la certificación', required: false, rows: 2 },
+    ]
   }
 ];

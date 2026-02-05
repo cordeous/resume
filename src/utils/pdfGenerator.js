@@ -1,7 +1,7 @@
 import { jsPDF } from 'jspdf';
 
 export const generatePdfResume = (data) => {
-  const { personal, education, educationList, experienceList, skills, projectsList } = data;
+  const { personal, education, educationList, experienceList, skills, projectsList, certificationsList, showCertifications } = data;
 
   // Create new PDF document (Letter size: 8.5" x 11")
   const doc = new jsPDF({
@@ -247,6 +247,78 @@ export const generatePdfResume = (data) => {
         }
       });
       yPos += 0.15;
+    });
+  }
+
+  // Certifications & Achievements Section
+  if (showCertifications && certificationsList && certificationsList.length > 0) {
+    // Check if we need a new page
+    if (yPos > 9.5) {
+      doc.addPage();
+      yPos = 0.7;
+    }
+
+    doc.setFont('times', 'bold');
+    doc.setFontSize(11);
+    doc.text('CERTIFICATIONS & ACHIEVEMENTS', leftMargin, yPos);
+    doc.setLineWidth(0.01);
+    doc.line(leftMargin, yPos + 0.05, rightMargin, yPos + 0.05);
+    yPos += 0.25;
+
+    certificationsList.forEach((cert, index) => {
+      // Check if we need a new page
+      if (yPos > 10) {
+        doc.addPage();
+        yPos = 0.7;
+      }
+
+      // Certification name and date
+      doc.setFont('times', 'bold');
+      doc.setFontSize(11);
+      doc.text(cert.name || '', leftMargin, yPos);
+      if (cert.date) {
+        doc.setFont('times', 'italic');
+        doc.setFontSize(10);
+        doc.text(cert.date, rightMargin, yPos, { align: 'right' });
+      }
+      yPos += 0.15;
+
+      // Issuer
+      if (cert.issuer) {
+        doc.setFont('times', 'italic');
+        doc.setFontSize(10);
+        doc.text(cert.issuer, leftMargin, yPos);
+        yPos += 0.15;
+      }
+
+      // Description (bullets)
+      if (cert.description) {
+        const bullets = cert.description.split('\n').filter(line => line.trim());
+        doc.setFont('times', 'normal');
+        doc.setFontSize(10);
+
+        bullets.forEach(bullet => {
+          const cleanBullet = bullet.replace(/^[•\-\*]\s*/, '');
+          const lines = doc.splitTextToSize(cleanBullet, rightMargin - leftMargin - 0.2);
+
+          lines.forEach((line, lineIndex) => {
+            if (lineIndex === 0) {
+              doc.text('•', leftMargin + 0.1, yPos);
+              doc.text(line, leftMargin + 0.25, yPos);
+            } else {
+              doc.text(line, leftMargin + 0.25, yPos);
+            }
+            yPos += 0.15;
+          });
+        });
+      }
+
+      yPos += 0.1;
+
+      // Add space between entries if not the last one
+      if (index < certificationsList.length - 1) {
+        yPos += 0.05;
+      }
     });
   }
 

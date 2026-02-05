@@ -14,6 +14,8 @@ const ResumeBuilder = () => {
   const [educationList, setEducationList] = useState([]);
   const [experienceList, setExperienceList] = useState([]);
   const [projectsList, setProjectsList] = useState([]);
+  const [certificationsList, setCertificationsList] = useState([]);
+  const [showCertifications, setShowCertifications] = useState(false);
   const [showDownloadModal, setShowDownloadModal] = useState(false);
 
   const currentQuestion = questions[currentStep];
@@ -40,6 +42,9 @@ const ResumeBuilder = () => {
     } else if (currentQuestion.id === 'projects' && formData.projects && Object.keys(formData.projects).length > 0) {
       setProjectsList(prev => [...prev, formData.projects]);
       setFormData(prev => ({ ...prev, projects: {} }));
+    } else if (currentQuestion.id === 'certifications' && formData.certifications && Object.keys(formData.certifications).length > 0) {
+      setCertificationsList(prev => [...prev, formData.certifications]);
+      setFormData(prev => ({ ...prev, certifications: {} }));
     }
   };
 
@@ -54,6 +59,9 @@ const ResumeBuilder = () => {
     } else if (currentQuestion.id === 'projects' && formData.projects && Object.keys(formData.projects).length > 0) {
       setProjectsList(prev => [...prev, formData.projects]);
       setFormData(prev => ({ ...prev, projects: {} }));
+    } else if (currentQuestion.id === 'certifications' && formData.certifications && Object.keys(formData.certifications).length > 0) {
+      setCertificationsList(prev => [...prev, formData.certifications]);
+      setFormData(prev => ({ ...prev, certifications: {} }));
     }
 
     if (currentStep < questions.length - 1) {
@@ -75,7 +83,9 @@ const ResumeBuilder = () => {
       ...formData,
       educationList,
       experienceList,
-      projectsList
+      projectsList,
+      certificationsList,
+      showCertifications
     };
   };
 
@@ -156,7 +166,21 @@ const ResumeBuilder = () => {
                 <h2 className="question-title">{currentQuestion.title}</h2>
                 <p className="question-subtitle">{currentQuestion.subtitle}</p>
 
-                <div className="form-fields">
+                {currentQuestion.optional && (
+                  <div className="form-field">
+                    <label className="field-label optional-toggle">
+                      <input
+                        type="checkbox"
+                        checked={showCertifications}
+                        onChange={(e) => setShowCertifications(e.target.checked)}
+                      />
+                      <span>Include this section in my resume</span>
+                    </label>
+                  </div>
+                )}
+
+                {(!currentQuestion.optional || showCertifications) && (
+                  <div className="form-fields">
                   {currentQuestion.fields.map((field, index) => (
                     <div key={index} className="form-field">
                       <label className="field-label">
@@ -183,6 +207,7 @@ const ResumeBuilder = () => {
                     </div>
                   ))}
                 </div>
+                )}
 
                 <div className="button-row">
                   <button
@@ -193,14 +218,21 @@ const ResumeBuilder = () => {
                     ← Back
                   </button>
                   <div className="button-group">
-                    {(currentQuestion.id === 'education' || currentQuestion.id === 'experience' || currentQuestion.id === 'projects') && (
+                    {currentQuestion.optional && !showCertifications && (
+                      <button className="skip-btn" onClick={handleNext}>
+                        Skip →
+                      </button>
+                    )}
+                    {(currentQuestion.id === 'education' || currentQuestion.id === 'experience' || currentQuestion.id === 'projects' || (currentQuestion.id === 'certifications' && showCertifications)) && (
                       <button className="add-another-btn" onClick={handleAddAnother}>
                         + Add Another
                       </button>
                     )}
-                    <button className="next-btn" onClick={handleNext}>
-                      {currentStep < questions.length - 1 ? 'Next →' : 'Download Resume'}
-                    </button>
+                    {(!currentQuestion.optional || showCertifications) && (
+                      <button className="next-btn" onClick={handleNext}>
+                        {currentStep < questions.length - 1 ? 'Next →' : 'Download Resume'}
+                      </button>
+                    )}
                   </div>
                 </div>
               </motion.div>
@@ -389,6 +421,54 @@ const ResumeBuilder = () => {
                         <div><strong>Libraries:</strong> {formData.skills.databases}</div>
                       )}
                     </div>
+                  </div>
+                )}
+
+                {/* Certifications & Achievements */}
+                {showCertifications && (certificationsList.length > 0 || (formData.certifications && Object.keys(formData.certifications).length > 0)) && (
+                  <div className="preview-section-block">
+                    <h3 className="preview-section-title">Certifications & Achievements</h3>
+                    {certificationsList.map((cert, index) => (
+                      <div key={index} className="preview-section-content">
+                        <div className="preview-item-header">
+                          <strong>{cert.name}</strong>
+                          {cert.date && <span className="preview-date">{cert.date}</span>}
+                        </div>
+                        {cert.issuer && (
+                          <div className="preview-item-subheader">
+                            <span>{cert.issuer}</span>
+                          </div>
+                        )}
+                        {cert.description && (
+                          <div className="preview-bullets">
+                            {cert.description.split('\n').filter(line => line.trim()).map((item, i) => (
+                              <div key={i}>{item.replace(/^[•\-\*]\s*/, '')}</div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                    {/* Show current entry being edited */}
+                    {formData.certifications && Object.keys(formData.certifications).length > 0 && (
+                      <div className="preview-section-content">
+                        <div className="preview-item-header">
+                          <strong>{formData.certifications.name || 'Certification Name'}</strong>
+                          {formData.certifications.date && <span className="preview-date">{formData.certifications.date}</span>}
+                        </div>
+                        {formData.certifications.issuer && (
+                          <div className="preview-item-subheader">
+                            <span>{formData.certifications.issuer}</span>
+                          </div>
+                        )}
+                        {formData.certifications.description && (
+                          <div className="preview-bullets">
+                            {formData.certifications.description.split('\n').filter(line => line.trim()).map((item, i) => (
+                              <div key={i}>{item.replace(/^[•\-\*]\s*/, '')}</div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

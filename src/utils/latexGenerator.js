@@ -1,5 +1,5 @@
 export const generateLatexResume = (data) => {
-  const { personal, education, educationList, experienceList, skills, projectsList } = data;
+  const { personal, education, educationList, experienceList, skills, projectsList, certificationsList, showCertifications } = data;
 
   // Extract contact info
   const phone = personal?.phone || 'xxx-xxx-xxxx';
@@ -55,6 +55,22 @@ ${project.description?.split('\\n').filter(line => line.trim()).map(line => `   
 ${skills.languages ? `     \\textbf{Languages}{: ${skills.languages}} \\\\\n` : ''}${skills.frameworks ? `     \\textbf{Frameworks}{: ${skills.frameworks}} \\\\\n` : ''}${skills.tools ? `     \\textbf{Developer Tools}{: ${skills.tools}} \\\\\n` : ''}${skills.databases ? `     \\textbf{Libraries}{: ${skills.databases}}` : ''}
     }}
  \\end{itemize}
+` : '';
+
+  // Generate certifications section
+  const certificationsSection = showCertifications && certificationsList && certificationsList.length > 0 ? `
+\\section{Certifications \\& Achievements}
+  \\resumeSubHeadingListStart
+${certificationsList.map(cert => {
+    const hasDescription = cert.description && cert.description.trim();
+    return `    \\resumeSubheading
+      {${cert.name || 'Certification Name'}}{${cert.date || ''}}
+      {${cert.issuer || ''}}{${cert.issuer ? '' : ''}}${hasDescription ? `
+      \\resumeItemListStart
+${cert.description.split('\\n').filter(line => line.trim()).map(line => `        \\resumeItem{${line.replace(/^[•\-\*]\s*/, '')}}`).join('\n')}
+      \\resumeItemListEnd` : ''}`;
+  }).join('\n')}
+  \\resumeSubHeadingListEnd
 ` : '';
 
   // Full LaTeX template
@@ -177,6 +193,7 @@ ${educationSection}
 ${experienceSection}
 ${projectsSection}
 ${skillsSection}
+${certificationsSection}
 
 %-------------------------------------------
 \\end{document}`;

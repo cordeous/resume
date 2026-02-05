@@ -223,6 +223,24 @@ textarea.field-input {
   transform: translateY(-1px);
 }
 
+.skip-btn {
+  flex: 1;
+  padding: 14px 32px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.skip-btn:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  transform: translateY(-1px);
+}
+
 .next-btn {
   flex: 1;
   padding: 14px 32px;
@@ -590,4 +608,36 @@ textarea.field-input {
   .modal-title {
     font-size: 24px;
   }
+}
+
+/* Optional Toggle Checkbox */
+.optional-toggle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  border: 2px solid var(--border-subtle);
+  transition: all 0.2s;
+  margin-bottom: 24px;
+}
+
+.optional-toggle:hover {
+  border-color: var(--accent-primary);
+  background: var(--bg-surface);
+}
+
+.optional-toggle input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--accent-primary);
+}
+
+.optional-toggle span {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-primary);
 }
