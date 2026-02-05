@@ -29,17 +29,15 @@
   color: var(--text-primary);
 }
 
-.role-selection > div:last-child {
+.role-container {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 40px 24px;
-}
-
-.role-container {
-  max-width: 800px;
+  max-width: 900px;
   width: 100%;
+  margin: 0 auto;
 }
 
 .role-content {

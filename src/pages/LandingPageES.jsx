@@ -1,12 +1,15 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import ResumePreview from '../components/ResumePreview';
 import LanguageSwitcher from '../components/LanguageSwitcher';
 import AppShowcase from '../components/AppShowcase';
+import ExamplesModal from '../components/ExamplesModal';
 import './LandingPage.css';
 
 const LandingPageES = () => {
   const navigate = useNavigate();
+  const [showExamples, setShowExamples] = useState(false);
 
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
@@ -93,7 +96,9 @@ const LandingPageES = () => {
             >
               Crear Mi Currículum →
             </button>
-            <button className="secondary-btn">Ver Ejemplos</button>
+            <button className="secondary-btn" onClick={() => setShowExamples(true)}>
+              Ver Ejemplos
+            </button>
           </motion.div>
           <motion.div
             className="hero-image"
@@ -353,6 +358,9 @@ const LandingPageES = () => {
           </div>
         </div>
       </footer>
+
+      {/* Examples Modal */}
+      <ExamplesModal isOpen={showExamples} onClose={() => setShowExamples(false)} />
     </div>
   );
 };
