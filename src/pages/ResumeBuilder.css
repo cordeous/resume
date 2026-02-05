@@ -146,6 +146,32 @@
   margin-left: 4px;
 }
 
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.input-wrapper.with-icon {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  left: 16px;
+  color: var(--text-tertiary);
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.input-wrapper.with-icon .field-input {
+  padding-left: 48px;
+}
+
 .field-input {
   width: 100%;
   padding: 14px 16px;

@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { FaLinkedin, FaGithub, FaPhone, FaEnvelope, FaGlobe, FaQrcode } from 'react-icons/fa';
 import { questionsES } from '../data/questionsES';
 import { generateLatexResume } from '../utils/latexGenerator';
 import { downloadPdf } from '../utils/pdfGenerator';
+import { generateBusinessCard, downloadQRCodeImage } from '../utils/qrCodeGenerator';
 import LanguageSwitcher from '../components/LanguageSwitcher';
 import './ResumeBuilder.css';
 
@@ -20,6 +22,18 @@ const ResumeBuilderES = () => {
 
   const currentQuestion = questionsES[currentStep];
   const progress = ((currentStep + 1) / questionsES.length) * 100;
+
+  // Get icon for social/contact fields
+  const getFieldIcon = (fieldName) => {
+    const icons = {
+      phone: <FaPhone />,
+      email: <FaEnvelope />,
+      linkedin: <FaLinkedin />,
+      github: <FaGithub />,
+      website: <FaGlobe />
+    };
+    return icons[fieldName] || null;
+  };
 
   const handleInputChange = (fieldName, value) => {
     setFormData(prev => ({
@@ -121,6 +135,26 @@ const ResumeBuilderES = () => {
     downloadPdf(getResumeData());
   };
 
+  const handleDownloadQRCode = async () => {
+    try {
+      await downloadQRCodeImage(formData.personal);
+      alert('¡Código QR descargado exitosamente!');
+    } catch (error) {
+      alert('Error al generar el código QR. Por favor, intenta de nuevo.');
+      console.error(error);
+    }
+  };
+
+  const handleDownloadBusinessCard = async () => {
+    try {
+      await generateBusinessCard(formData.personal);
+      alert('¡Tarjeta de presentación generada exitosamente!');
+    } catch (error) {
+      alert('Error al generar la tarjeta de presentación. Por favor, intenta de nuevo.');
+      console.error(error);
+    }
+  };
+
   const currentSectionData = formData[currentQuestion.id] || {};
 
   return (
@@ -181,7 +215,9 @@ const ResumeBuilderES = () => {
 
                 {(!currentQuestion.optional || showCertifications) && (
                   <div className="form-fields">
-                  {currentQuestion.fields.map((field, index) => (
+                  {currentQuestion.fields.map((field, index) => {
+                    const icon = getFieldIcon(field.name);
+                    return (
                     <div key={index} className="form-field">
                       <label className="field-label">
                         {field.label}
@@ -196,16 +232,20 @@ const ResumeBuilderES = () => {
                           onChange={(e) => handleInputChange(field.name, e.target.value)}
                         />
                       ) : (
-                        <input
-                          type={field.type}
-                          className="field-input"
-                          placeholder={field.placeholder}
-                          value={currentSectionData[field.name] || ''}
-                          onChange={(e) => handleInputChange(field.name, e.target.value)}
-                        />
+                        <div className={`input-wrapper ${icon ? 'with-icon' : ''}`}>
+                          {icon && <span className="input-icon">{icon}</span>}
+                          <input
+                            type={field.type}
+                            className="field-input"
+                            placeholder={field.placeholder}
+                            value={currentSectionData[field.name] || ''}
+                            onChange={(e) => handleInputChange(field.name, e.target.value)}
+                          />
+                        </div>
                       )}
                     </div>
-                  ))}
+                    );
+                  })}
                 </div>
                 )}
 
@@ -529,6 +569,22 @@ const ResumeBuilderES = () => {
                   <div className="download-info">
                     <div className="download-title">Copiar al Portapapeles</div>
                     <div className="download-desc">Copia el código LaTeX para pegar en cualquier lugar</div>
+                  </div>
+                </button>
+
+                <button className="download-option" onClick={handleDownloadQRCode}>
+                  <span className="download-icon"><FaQrcode size={24} /></span>
+                  <div className="download-info">
+                    <div className="download-title">Descargar Código QR</div>
+                    <div className="download-desc">Obtén un código QR con tu información de contacto</div>
+                  </div>
+                </button>
+
+                <button className="download-option" onClick={handleDownloadBusinessCard}>
+                  <span className="download-icon">💼</span>
+                  <div className="download-info">
+                    <div className="download-title">Tarjeta de Presentación PDF</div>
+                    <div className="download-desc">Genera una tarjeta de presentación imprimible con código QR</div>
                   </div>
                 </button>
               </div>

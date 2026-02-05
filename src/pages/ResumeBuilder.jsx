@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { FaLinkedin, FaGithub, FaPhone, FaEnvelope, FaGlobe, FaQrcode } from 'react-icons/fa';
 import { questions } from '../data/questions';
 import { generateLatexResume } from '../utils/latexGenerator';
 import { downloadPdf } from '../utils/pdfGenerator';
+import { generateBusinessCard, downloadQRCodeImage } from '../utils/qrCodeGenerator';
 import LanguageSwitcher from '../components/LanguageSwitcher';
 import './ResumeBuilder.css';
 
@@ -20,6 +22,18 @@ const ResumeBuilder = () => {
 
   const currentQuestion = questions[currentStep];
   const progress = ((currentStep + 1) / questions.length) * 100;
+
+  // Get icon for social/contact fields
+  const getFieldIcon = (fieldName) => {
+    const icons = {
+      phone: <FaPhone />,
+      email: <FaEnvelope />,
+      linkedin: <FaLinkedin />,
+      github: <FaGithub />,
+      website: <FaGlobe />
+    };
+    return icons[fieldName] || null;
+  };
 
   const handleInputChange = (fieldName, value) => {
     setFormData(prev => ({
@@ -121,6 +135,26 @@ const ResumeBuilder = () => {
     downloadPdf(getResumeData());
   };
 
+  const handleDownloadQRCode = async () => {
+    try {
+      await downloadQRCodeImage(formData.personal);
+      alert('QR Code downloaded successfully!');
+    } catch (error) {
+      alert('Error generating QR Code. Please try again.');
+      console.error(error);
+    }
+  };
+
+  const handleDownloadBusinessCard = async () => {
+    try {
+      await generateBusinessCard(formData.personal);
+      alert('Business card generated successfully!');
+    } catch (error) {
+      alert('Error generating business card. Please try again.');
+      console.error(error);
+    }
+  };
+
   const currentSectionData = formData[currentQuestion.id] || {};
 
   return (
@@ -181,7 +215,9 @@ const ResumeBuilder = () => {
 
                 {(!currentQuestion.optional || showCertifications) && (
                   <div className="form-fields">
-                  {currentQuestion.fields.map((field, index) => (
+                  {currentQuestion.fields.map((field, index) => {
+                    const icon = getFieldIcon(field.name);
+                    return (
                     <div key={index} className="form-field">
                       <label className="field-label">
                         {field.label}
@@ -196,16 +232,20 @@ const ResumeBuilder = () => {
                           onChange={(e) => handleInputChange(field.name, e.target.value)}
                         />
                       ) : (
-                        <input
-                          type={field.type}
-                          className="field-input"
-                          placeholder={field.placeholder}
-                          value={currentSectionData[field.name] || ''}
-                          onChange={(e) => handleInputChange(field.name, e.target.value)}
-                        />
+                        <div className={`input-wrapper ${icon ? 'with-icon' : ''}`}>
+                          {icon && <span className="input-icon">{icon}</span>}
+                          <input
+                            type={field.type}
+                            className="field-input"
+                            placeholder={field.placeholder}
+                            value={currentSectionData[field.name] || ''}
+                            onChange={(e) => handleInputChange(field.name, e.target.value)}
+                          />
+                        </div>
                       )}
                     </div>
-                  ))}
+                    );
+                  })}
                 </div>
                 )}
 
@@ -529,6 +569,22 @@ const ResumeBuilder = () => {
                   <div className="download-info">
                     <div className="download-title">Copy to Clipboard</div>
                     <div className="download-desc">Copy the LaTeX code to paste anywhere</div>
+                  </div>
+                </button>
+
+                <button className="download-option" onClick={handleDownloadQRCode}>
+                  <span className="download-icon"><FaQrcode size={24} /></span>
+                  <div className="download-info">
+                    <div className="download-title">Download QR Code</div>
+                    <div className="download-desc">Get a QR code with your contact information</div>
+                  </div>
+                </button>
+
+                <button className="download-option" onClick={handleDownloadBusinessCard}>
+                  <span className="download-icon">💼</span>
+                  <div className="download-info">
+                    <div className="download-title">Business Card PDF</div>
+                    <div className="download-desc">Generate a printable business card with QR code</div>
                   </div>
                 </button>
               </div>
