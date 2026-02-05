@@ -5,8 +5,9 @@ import { FaLinkedin, FaGithub, FaPhone, FaEnvelope, FaGlobe, FaQrcode } from 're
 import { questionsES } from '../data/questionsES';
 import { generateLatexResume } from '../utils/latexGenerator';
 import { downloadPdf } from '../utils/pdfGenerator';
-import { generateBusinessCard, downloadQRCodeImage } from '../utils/qrCodeGenerator';
+import { generateBusinessCard, downloadQRCodeImage, generateQRCode } from '../utils/qrCodeGenerator';
 import LanguageSwitcher from '../components/LanguageSwitcher';
+import QRPreviewModal from '../components/QRPreviewModal';
 import './ResumeBuilder.css';
 
 const ResumeBuilderES = () => {
@@ -19,6 +20,9 @@ const ResumeBuilderES = () => {
   const [certificationsList, setCertificationsList] = useState([]);
   const [showCertifications, setShowCertifications] = useState(false);
   const [showDownloadModal, setShowDownloadModal] = useState(false);
+  const [showQRPreview, setShowQRPreview] = useState(false);
+  const [qrPreviewType, setQrPreviewType] = useState('qr'); // 'qr' or 'card'
+  const [qrCodeDataURL, setQrCodeDataURL] = useState(null);
 
   const currentQuestion = questionsES[currentStep];
   const progress = ((currentStep + 1) / questionsES.length) * 100;
@@ -137,8 +141,10 @@ const ResumeBuilderES = () => {
 
   const handleDownloadQRCode = async () => {
     try {
-      await downloadQRCodeImage(formData.personal);
-      alert('¡Código QR descargado exitosamente!');
+      const qrDataURL = await generateQRCode(formData.personal);
+      setQrCodeDataURL(qrDataURL);
+      setQrPreviewType('qr');
+      setShowQRPreview(true);
     } catch (error) {
       alert('Error al generar el código QR. Por favor, intenta de nuevo.');
       console.error(error);
@@ -147,11 +153,25 @@ const ResumeBuilderES = () => {
 
   const handleDownloadBusinessCard = async () => {
     try {
-      await generateBusinessCard(formData.personal);
-      alert('¡Tarjeta de presentación generada exitosamente!');
+      const qrDataURL = await generateQRCode(formData.personal);
+      setQrCodeDataURL(qrDataURL);
+      setQrPreviewType('card');
+      setShowQRPreview(true);
     } catch (error) {
       alert('Error al generar la tarjeta de presentación. Por favor, intenta de nuevo.');
       console.error(error);
+    }
+  };
+
+  const handleActualDownload = async () => {
+    try {
+      if (qrPreviewType === 'qr') {
+        await downloadQRCodeImage(formData.personal);
+      } else {
+        await generateBusinessCard(formData.personal);
+      }
+    } catch (error) {
+      console.error('Download error:', error);
     }
   };
 
@@ -598,6 +618,16 @@ const ResumeBuilderES = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* QR Code Preview Modal */}
+      <QRPreviewModal
+        isOpen={showQRPreview}
+        onClose={() => setShowQRPreview(false)}
+        type={qrPreviewType}
+        qrCodeDataURL={qrCodeDataURL}
+        personalInfo={formData.personal}
+        onDownload={handleActualDownload}
+      />
     </div>
   );
 };
