@@ -11,11 +11,17 @@ const ExamplesModal = ({ isOpen, onClose }) => {
       image: '/examples/software-engineer.png',
       preview: {
         name: 'Alex Johnson',
-        title: 'Senior Software Engineer',
+        title: 'Senior Software Engineer | San Francisco, CA',
+        contact: 'alex.johnson@email.com | (415) 555-0123 | linkedin.com/in/alexjohnson',
         highlights: [
-          'Led development of microservices architecture',
-          '5+ years experience with React, Node.js, AWS',
-          'Increased system performance by 40%'
+          'EXPERIENCE',
+          'Senior Software Engineer at Google • 2021-Present',
+          '• Led microservices migration reducing latency by 40%',
+          '• Architected real-time data pipeline processing 10M+ events/day',
+          '',
+          'Software Engineer at Amazon • 2019-2021',
+          '• Built distributed caching system improving response time by 60%',
+          '• Mentored 5 junior engineers, conducted 100+ code reviews'
         ]
       }
     },
@@ -27,11 +33,17 @@ const ExamplesModal = ({ isOpen, onClose }) => {
       image: '/examples/data-scientist.png',
       preview: {
         name: 'Sarah Chen',
-        title: 'Data Scientist',
+        title: 'Data Scientist | New York, NY',
+        contact: 'sarah.chen@email.com | (212) 555-0187 | github.com/sarachen',
         highlights: [
-          'Built ML models with 95% accuracy',
-          'Expert in Python, TensorFlow, SQL',
-          'Published 3 research papers'
+          'EXPERIENCE',
+          'Senior Data Scientist at Meta • 2022-Present',
+          '• Developed recommendation ML model achieving 95% accuracy',
+          '• Analyzed 50M+ user interactions to drive product decisions',
+          '',
+          'Data Scientist at Netflix • 2020-2022',
+          '• Built predictive churn model saving $2M annually',
+          '• Published 3 papers in top-tier ML conferences'
         ]
       }
     },
@@ -43,11 +55,17 @@ const ExamplesModal = ({ isOpen, onClose }) => {
       image: '/examples/product-manager.png',
       preview: {
         name: 'Michael Rodriguez',
-        title: 'Senior Product Manager',
+        title: 'Senior Product Manager | Seattle, WA',
+        contact: 'mrodriguez@email.com | (206) 555-0194 | linkedin.com/in/mrodriguez',
         highlights: [
-          'Launched 10+ features affecting 1M+ users',
-          'Increased revenue by 35% YoY',
-          'Led cross-functional teams of 15+'
+          'EXPERIENCE',
+          'Senior PM at Microsoft • 2021-Present',
+          '• Launched 10+ features reaching 5M+ active users',
+          '• Drove 35% YoY revenue growth ($50M ARR)',
+          '',
+          'Product Manager at Uber • 2019-2021',
+          '• Led cross-functional team of 15 across eng, design, data',
+          '• Shipped rider safety features reducing incidents by 25%'
         ]
       }
     },
@@ -59,11 +77,17 @@ const ExamplesModal = ({ isOpen, onClose }) => {
       image: '/examples/ux-designer.png',
       preview: {
         name: 'Emily Zhang',
-        title: 'Senior UX Designer',
+        title: 'Senior UX Designer | Austin, TX',
+        contact: 'emily.zhang@email.com | (512) 555-0176 | dribbble.com/emilyzhang',
         highlights: [
-          'Redesigned app with 50% better UX metrics',
-          'Expert in Figma, Adobe Creative Suite',
-          'Won 2 design awards'
+          'EXPERIENCE',
+          'Senior UX Designer at Airbnb • 2022-Present',
+          '• Redesigned booking flow, improving conversion by 50%',
+          '• Led design system initiative used by 200+ engineers',
+          '',
+          'UX Designer at Spotify • 2020-2022',
+          '• Designed mobile onboarding flow (4.8★ App Store rating)',
+          '• Won 2 Webby Awards for innovative interaction design'
         ]
       }
     },
@@ -75,11 +99,17 @@ const ExamplesModal = ({ isOpen, onClose }) => {
       image: '/examples/marketing-manager.png',
       preview: {
         name: 'David Kim',
-        title: 'Digital Marketing Manager',
+        title: 'Digital Marketing Manager | Los Angeles, CA',
+        contact: 'david.kim@email.com | (323) 555-0165 | linkedin.com/in/davidkim',
         highlights: [
-          'Grew user base from 10K to 500K',
-          'Managed $2M+ annual marketing budget',
-          'Achieved 300% ROI on campaigns'
+          'EXPERIENCE',
+          'Marketing Manager at Shopify • 2021-Present',
+          '• Grew user base from 50K to 500K in 18 months',
+          '• Managed $2M annual budget across paid/organic channels',
+          '',
+          'Growth Marketing Lead at Squarespace • 2019-2021',
+          '• Achieved 300% ROI on paid campaigns ($5M revenue)',
+          '• Built SEO strategy driving 200K monthly organic visits'
         ]
       }
     },
@@ -91,11 +121,19 @@ const ExamplesModal = ({ isOpen, onClose }) => {
       image: '/examples/entry-level.png',
       preview: {
         name: 'Jessica Williams',
-        title: 'Computer Science Graduate',
+        title: 'Computer Science Graduate | Boston, MA',
+        contact: 'j.williams@email.com | (617) 555-0142 | github.com/jesswilliams',
         highlights: [
-          'GPA: 3.9/4.0, Dean\'s List',
-          '3 internships at tech companies',
-          'Built 5+ personal projects'
+          'EDUCATION',
+          'B.S. Computer Science, MIT • 2022-2026',
+          'GPA: 3.9/4.0 | Dean\'s List (4 semesters)',
+          '',
+          'EXPERIENCE',
+          'Software Engineering Intern at Stripe • Summer 2025',
+          '• Built payment reconciliation tool processing $10M+',
+          '',
+          'SWE Intern at Tesla • Summer 2024',
+          '• Developed data pipeline reducing processing time by 40%'
         ]
       }
     }
@@ -146,10 +184,13 @@ const ExamplesModal = ({ isOpen, onClose }) => {
                     <div className="example-placeholder-header">
                       <div className="placeholder-name">{example.preview.name}</div>
                       <div className="placeholder-title">{example.preview.title}</div>
+                      {example.preview.contact && (
+                        <div className="placeholder-contact">{example.preview.contact}</div>
+                      )}
                     </div>
                     <div className="example-placeholder-content">
                       {example.preview.highlights.map((highlight, idx) => (
-                        <div key={idx} className="placeholder-line">• {highlight}</div>
+                        <div key={idx} className="placeholder-line">{highlight}</div>
                       ))}
                     </div>
                   </div>

@@ -10,14 +10,25 @@ A modern React application that helps users build professional resumes using LaT
 - 📄 **LaTeX Export** - Generate industry-standard LaTeX resume files
 - 📱 **Mobile Friendly** - Fully responsive design that works on all devices
 - ✨ **Modern Effects** - Smooth transitions and hover effects using Framer Motion
+- 🌍 **Bilingual Support** - Full English and Spanish language support
+- 📋 **Resume Examples** - View professional resume examples from various industries
+- 🎯 **Role Selection** - Get tailored suggestions based on your career field
+- 📊 **Certifications Section** - Optional section for certifications and achievements
+- 📱 **QR Code Generator** - Generate QR codes with your contact information
+- 💼 **Business Cards** - Create professional business cards with integrated QR codes
+- 🎨 **Professional Previews** - Preview QR codes and business cards before downloading
 
 ## Tech Stack
 
-- **React** - UI framework
-- **Vite** - Build tool and dev server
-- **React Router** - Navigation
-- **Framer Motion** - Animations
-- **CSS Variables** - Design system
+- **React 19.2.0** - UI framework with latest features
+- **Vite 7.3.1** - Build tool and dev server
+- **React Router DOM** - Client-side navigation
+- **Framer Motion** - Smooth animations and transitions
+- **React Icons** - Icon library for social media and UI elements
+- **QRCode.js** - QR code generation library
+- **jsPDF** - PDF generation for business cards
+- **CSS Variables** - Consistent design system
+- **Pencil Extension** - Professional UI design tool
 
 ## Getting Started
 
@@ -60,23 +71,41 @@ Click "Build My Resume" to start creating your resume.
 
 ### Resume Builder
 
-The resume builder guides you through 5 sections:
+The resume builder guides you through multiple sections:
 
-1. **Personal Information** - Name, email, phone, LinkedIn, GitHub
-2. **Education** - University, degree, location, dates
-3. **Work Experience** - Company, position, responsibilities
-4. **Technical Skills** - Languages, frameworks, tools, databases
-5. **Projects** - Project name, technologies, description
+1. **Role Selection** - Choose your career field for tailored suggestions
+2. **Personal Information** - Name, email, phone, LinkedIn, GitHub with social icons
+3. **Education** - University, degree, location, dates (add multiple entries)
+4. **Work Experience** - Company, position, responsibilities (add multiple entries)
+5. **Technical Skills** - Languages, frameworks, tools, databases
+6. **Projects** - Project name, technologies, description (add multiple entries)
+7. **Certifications & Achievements** - Optional section for additional credentials
 
 As you fill out each section, the live preview on the right updates automatically to show how your resume will look.
 
+### QR Codes & Business Cards
+
+Generate professional contact materials:
+- **QR Codes** - Create scannable QR codes with your contact information in vCard format
+- **Business Cards** - Generate print-ready business cards (3.5" × 2") with integrated QR codes
+- **Preview First** - View professional previews before downloading
+- **Multiple Actions** - Share, print, or download your materials
+
 ### Exporting Your Resume
 
-After completing all sections, click "Download Resume" to export your resume as a `.tex` file. You can then:
+After completing all sections, you have multiple export options:
 
-1. **Compile with LaTeX** - Use Overleaf, pdflatex, or any LaTeX compiler
-2. **Generate PDF** - The LaTeX file will compile to a professional PDF resume
-3. **Submit to Jobs** - Use the PDF to apply to positions
+1. **Download LaTeX (.tex)** - Get the raw LaTeX source file
+2. **Copy to Clipboard** - Copy LaTeX code directly
+3. **Open in Overleaf** - Launch directly in Overleaf for online editing
+4. **Download PDF** - Generate PDF directly in the browser
+5. **Download QR Code** - Get a PNG image of your contact QR code
+6. **Download Business Card** - Get a print-ready PDF business card
+
+The LaTeX files can be compiled with:
+- **Overleaf** (online, recommended)
+- **pdflatex** (local installation)
+- Any standard LaTeX compiler
 
 ## LaTeX Template
 
@@ -92,20 +121,29 @@ The application uses the popular [Jake's Resume](https://github.com/jakegut/resu
 ```
 resume-builder/
 ├── src/
-│   ├── components/         # Reusable React components
-│   ├── data/              # Question definitions
-│   │   └── questions.js   # Resume questionnaire structure
-│   ├── pages/             # Page components
-│   │   ├── LandingPage.jsx
-│   │   ├── LandingPage.css
-│   │   ├── ResumeBuilder.jsx
-│   │   └── ResumeBuilder.css
-│   ├── utils/             # Utility functions
-│   │   └── latexGenerator.js  # LaTeX generation logic
-│   ├── App.jsx            # Main app with routing
-│   ├── index.css          # Global styles and design system
-│   └── main.jsx           # Entry point
-├── public/                # Static assets
+│   ├── components/            # Reusable React components
+│   │   ├── ExamplesModal.jsx  # Resume examples showcase
+│   │   ├── QRPreviewModal.jsx # QR code and business card previews
+│   │   └── LanguageSwitcher.jsx # Language toggle component
+│   ├── data/                  # Question definitions
+│   │   ├── questions.js       # English questionnaire
+│   │   └── questionsES.js     # Spanish questionnaire
+│   ├── pages/                 # Page components
+│   │   ├── LandingPage.jsx    # English landing page
+│   │   ├── LandingPageES.jsx  # Spanish landing page
+│   │   ├── ResumeBuilder.jsx  # English builder
+│   │   ├── ResumeBuilderES.jsx # Spanish builder
+│   │   ├── RoleSelection.jsx  # Career field selection
+│   │   └── *.css              # Component styles
+│   ├── utils/                 # Utility functions
+│   │   ├── latexGenerator.js  # LaTeX generation logic
+│   │   ├── pdfGenerator.js    # PDF generation
+│   │   └── qrCodeGenerator.js # QR code and business card generation
+│   ├── App.jsx                # Main app with routing
+│   ├── index.css              # Global styles and design system
+│   └── main.jsx               # Entry point
+├── public/                    # Static assets
+├── pencil-new.pen            # Pencil design file with UI mockups
 ├── package.json
 └── README.md
 ```
@@ -186,16 +224,29 @@ npm install --save-dev gh-pages
 npm run deploy
 ```
 
+## Recent Updates
+
+### Version 2.0 Features
+- ✅ Bilingual support (English/Spanish)
+- ✅ Professional resume examples from 6 different industries
+- ✅ QR code generation with vCard format
+- ✅ Business card creation with QR codes
+- ✅ Preview modals for QR codes and business cards
+- ✅ Social media icons for contact fields
+- ✅ Optional certifications section
+- ✅ Mobile-responsive design throughout
+- ✅ Role selection with career field suggestions
+
 ## Future Enhancements
 
 Potential features for future versions:
 - Multiple LaTeX templates to choose from
-- PDF generation directly in the browser
-- Save/load resume data
+- Save/load resume data to local storage
 - User accounts and cloud storage
 - Export to other formats (Word, Markdown)
-- Resume review and suggestions
+- AI-powered resume review and suggestions
 - Cover letter generation
+- Resume scoring and ATS optimization tips
 
 ## License
 
