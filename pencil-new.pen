@@ -1,0 +1,1682 @@
+{
+  "version": "2.6",
+  "children": [
+    {
+      "type": "frame",
+      "id": "Ljfct",
+      "x": 0,
+      "y": 0,
+      "name": "Landing Page",
+      "width": 1440,
+      "fill": "#F5F4F1",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "H1XUr",
+          "name": "Header",
+          "width": "fill_container",
+          "height": 80,
+          "gap": 16,
+          "padding": [
+            0,
+            120
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "3cFFd",
+              "name": "logo",
+              "fill": "#1A1918",
+              "content": "ResumeBuilder",
+              "fontFamily": "Inter",
+              "fontSize": 24,
+              "fontWeight": "semibold"
+            },
+            {
+              "type": "frame",
+              "id": "Max6C",
+              "name": "nav",
+              "gap": 32,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "tSDis",
+                  "name": "navItem1",
+                  "fill": "#6D6C6A",
+                  "content": "Features",
+                  "fontFamily": "Inter",
+                  "fontSize": 15,
+                  "fontWeight": "medium"
+                },
+                {
+                  "type": "text",
+                  "id": "n4klF",
+                  "name": "navItem2",
+                  "fill": "#6D6C6A",
+                  "content": "Templates",
+                  "fontFamily": "Inter",
+                  "fontSize": 15,
+                  "fontWeight": "medium"
+                },
+                {
+                  "type": "text",
+                  "id": "ANjA4",
+                  "name": "navItem3",
+                  "fill": "#6D6C6A",
+                  "content": "Pricing",
+                  "fontFamily": "Inter",
+                  "fontSize": 15,
+                  "fontWeight": "medium"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "nsQP9",
+              "name": "signInBtn",
+              "fill": "#FFFFFF",
+              "cornerRadius": 8,
+              "padding": [
+                12,
+                24
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "7FpMA",
+                  "name": "signInText",
+                  "fill": "#1A1918",
+                  "content": "Sign In",
+                  "fontFamily": "Inter",
+                  "fontSize": 15,
+                  "fontWeight": "semibold"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "YXb4i",
+          "name": "Hero",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 32,
+          "padding": [
+            100,
+            120
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "1F99f",
+              "name": "badge",
+              "fill": "#C8F0D8",
+              "cornerRadius": 100,
+              "gap": 8,
+              "padding": [
+                8,
+                16
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "lfdne",
+                  "name": "badgeText",
+                  "fill": "#3D8A5A",
+                  "content": "✨ Built with LaTeX for Perfect Typography",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "semibold"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "F0xF6",
+              "name": "heroHeadline",
+              "fill": "#1A1918",
+              "textGrowth": "fixed-width",
+              "width": 900,
+              "content": "Build Your Professional Resume in Minutes",
+              "textAlign": "center",
+              "fontFamily": "Inter",
+              "fontSize": 56,
+              "fontWeight": "bold",
+              "letterSpacing": -1
+            },
+            {
+              "type": "text",
+              "id": "saz8S",
+              "name": "heroSubline",
+              "fill": "#6D6C6A",
+              "textGrowth": "fixed-width",
+              "width": 700,
+              "content": "Answer a few questions and get a perfectly formatted resume using industry-standard LaTeX templates. No design experience needed.",
+              "lineHeight": 1.5,
+              "textAlign": "center",
+              "fontFamily": "Inter",
+              "fontSize": 20,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "ZZDAL",
+              "name": "ctaRow",
+              "gap": 16,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "ENOYa",
+                  "name": "primaryCta",
+                  "fill": "#3D8A5A",
+                  "cornerRadius": 12,
+                  "padding": [
+                    16,
+                    32
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "1DhSp",
+                      "name": "primaryCtaText",
+                      "fill": "#FFFFFF",
+                      "content": "Build My Resume →",
+                      "fontFamily": "Inter",
+                      "fontSize": 18,
+                      "fontWeight": "semibold"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Lpvuz",
+                  "name": "secondaryCta",
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 12,
+                  "padding": [
+                    16,
+                    32
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "xvH2k",
+                      "name": "secondaryCtaText",
+                      "fill": "#1A1918",
+                      "content": "See Examples",
+                      "fontFamily": "Inter",
+                      "fontSize": 18,
+                      "fontWeight": "semibold"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "tPPy2",
+              "name": "heroImgContainer",
+              "width": 900,
+              "height": 500,
+              "fill": "#FFFFFF",
+              "cornerRadius": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "bE3Vb",
+                  "name": "placeholderText",
+                  "fill": "#9C9B99",
+                  "content": "Resume Preview Screenshot",
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "hLsoK",
+          "name": "How It Works",
+          "width": "fill_container",
+          "fill": "#FFFFFF",
+          "layout": "vertical",
+          "gap": 48,
+          "padding": [
+            80,
+            120
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "DyTee",
+              "name": "hiwHeader",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "uluTT",
+                  "name": "hiwTitle",
+                  "fill": "#1A1918",
+                  "content": "How It Works",
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 48,
+                  "fontWeight": "bold",
+                  "letterSpacing": -0.5
+                },
+                {
+                  "type": "text",
+                  "id": "SC8tS",
+                  "name": "hiwSubtitle",
+                  "fill": "#6D6C6A",
+                  "content": "Three simple steps to your perfect resume",
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 20,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "LmSOI",
+              "name": "stepsRow",
+              "width": "fill_container",
+              "gap": 32,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "qYjWi",
+                  "name": "step1",
+                  "width": "fill_container",
+                  "fill": "#F5F4F1",
+                  "cornerRadius": 16,
+                  "layout": "vertical",
+                  "gap": 16,
+                  "padding": 32,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "AStu7",
+                      "name": "step1Num",
+                      "width": 48,
+                      "height": 48,
+                      "fill": "#3D8A5A",
+                      "cornerRadius": 100,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "7qPtb",
+                          "name": "step1NumText",
+                          "fill": "#FFFFFF",
+                          "content": "1",
+                          "fontFamily": "Inter",
+                          "fontSize": 24,
+                          "fontWeight": "bold"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "XrtZD",
+                      "name": "step1Title",
+                      "fill": "#1A1918",
+                      "content": "Answer Questions",
+                      "fontFamily": "Inter",
+                      "fontSize": 22,
+                      "fontWeight": "semibold"
+                    },
+                    {
+                      "type": "text",
+                      "id": "A7tXK",
+                      "name": "step1Desc",
+                      "fill": "#6D6C6A",
+                      "content": "Tell us about your education, experience, skills, and projects through our guided questionnaire.",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Inter",
+                      "fontSize": 16,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "T8Jwi",
+                  "name": "step2",
+                  "width": "fill_container",
+                  "fill": "#F5F4F1",
+                  "cornerRadius": 16,
+                  "layout": "vertical",
+                  "gap": 16,
+                  "padding": 32,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "VJCPU",
+                      "name": "step2Num",
+                      "width": 48,
+                      "height": 48,
+                      "fill": "#D89575",
+                      "cornerRadius": 100,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "VxZHb",
+                          "name": "step2NumText",
+                          "fill": "#FFFFFF",
+                          "content": "2",
+                          "fontFamily": "Inter",
+                          "fontSize": 24,
+                          "fontWeight": "bold"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "3q9nd",
+                      "name": "step2Title",
+                      "fill": "#1A1918",
+                      "content": "Preview & Edit",
+                      "fontFamily": "Inter",
+                      "fontSize": 22,
+                      "fontWeight": "semibold"
+                    },
+                    {
+                      "type": "text",
+                      "id": "yGUz8",
+                      "name": "step2Desc",
+                      "fill": "#6D6C6A",
+                      "content": "Review your generated resume and make any adjustments before downloading.",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Inter",
+                      "fontSize": 16,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "412Dq",
+                  "name": "step3",
+                  "width": "fill_container",
+                  "fill": "#F5F4F1",
+                  "cornerRadius": 16,
+                  "layout": "vertical",
+                  "gap": 16,
+                  "padding": 32,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "Aej4H",
+                      "name": "step3Num",
+                      "width": 48,
+                      "height": 48,
+                      "fill": "#3D8A5A",
+                      "cornerRadius": 100,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "z57TJ",
+                          "name": "step3NumText",
+                          "fill": "#FFFFFF",
+                          "content": "3",
+                          "fontFamily": "Inter",
+                          "fontSize": 24,
+                          "fontWeight": "bold"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "qlQ9z",
+                      "name": "step3Title",
+                      "fill": "#1A1918",
+                      "content": "Download & Apply",
+                      "fontFamily": "Inter",
+                      "fontSize": 22,
+                      "fontWeight": "semibold"
+                    },
+                    {
+                      "type": "text",
+                      "id": "ZbMk5",
+                      "name": "step3Desc",
+                      "fill": "#6D6C6A",
+                      "content": "Export your perfectly formatted resume as PDF and start applying to your dream jobs.",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Inter",
+                      "fontSize": 16,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "NCMBC",
+          "name": "Features",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 48,
+          "padding": [
+            80,
+            120
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "srbxR",
+              "name": "featHeader",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "aDLog",
+                  "name": "featTitle",
+                  "fill": "#1A1918",
+                  "content": "Why Choose Our Resume Builder?",
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 48,
+                  "fontWeight": "bold",
+                  "letterSpacing": -0.5
+                },
+                {
+                  "type": "text",
+                  "id": "r55Zt",
+                  "name": "featSubtitle",
+                  "fill": "#6D6C6A",
+                  "content": "Professional results powered by LaTeX typography",
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 20,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "a8OTw",
+              "name": "featGrid",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "k0ZkV",
+                  "name": "feat1Row",
+                  "width": "fill_container",
+                  "gap": 32,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "ZoTLb",
+                      "name": "feat1",
+                      "width": "fill_container",
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 16,
+                      "layout": "vertical",
+                      "gap": 16,
+                      "padding": 32,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "ZXPy7",
+                          "name": "feat1Title",
+                          "fill": "#1A1918",
+                          "content": "LaTeX Quality",
+                          "fontFamily": "Inter",
+                          "fontSize": 22,
+                          "fontWeight": "semibold"
+                        },
+                        {
+                          "type": "text",
+                          "id": "hOhJc",
+                          "name": "feat1Desc",
+                          "fill": "#6D6C6A",
+                          "content": "Industry-standard formatting using the same LaTeX engine trusted by academics and professionals worldwide.",
+                          "lineHeight": 1.5,
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "HJUi3",
+                      "name": "feat2",
+                      "width": "fill_container",
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 16,
+                      "layout": "vertical",
+                      "gap": 16,
+                      "padding": 32,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "vrxkW",
+                          "name": "feat2Title",
+                          "fill": "#1A1918",
+                          "content": "No Design Skills Needed",
+                          "fontFamily": "Inter",
+                          "fontSize": 22,
+                          "fontWeight": "semibold"
+                        },
+                        {
+                          "type": "text",
+                          "id": "8VJws",
+                          "name": "feat2Desc",
+                          "fill": "#6D6C6A",
+                          "content": "Just answer questions about your background. We handle all the typography, spacing, and formatting automatically.",
+                          "lineHeight": 1.5,
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "sOUZv",
+                  "name": "feat2Row",
+                  "width": "fill_container",
+                  "gap": 32,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "h18rn",
+                      "name": "feat3",
+                      "width": "fill_container",
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 16,
+                      "layout": "vertical",
+                      "gap": 16,
+                      "padding": 32,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "bnMTe",
+                          "name": "feat3Title",
+                          "fill": "#1A1918",
+                          "content": "ATS-Friendly",
+                          "fontFamily": "Inter",
+                          "fontSize": 22,
+                          "fontWeight": "semibold"
+                        },
+                        {
+                          "type": "text",
+                          "id": "wpr5Q",
+                          "name": "feat3Desc",
+                          "fill": "#6D6C6A",
+                          "content": "Clean, parseable format that passes Applicant Tracking Systems while maintaining professional appearance.",
+                          "lineHeight": 1.5,
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Xf0mx",
+                      "name": "feat4",
+                      "width": "fill_container",
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 16,
+                      "layout": "vertical",
+                      "gap": 16,
+                      "padding": 32,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Tv53F",
+                          "name": "feat4Title",
+                          "fill": "#1A1918",
+                          "content": "Instant PDF Export",
+                          "fontFamily": "Inter",
+                          "fontSize": 22,
+                          "fontWeight": "semibold"
+                        },
+                        {
+                          "type": "text",
+                          "id": "lhebx",
+                          "name": "feat4Desc",
+                          "fill": "#6D6C6A",
+                          "content": "Download your resume as a PDF ready to submit to employers. No watermarks, no signup required.",
+                          "lineHeight": 1.5,
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "5IMfy",
+          "name": "Final CTA",
+          "width": "fill_container",
+          "fill": "#3D8A5A",
+          "layout": "vertical",
+          "gap": 32,
+          "padding": [
+            80,
+            120
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "yXcZZ",
+              "name": "ctaHeadline",
+              "fill": "#FFFFFF",
+              "content": "Ready to Build Your Resume?",
+              "textAlign": "center",
+              "fontFamily": "Inter",
+              "fontSize": 48,
+              "fontWeight": "bold",
+              "letterSpacing": -0.5
+            },
+            {
+              "type": "text",
+              "id": "Tji10",
+              "name": "ctaSubline",
+              "fill": "#FFFFFFCC",
+              "textGrowth": "fixed-width",
+              "width": 700,
+              "content": "Join thousands of job seekers who landed their dream jobs with our professional resumes",
+              "textAlign": "center",
+              "fontFamily": "Inter",
+              "fontSize": 20,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "FmU4o",
+              "name": "ctaBtn",
+              "fill": "#FFFFFF",
+              "cornerRadius": 12,
+              "padding": [
+                18,
+                40
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "llrrx",
+                  "name": "ctaBtnText",
+                  "fill": "#3D8A5A",
+                  "content": "Get Started Free",
+                  "fontFamily": "Inter",
+                  "fontSize": 20,
+                  "fontWeight": "semibold"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "WihSn",
+          "name": "Footer",
+          "width": "fill_container",
+          "fill": "#1A1918",
+          "layout": "vertical",
+          "gap": 40,
+          "padding": [
+            60,
+            120
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "ufymp",
+              "name": "footerTop",
+              "width": "fill_container",
+              "gap": 80,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "ujF6M",
+                  "name": "footerBrand",
+                  "layout": "vertical",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "UR4l0",
+                      "name": "footerLogo",
+                      "fill": "#FFFFFF",
+                      "content": "ResumeBuilder",
+                      "fontFamily": "Inter",
+                      "fontSize": 24,
+                      "fontWeight": "semibold"
+                    },
+                    {
+                      "type": "text",
+                      "id": "iGrMl",
+                      "name": "footerTagline",
+                      "fill": "#9C9B99",
+                      "content": "Professional resumes powered by LaTeX",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "bFDaR",
+                  "name": "footerLinks",
+                  "width": "fill_container",
+                  "gap": 60,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "7BZov",
+                      "name": "footerCol1",
+                      "layout": "vertical",
+                      "gap": 12,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "rYLG4",
+                          "name": "footerCol1Title",
+                          "fill": "#FFFFFF",
+                          "content": "Product",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "semibold"
+                        },
+                        {
+                          "type": "text",
+                          "id": "9wR33",
+                          "name": "footerCol1Link1",
+                          "fill": "#9C9B99",
+                          "content": "Features",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "rbl9E",
+                          "name": "footerCol1Link2",
+                          "fill": "#9C9B99",
+                          "content": "Templates",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "mPTy5",
+                          "name": "footerCol1Link3",
+                          "fill": "#9C9B99",
+                          "content": "Pricing",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "rJODU",
+                      "name": "footerCol2",
+                      "layout": "vertical",
+                      "gap": 12,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "QgYiY",
+                          "name": "footerCol2Title",
+                          "fill": "#FFFFFF",
+                          "content": "Company",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "semibold"
+                        },
+                        {
+                          "type": "text",
+                          "id": "itC45",
+                          "name": "footerCol2Link1",
+                          "fill": "#9C9B99",
+                          "content": "About",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "bDQya",
+                          "name": "footerCol2Link2",
+                          "fill": "#9C9B99",
+                          "content": "Contact",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "UIvNa",
+              "name": "footerBottom",
+              "width": "fill_container",
+              "padding": [
+                24,
+                0,
+                0,
+                0
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "4N2P8",
+                  "name": "footerCopy",
+                  "fill": "#9C9B99",
+                  "content": "© 2026 ResumeBuilder. All rights reserved.",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "YHVo2",
+      "x": 1600,
+      "y": 0,
+      "name": "Resume Builder App",
+      "width": 1440,
+      "fill": "#F5F4F1",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "BYuqk",
+          "name": "App Header",
+          "width": "fill_container",
+          "height": 80,
+          "fill": "#FFFFFF",
+          "gap": 16,
+          "padding": [
+            0,
+            120
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "ali9w",
+              "name": "appLogo",
+              "fill": "#1A1918",
+              "content": "ResumeBuilder",
+              "fontFamily": "Inter",
+              "fontSize": 24,
+              "fontWeight": "semibold"
+            },
+            {
+              "type": "frame",
+              "id": "Mkgho",
+              "name": "progressBar",
+              "width": "fill_container",
+              "height": 8,
+              "fill": "#EDECEA",
+              "cornerRadius": 100,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "Gg2Yr",
+                  "name": "progressFill",
+                  "width": "fill_container",
+                  "height": 8,
+                  "fill": "#3D8A5A",
+                  "cornerRadius": 100
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "H0jdh",
+          "name": "App Content",
+          "width": "fill_container",
+          "gap": 60,
+          "padding": [
+            60,
+            120
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "KSwU8",
+              "name": "formSection",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 32,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "StKxq",
+                  "name": "questionCard",
+                  "width": "fill_container",
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 16,
+                  "layout": "vertical",
+                  "gap": 24,
+                  "padding": 40,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "rCa0f",
+                      "name": "questionTitle",
+                      "fill": "#1A1918",
+                      "content": "Tell us about yourself",
+                      "fontFamily": "Inter",
+                      "fontSize": 32,
+                      "fontWeight": "bold"
+                    },
+                    {
+                      "type": "text",
+                      "id": "rEvcJ",
+                      "name": "questionSubtitle",
+                      "fill": "#6D6C6A",
+                      "content": "Let's start with your basic information",
+                      "fontFamily": "Inter",
+                      "fontSize": 16,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "szttf",
+                      "name": "formField1",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "lAHPM",
+                          "name": "label1",
+                          "fill": "#1A1918",
+                          "content": "Full Name",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "semibold"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "MC9WM",
+                          "name": "input1",
+                          "width": "fill_container",
+                          "height": 48,
+                          "fill": "#FFFFFF",
+                          "cornerRadius": 8,
+                          "padding": [
+                            0,
+                            16
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "kgE5U",
+                              "name": "input1Text",
+                              "fill": "#1A1918",
+                              "content": "Jake Gutierrez",
+                              "fontFamily": "Inter",
+                              "fontSize": 15,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "OUs50",
+                      "name": "formField2",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "NVxhU",
+                          "name": "label2",
+                          "fill": "#1A1918",
+                          "content": "Email",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "semibold"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "ObVin",
+                          "name": "input2",
+                          "width": "fill_container",
+                          "height": 48,
+                          "fill": "#FFFFFF",
+                          "cornerRadius": 8,
+                          "padding": [
+                            0,
+                            16
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "xSmTq",
+                              "name": "input2Text",
+                              "fill": "#1A1918",
+                              "content": "g@southwestern.edu",
+                              "fontFamily": "Inter",
+                              "fontSize": 15,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "ug5it",
+                      "name": "btnRow",
+                      "width": "fill_container",
+                      "gap": 16,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "WYHLE",
+                          "name": "backBtn",
+                          "fill": "#FFFFFF",
+                          "cornerRadius": 8,
+                          "padding": [
+                            14,
+                            24
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "pAZhr",
+                              "name": "backBtnText",
+                              "fill": "#1A1918",
+                              "content": "← Back",
+                              "fontFamily": "Inter",
+                              "fontSize": 16,
+                              "fontWeight": "semibold"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "TbDB7",
+                          "name": "nextBtn",
+                          "fill": "#3D8A5A",
+                          "cornerRadius": 8,
+                          "padding": [
+                            14,
+                            32
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "7aY7U",
+                              "name": "nextBtnText",
+                              "fill": "#FFFFFF",
+                              "content": "Next →",
+                              "fontFamily": "Inter",
+                              "fontSize": 16,
+                              "fontWeight": "semibold"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "VfgVB",
+              "name": "previewSection",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "j6aA3",
+                  "name": "previewTitle",
+                  "fill": "#1A1918",
+                  "content": "Live Preview",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "semibold"
+                },
+                {
+                  "type": "frame",
+                  "id": "j1gPV",
+                  "name": "previewCard",
+                  "width": "fill_container",
+                  "height": 800,
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 16,
+                  "layout": "vertical",
+                  "padding": 32,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "PbbMl",
+                      "name": "previewContent",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 16,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "u0jxc",
+                          "name": "previewName",
+                          "fill": "#1A1918",
+                          "content": "Jake Gutierrez",
+                          "fontFamily": "Inter",
+                          "fontSize": 24,
+                          "fontWeight": "bold"
+                        },
+                        {
+                          "type": "text",
+                          "id": "fkrVB",
+                          "name": "previewContact",
+                          "fill": "#6D6C6A",
+                          "content": "g@southwestern.edu | linkedin.com/in/jakegut",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "nFHcj",
+                          "name": "previewDivider",
+                          "width": "fill_container",
+                          "height": 1,
+                          "fill": "#E5E4E1"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "dN5Jq",
+                          "name": "previewSection1",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 8,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "HHwHG",
+                              "name": "previewSectionTitle",
+                              "fill": "#1A1918",
+                              "content": "EDUCATION",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "bold",
+                              "letterSpacing": 1
+                            },
+                            {
+                              "type": "text",
+                              "id": "dqU9z",
+                              "name": "previewSchool",
+                              "fill": "#1A1918",
+                              "content": "Southwestern University",
+                              "fontFamily": "Inter",
+                              "fontSize": 14,
+                              "fontWeight": "semibold"
+                            },
+                            {
+                              "type": "text",
+                              "id": "A4uxw",
+                              "name": "previewDegree",
+                              "fill": "#6D6C6A",
+                              "content": "Bachelor of Arts in Computer Science, Minor in Business",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "text",
+                              "id": "vQMzW",
+                              "name": "previewDate",
+                              "fill": "#6D6C6A",
+                              "content": "Aug. 2018 – May 2021",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "XEVlL",
+      "x": 0,
+      "y": 3500,
+      "name": "Mobile Landing",
+      "width": 375,
+      "fill": "#F5F4F1",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "B8a7j",
+          "name": "mobileHeader",
+          "width": "fill_container",
+          "height": 60,
+          "fill": "#FFFFFF",
+          "gap": 16,
+          "padding": [
+            0,
+            24
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "uUNy9",
+              "name": "mobileLogo",
+              "fill": "#1A1918",
+              "content": "ResumeBuilder",
+              "fontFamily": "Inter",
+              "fontSize": 18,
+              "fontWeight": "semibold"
+            },
+            {
+              "type": "frame",
+              "id": "BtzUn",
+              "name": "menuIcon",
+              "width": 32,
+              "height": 32,
+              "fill": "#3D8A5A",
+              "cornerRadius": 6,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "FlrrJ",
+                  "name": "menuIconText",
+                  "fill": "#FFFFFF",
+                  "content": "☰",
+                  "fontFamily": "Inter",
+                  "fontSize": 20,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "pxghA",
+          "name": "mobileHero",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 24,
+          "padding": [
+            60,
+            24
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "99uHO",
+              "name": "mobileBadge",
+              "fill": "#C8F0D8",
+              "cornerRadius": 100,
+              "padding": [
+                6,
+                12
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "JsJzE",
+                  "name": "mobileBadgeText",
+                  "fill": "#3D8A5A",
+                  "content": "✨ Built with LaTeX",
+                  "fontFamily": "Inter",
+                  "fontSize": 11,
+                  "fontWeight": "semibold"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "TzyeM",
+              "name": "mobileHeroTitle",
+              "fill": "#1A1918",
+              "textGrowth": "fixed-width",
+              "width": 327,
+              "content": "Build Your Professional Resume",
+              "textAlign": "center",
+              "fontFamily": "Inter",
+              "fontSize": 32,
+              "fontWeight": "bold",
+              "letterSpacing": -0.5
+            },
+            {
+              "type": "text",
+              "id": "bc50S",
+              "name": "mobileHeroSub",
+              "fill": "#6D6C6A",
+              "textGrowth": "fixed-width",
+              "width": 300,
+              "content": "Get a perfectly formatted resume using LaTeX templates",
+              "lineHeight": 1.5,
+              "textAlign": "center",
+              "fontFamily": "Inter",
+              "fontSize": 16,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "qu6Zw",
+              "name": "mobileCtaBtn",
+              "width": "fill_container",
+              "fill": "#3D8A5A",
+              "cornerRadius": 12,
+              "padding": [
+                14,
+                28
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "1ASKU",
+                  "name": "mobileCtaText",
+                  "fill": "#FFFFFF",
+                  "content": "Build My Resume →",
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "semibold"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "pWhPB",
+              "name": "mobilePreview",
+              "width": "fill_container",
+              "height": 300,
+              "fill": "#FFFFFF",
+              "cornerRadius": 12,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "lCbSV",
+                  "name": "mobilePlaceholder",
+                  "fill": "#9C9B99",
+                  "content": "Resume Preview",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "vvddW",
+      "x": 450,
+      "y": 3500,
+      "name": "Mobile App",
+      "width": 375,
+      "fill": "#F5F4F1",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "CLxcE",
+          "name": "mobileAppHeader",
+          "width": "fill_container",
+          "fill": "#FFFFFF",
+          "layout": "vertical",
+          "gap": 12,
+          "padding": [
+            16,
+            24
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "Fu7d9",
+              "name": "mobileAppLogo",
+              "fill": "#1A1918",
+              "content": "ResumeBuilder",
+              "fontFamily": "Inter",
+              "fontSize": 16,
+              "fontWeight": "semibold"
+            },
+            {
+              "type": "frame",
+              "id": "EuP6u",
+              "name": "mobileProgress",
+              "width": "fill_container",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "1NExM",
+                  "name": "mobileProgressBar",
+                  "width": "fill_container",
+                  "height": 6,
+                  "fill": "#EDECEA",
+                  "cornerRadius": 100,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "0vjQc",
+                      "name": "mobileProgressFill",
+                      "width": "fill_container",
+                      "height": 6,
+                      "fill": "#3D8A5A",
+                      "cornerRadius": 100
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "yhZwu",
+                  "name": "mobileProgressText",
+                  "fill": "#6D6C6A",
+                  "content": "2 of 5",
+                  "fontFamily": "Inter",
+                  "fontSize": 12,
+                  "fontWeight": "medium"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "N42bP",
+          "name": "mobileContent",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 24,
+          "padding": 24,
+          "children": [
+            {
+              "type": "frame",
+              "id": "V4Ir3",
+              "name": "mobileCard",
+              "width": "fill_container",
+              "fill": "#FFFFFF",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 20,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "XoEtK",
+                  "name": "mobileCardTitle",
+                  "fill": "#1A1918",
+                  "content": "Tell us about yourself",
+                  "fontFamily": "Inter",
+                  "fontSize": 24,
+                  "fontWeight": "bold"
+                },
+                {
+                  "type": "text",
+                  "id": "dA9wY",
+                  "name": "mobileCardSub",
+                  "fill": "#6D6C6A",
+                  "content": "Let's start with your basic information",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "cMTfV",
+                  "name": "mobileField",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 6,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "fvOX1",
+                      "name": "mobileLabel",
+                      "fill": "#1A1918",
+                      "content": "Full Name",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "semibold"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "zCxNZ",
+                      "name": "mobileInput",
+                      "width": "fill_container",
+                      "height": 44,
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 8,
+                      "padding": [
+                        0,
+                        12
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "JtXFt",
+                          "name": "mobileInputText",
+                          "fill": "#1A1918",
+                          "content": "Jake Gutierrez",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "5l274",
+                  "name": "mobileBtns",
+                  "width": "fill_container",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "xPGNq",
+                      "name": "mobileBackBtn",
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 8,
+                      "padding": [
+                        12,
+                        20
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "WrH6i",
+                          "name": "mobileBackText",
+                          "fill": "#1A1918",
+                          "content": "← Back",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "semibold"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "fEjQk",
+                      "name": "mobileNextBtn",
+                      "width": "fill_container",
+                      "fill": "#3D8A5A",
+                      "cornerRadius": 8,
+                      "padding": [
+                        12,
+                        24
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "yjStq",
+                          "name": "mobileNextText",
+                          "fill": "#FFFFFF",
+                          "content": "Next →",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "semibold"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
