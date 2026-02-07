@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import LanguageSwitcher from '../components/LanguageSwitcher';
+import Logo from '../components/Logo';
 import './RoleSelection.css';
 
 const RoleSelectionES = ({ onRoleSelect }) => {
@@ -78,7 +79,7 @@ const RoleSelectionES = ({ onRoleSelect }) => {
       {/* Header with Language Switcher */}
       <div className="role-header">
         <div className="role-header-content">
-          <div className="role-logo">CreadorCV</div>
+          <div className="role-logo"><Logo /></div>
           <LanguageSwitcher />
         </div>
       </div>

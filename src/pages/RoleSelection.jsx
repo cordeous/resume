@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import LanguageSwitcher from '../components/LanguageSwitcher';
+import Logo from '../components/Logo';
 import './RoleSelection.css';
 
 const RoleSelection = ({ onRoleSelect }) => {
@@ -80,7 +81,7 @@ const RoleSelection = ({ onRoleSelect }) => {
       {/* Header with Language Switcher */}
       <div className="role-header">
         <div className="role-header-content">
-          <div className="role-logo">ResumeBuilder</div>
+          <div className="role-logo"><Logo /></div>
           <LanguageSwitcher />
         </div>
       </div>

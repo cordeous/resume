@@ -8,6 +8,7 @@ import { downloadPdf } from '../utils/pdfGenerator';
 import { generateBusinessCard, downloadQRCodeImage, generateQRCode } from '../utils/qrCodeGenerator';
 import LanguageSwitcher from '../components/LanguageSwitcher';
 import QRPreviewModal from '../components/QRPreviewModal';
+import Logo from '../components/Logo';
 import './ResumeBuilder.css';
 
 const ResumeBuilder = () => {
@@ -186,7 +187,7 @@ const ResumeBuilder = () => {
             <button className="home-btn" onClick={() => navigate('/')} title="Back to home">
               ← Home
             </button>
-            <div className="builder-logo">ResumeBuilder</div>
+            <div className="builder-logo"><Logo size="small" /></div>
           </div>
           <div className="progress-container">
             <div className="progress-bar">

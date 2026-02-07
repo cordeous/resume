@@ -5,6 +5,7 @@ import ResumePreview from '../components/ResumePreview';
 import LanguageSwitcher from '../components/LanguageSwitcher';
 import AppShowcase from '../components/AppShowcase';
 import ExamplesModal from '../components/ExamplesModal';
+import Logo from '../components/Logo';
 import './LandingPage.css';
 
 const LandingPageES = () => {
@@ -46,7 +47,7 @@ const LandingPageES = () => {
         transition={{ duration: 0.5 }}
       >
         <div className="container header-content">
-          <div className="logo">CreadorCV</div>
+          <div className="logo"><Logo /></div>
           <nav className="nav">
             <a href="#how-it-works" onClick={(e) => handleSmoothScroll(e, '#how-it-works')}>Cómo Funciona</a>
             <a href="#features" onClick={(e) => handleSmoothScroll(e, '#features')}>Características</a>
@@ -336,7 +337,7 @@ const LandingPageES = () => {
         <div className="container">
           <div className="footer-top">
             <div className="footer-brand">
-              <div className="footer-logo">CreadorCV</div>
+              <div className="footer-logo"><Logo variant="light" /></div>
               <p className="footer-tagline">Currículums profesionales impulsados por LaTeX</p>
             </div>
             <div className="footer-links">
