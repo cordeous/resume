@@ -655,6 +655,9 @@ const ResumeBuilder = () => {
                       {formData.skills.databases && (
                         <div><strong>Libraries:</strong> {formData.skills.databases}</div>
                       )}
+                      {formData.skills.platforms && (
+                        <div><strong>Enterprise Platforms:</strong> {formData.skills.platforms}</div>
+                      )}
                     </div>
                   </div>
                 )}

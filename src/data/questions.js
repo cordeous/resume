@@ -46,6 +46,7 @@ export const questions = [
       { name: 'frameworks', label: 'Frameworks & Libraries', type: 'text', placeholder: 'React, Node.js, Express', required: false },
       { name: 'tools', label: 'Developer Tools', type: 'text', placeholder: 'Git, Docker, AWS', required: false },
       { name: 'databases', label: 'Databases', type: 'text', placeholder: 'PostgreSQL, MongoDB', required: false },
+      { name: 'platforms', label: 'Enterprise Platforms', type: 'text', placeholder: 'Salesforce, SAP, ServiceNow', required: false },
     ]
   },
   {

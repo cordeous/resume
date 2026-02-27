@@ -229,6 +229,7 @@ export const generatePdfResume = (data) => {
     if (skills.frameworks) skillLines.push(`Frameworks: ${skills.frameworks}`);
     if (skills.tools) skillLines.push(`Developer Tools: ${skills.tools}`);
     if (skills.databases) skillLines.push(`Libraries: ${skills.databases}`);
+    if (skills.platforms) skillLines.push(`Enterprise Platforms: ${skills.platforms}`);
 
     skillLines.forEach(line => {
       const [label, value] = line.split(': ');

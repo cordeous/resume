@@ -52,7 +52,7 @@ ${project.description?.split('\\n').filter(line => line.trim()).map(line => `   
 \\section{Technical Skills}
  \\begin{itemize}[leftmargin=0.15in, label={}]
     \\small{\\item{
-${skills.languages ? `     \\textbf{Languages}{: ${skills.languages}} \\\\\n` : ''}${skills.frameworks ? `     \\textbf{Frameworks}{: ${skills.frameworks}} \\\\\n` : ''}${skills.tools ? `     \\textbf{Developer Tools}{: ${skills.tools}} \\\\\n` : ''}${skills.databases ? `     \\textbf{Libraries}{: ${skills.databases}}` : ''}
+${skills.languages ? `     \\textbf{Languages}{: ${skills.languages}} \\\\\n` : ''}${skills.frameworks ? `     \\textbf{Frameworks}{: ${skills.frameworks}} \\\\\n` : ''}${skills.tools ? `     \\textbf{Developer Tools}{: ${skills.tools}} \\\\\n` : ''}${skills.databases ? `     \\textbf{Libraries}{: ${skills.databases}} \\\\\n` : ''}${skills.platforms ? `     \\textbf{Enterprise Platforms}{: ${skills.platforms}}` : ''}
     }}
  \\end{itemize}
 ` : '';
