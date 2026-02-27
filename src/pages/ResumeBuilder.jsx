@@ -19,6 +19,10 @@ const ResumeBuilder = () => {
   const [experienceList, setExperienceList] = useState([]);
   const [projectsList, setProjectsList] = useState([]);
   const [certificationsList, setCertificationsList] = useState([]);
+  const [editingExperienceIndex, setEditingExperienceIndex] = useState(null);
+  const [editingEducationIndex, setEditingEducationIndex] = useState(null);
+  const [editingProjectIndex, setEditingProjectIndex] = useState(null);
+  const [editingCertIndex, setEditingCertIndex] = useState(null);
   const [showCertifications, setShowCertifications] = useState(false);
   const [showDownloadModal, setShowDownloadModal] = useState(false);
   const [showQRPreview, setShowQRPreview] = useState(false);
@@ -50,43 +54,143 @@ const ResumeBuilder = () => {
     }));
   };
 
-  const handleAddAnother = () => {
-    // Save current entry and clear form without moving to next step
-    if (currentQuestion.id === 'education' && formData.education && Object.keys(formData.education).length > 0) {
-      setEducationList(prev => [...prev, formData.education]);
+  // Sort experience: Present/active jobs first, then by most recent start date
+  const sortExperience = (list) => {
+    return [...list].sort((a, b) => {
+      const aPresent = !a.endDate || a.endDate.toLowerCase() === 'present' || a.endDate === '';
+      const bPresent = !b.endDate || b.endDate.toLowerCase() === 'present' || b.endDate === '';
+      if (aPresent && !bPresent) return -1;
+      if (!aPresent && bPresent) return 1;
+      // Both present or both not present: sort by startDate descending
+      return (b.startDate || '').localeCompare(a.startDate || '');
+    });
+  };
+
+  const saveCurrentEntry = (sectionId) => {
+    if (sectionId === 'education' && formData.education && Object.keys(formData.education).length > 0) {
+      if (editingEducationIndex !== null) {
+        setEducationList(prev => prev.map((e, i) => i === editingEducationIndex ? formData.education : e));
+        setEditingEducationIndex(null);
+      } else {
+        setEducationList(prev => [...prev, formData.education]);
+      }
       setFormData(prev => ({ ...prev, education: {} }));
-    } else if (currentQuestion.id === 'experience' && formData.experience && Object.keys(formData.experience).length > 0) {
-      setExperienceList(prev => [...prev, formData.experience]);
+    } else if (sectionId === 'experience' && formData.experience && Object.keys(formData.experience).length > 0) {
+      if (editingExperienceIndex !== null) {
+        setExperienceList(prev => sortExperience(prev.map((e, i) => i === editingExperienceIndex ? formData.experience : e)));
+        setEditingExperienceIndex(null);
+      } else {
+        setExperienceList(prev => sortExperience([...prev, formData.experience]));
+      }
       setFormData(prev => ({ ...prev, experience: {} }));
-    } else if (currentQuestion.id === 'projects' && formData.projects && Object.keys(formData.projects).length > 0) {
-      setProjectsList(prev => [...prev, formData.projects]);
+    } else if (sectionId === 'projects' && formData.projects && Object.keys(formData.projects).length > 0) {
+      if (editingProjectIndex !== null) {
+        setProjectsList(prev => prev.map((e, i) => i === editingProjectIndex ? formData.projects : e));
+        setEditingProjectIndex(null);
+      } else {
+        setProjectsList(prev => [...prev, formData.projects]);
+      }
       setFormData(prev => ({ ...prev, projects: {} }));
-    } else if (currentQuestion.id === 'certifications' && formData.certifications && Object.keys(formData.certifications).length > 0) {
-      setCertificationsList(prev => [...prev, formData.certifications]);
+    } else if (sectionId === 'certifications' && formData.certifications && Object.keys(formData.certifications).length > 0) {
+      if (editingCertIndex !== null) {
+        setCertificationsList(prev => prev.map((e, i) => i === editingCertIndex ? formData.certifications : e));
+        setEditingCertIndex(null);
+      } else {
+        setCertificationsList(prev => [...prev, formData.certifications]);
+      }
       setFormData(prev => ({ ...prev, certifications: {} }));
     }
   };
 
-  const handleNext = () => {
-    // Save current section data before moving forward
-    if (currentQuestion.id === 'education' && formData.education && Object.keys(formData.education).length > 0) {
-      setEducationList(prev => [...prev, formData.education]);
-      setFormData(prev => ({ ...prev, education: {} }));
-    } else if (currentQuestion.id === 'experience' && formData.experience && Object.keys(formData.experience).length > 0) {
-      setExperienceList(prev => [...prev, formData.experience]);
-      setFormData(prev => ({ ...prev, experience: {} }));
-    } else if (currentQuestion.id === 'projects' && formData.projects && Object.keys(formData.projects).length > 0) {
-      setProjectsList(prev => [...prev, formData.projects]);
-      setFormData(prev => ({ ...prev, projects: {} }));
-    } else if (currentQuestion.id === 'certifications' && formData.certifications && Object.keys(formData.certifications).length > 0) {
-      setCertificationsList(prev => [...prev, formData.certifications]);
-      setFormData(prev => ({ ...prev, certifications: {} }));
+  const handleAddAnother = () => {
+    saveCurrentEntry(currentQuestion.id);
+  };
+
+  const handleEditEntry = (sectionId, index) => {
+    if (sectionId === 'experience') {
+      // Save current draft if any
+      if (formData.experience && Object.keys(formData.experience).length > 0 && editingExperienceIndex === null) {
+        setExperienceList(prev => sortExperience([...prev, formData.experience]));
+      }
+      setFormData(prev => ({ ...prev, experience: experienceList[index] }));
+      setEditingExperienceIndex(index);
+    } else if (sectionId === 'education') {
+      if (formData.education && Object.keys(formData.education).length > 0 && editingEducationIndex === null) {
+        setEducationList(prev => [...prev, formData.education]);
+      }
+      setFormData(prev => ({ ...prev, education: educationList[index] }));
+      setEditingEducationIndex(index);
+    } else if (sectionId === 'projects') {
+      if (formData.projects && Object.keys(formData.projects).length > 0 && editingProjectIndex === null) {
+        setProjectsList(prev => [...prev, formData.projects]);
+      }
+      setFormData(prev => ({ ...prev, projects: projectsList[index] }));
+      setEditingProjectIndex(index);
+    } else if (sectionId === 'certifications') {
+      if (formData.certifications && Object.keys(formData.certifications).length > 0 && editingCertIndex === null) {
+        setCertificationsList(prev => [...prev, formData.certifications]);
+      }
+      setFormData(prev => ({ ...prev, certifications: certificationsList[index] }));
+      setEditingCertIndex(index);
     }
+  };
+
+  const handleDeleteEntry = (sectionId, index) => {
+    if (sectionId === 'experience') {
+      setExperienceList(prev => prev.filter((_, i) => i !== index));
+      if (editingExperienceIndex === index) {
+        setEditingExperienceIndex(null);
+        setFormData(prev => ({ ...prev, experience: {} }));
+      } else if (editingExperienceIndex > index) {
+        setEditingExperienceIndex(prev => prev - 1);
+      }
+    } else if (sectionId === 'education') {
+      setEducationList(prev => prev.filter((_, i) => i !== index));
+      if (editingEducationIndex === index) {
+        setEditingEducationIndex(null);
+        setFormData(prev => ({ ...prev, education: {} }));
+      } else if (editingEducationIndex > index) {
+        setEditingEducationIndex(prev => prev - 1);
+      }
+    } else if (sectionId === 'projects') {
+      setProjectsList(prev => prev.filter((_, i) => i !== index));
+      if (editingProjectIndex === index) {
+        setEditingProjectIndex(null);
+        setFormData(prev => ({ ...prev, projects: {} }));
+      } else if (editingProjectIndex > index) {
+        setEditingProjectIndex(prev => prev - 1);
+      }
+    } else if (sectionId === 'certifications') {
+      setCertificationsList(prev => prev.filter((_, i) => i !== index));
+      if (editingCertIndex === index) {
+        setEditingCertIndex(null);
+        setFormData(prev => ({ ...prev, certifications: {} }));
+      } else if (editingCertIndex > index) {
+        setEditingCertIndex(prev => prev - 1);
+      }
+    }
+  };
+
+  const handleMoveEntry = (sectionId, index, direction) => {
+    const move = (list, setList) => {
+      const newList = [...list];
+      const target = index + direction;
+      if (target < 0 || target >= newList.length) return;
+      [newList[index], newList[target]] = [newList[target], newList[index]];
+      setList(newList);
+    };
+    if (sectionId === 'experience') move(experienceList, setExperienceList);
+    else if (sectionId === 'education') move(educationList, setEducationList);
+    else if (sectionId === 'projects') move(projectsList, setProjectsList);
+    else if (sectionId === 'certifications') move(certificationsList, setCertificationsList);
+  };
+
+  const handleNext = () => {
+    saveCurrentEntry(currentQuestion.id);
 
     if (currentStep < questions.length - 1) {
       setCurrentStep(prev => prev + 1);
     } else {
-      // Show download modal
       setShowDownloadModal(true);
     }
   };
@@ -234,41 +338,111 @@ const ResumeBuilder = () => {
                   </div>
                 )}
 
-                {(!currentQuestion.optional || showCertifications) && (
-                  <div className="form-fields">
-                  {currentQuestion.fields.map((field, index) => {
-                    const icon = getFieldIcon(field.name);
-                    return (
-                    <div key={index} className="form-field">
-                      <label className="field-label">
-                        {field.label}
-                        {field.required && <span className="required">*</span>}
-                      </label>
-                      {field.type === 'textarea' ? (
-                        <textarea
-                          className="field-input"
-                          placeholder={field.placeholder}
-                          rows={field.rows || 3}
-                          value={currentSectionData[field.name] || ''}
-                          onChange={(e) => handleInputChange(field.name, e.target.value)}
-                        />
-                      ) : (
-                        <div className={`input-wrapper ${icon ? 'with-icon' : ''}`}>
-                          {icon && <span className="input-icon">{icon}</span>}
-                          <input
-                            type={field.type}
-                            className="field-input"
-                            placeholder={field.placeholder}
-                            value={currentSectionData[field.name] || ''}
-                            onChange={(e) => handleInputChange(field.name, e.target.value)}
-                          />
+                {(!currentQuestion.optional || showCertifications) && (() => {
+                  const sectionId = currentQuestion.id;
+                  const savedList =
+                    sectionId === 'experience' ? experienceList :
+                    sectionId === 'education' ? educationList :
+                    sectionId === 'projects' ? projectsList :
+                    sectionId === 'certifications' ? certificationsList : null;
+                  const editingIndex =
+                    sectionId === 'experience' ? editingExperienceIndex :
+                    sectionId === 'education' ? editingEducationIndex :
+                    sectionId === 'projects' ? editingProjectIndex :
+                    sectionId === 'certifications' ? editingCertIndex : null;
+
+                  return (
+                    <>
+                      {savedList && savedList.length > 0 && (
+                        <div className="saved-entries-list">
+                          {savedList.map((entry, i) => {
+                            const label =
+                              sectionId === 'experience' ? (entry.position || entry.company || `Entry ${i + 1}`) :
+                              sectionId === 'education' ? (entry.university || entry.degree || `Entry ${i + 1}`) :
+                              sectionId === 'projects' ? (entry.projectName || `Entry ${i + 1}`) :
+                              (entry.name || `Entry ${i + 1}`);
+                            const sublabel =
+                              sectionId === 'experience' ? (entry.company || '') :
+                              sectionId === 'education' ? (entry.degree || '') :
+                              sectionId === 'projects' ? (entry.technologies || '') :
+                              (entry.issuer || '');
+                            return (
+                              <div key={i} className={`saved-entry-item${editingIndex === i ? ' editing' : ''}`}>
+                                <div className="saved-entry-info">
+                                  <span className="saved-entry-label">{label}</span>
+                                  {sublabel && <span className="saved-entry-sublabel">{sublabel}</span>}
+                                </div>
+                                <div className="saved-entry-actions">
+                                  <button
+                                    className="entry-action-btn move-btn"
+                                    onClick={() => handleMoveEntry(sectionId, i, -1)}
+                                    disabled={i === 0}
+                                    title="Move up"
+                                  >↑</button>
+                                  <button
+                                    className="entry-action-btn move-btn"
+                                    onClick={() => handleMoveEntry(sectionId, i, 1)}
+                                    disabled={i === savedList.length - 1}
+                                    title="Move down"
+                                  >↓</button>
+                                  <button
+                                    className="entry-action-btn edit-btn"
+                                    onClick={() => handleEditEntry(sectionId, i)}
+                                    title="Edit"
+                                  >{editingIndex === i ? '✏️' : 'Edit'}</button>
+                                  <button
+                                    className="entry-action-btn delete-btn"
+                                    onClick={() => handleDeleteEntry(sectionId, i)}
+                                    title="Delete"
+                                  >✕</button>
+                                </div>
+                              </div>
+                            );
+                          })}
                         </div>
                       )}
-                    </div>
-                    );
-                  })}
-                </div>
-                )}
+
+                      <div className="form-fields">
+                        {savedList && savedList.length > 0 && (
+                          <div className="new-entry-heading">
+                            {editingIndex !== null ? `Editing entry ${editingIndex + 1}` : 'New entry'}
+                          </div>
+                        )}
+                        {currentQuestion.fields.map((field, index) => {
+                          const icon = getFieldIcon(field.name);
+                          return (
+                            <div key={index} className="form-field">
+                              <label className="field-label">
+                                {field.label}
+                                {field.required && <span className="required">*</span>}
+                              </label>
+                              {field.type === 'textarea' ? (
+                                <textarea
+                                  className="field-input"
+                                  placeholder={field.placeholder}
+                                  rows={field.rows || 3}
+                                  value={currentSectionData[field.name] || ''}
+                                  onChange={(e) => handleInputChange(field.name, e.target.value)}
+                                />
+                              ) : (
+                                <div className={`input-wrapper ${icon ? 'with-icon' : ''}`}>
+                                  {icon && <span className="input-icon">{icon}</span>}
+                                  <input
+                                    type={field.type}
+                                    className="field-input"
+                                    placeholder={field.placeholder}
+                                    value={currentSectionData[field.name] || ''}
+                                    onChange={(e) => handleInputChange(field.name, e.target.value)}
+                                  />
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </>
+                  );
+                })()}
 
                 <div className="button-row">
                   <button

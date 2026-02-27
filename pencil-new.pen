@@ -1,5 +1,5 @@
 {
-  "version": "2.6",
+  "version": "2.7",
   "children": [
     {
       "type": "frame",
@@ -1671,6 +1671,967 @@
                       ]
                     }
                   ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "vMkQL",
+      "x": 3140,
+      "y": 0,
+      "name": "Business Card Preview",
+      "width": 600,
+      "fill": "#F5F4F1",
+      "layout": "vertical",
+      "gap": 32,
+      "padding": 40,
+      "children": [
+        {
+          "type": "frame",
+          "id": "HKvl8",
+          "name": "cardHeader",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 8,
+          "children": [
+            {
+              "type": "text",
+              "id": "ZWFhg",
+              "name": "cardTitle",
+              "fill": "#1A1918",
+              "content": "Your Business Card",
+              "fontFamily": "Inter",
+              "fontSize": 28,
+              "fontWeight": "bold"
+            },
+            {
+              "type": "text",
+              "id": "7TNRS",
+              "name": "cardSubtitle",
+              "fill": "#6D6C6A",
+              "content": "Preview your professional contact card with QR code",
+              "fontFamily": "Inter",
+              "fontSize": 14,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "4Nwh4",
+          "name": "cardDisplayContainer",
+          "width": "fill_container",
+          "fill": "#EDECEA",
+          "cornerRadius": 16,
+          "padding": 40,
+          "children": [
+            {
+              "type": "frame",
+              "id": "0mut5",
+              "name": "businessCard",
+              "width": 420,
+              "height": 240,
+              "fill": "#FFFFFF",
+              "cornerRadius": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "KOML8",
+                  "name": "cardLeftSection",
+                  "width": 280,
+                  "height": "fill_container",
+                  "layout": "vertical",
+                  "gap": 16,
+                  "padding": [
+                    32,
+                    28
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "NsmeN",
+                      "name": "cardPersonName",
+                      "fill": "#3D8A5A",
+                      "content": "Jake Gutierrez",
+                      "fontFamily": "Inter",
+                      "fontSize": 22,
+                      "fontWeight": "bold"
+                    },
+                    {
+                      "type": "text",
+                      "id": "ayUv9",
+                      "name": "cardPersonTitle",
+                      "fill": "#6D6C6A",
+                      "content": "Software Engineer",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "medium"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "ipVTU",
+                      "name": "cardContactInfo",
+                      "layout": "vertical",
+                      "gap": 10,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "N0jso",
+                          "name": "contactEmail",
+                          "gap": 10,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "dBvVI",
+                              "name": "emailIcon",
+                              "fill": "#3D8A5A",
+                              "content": "📧",
+                              "fontFamily": "Inter",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "text",
+                              "id": "bVqbS",
+                              "name": "emailText",
+                              "fill": "#1A1918",
+                              "content": "g@southwestern.edu",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "t3L5v",
+                          "name": "contactPhone",
+                          "gap": 10,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "hOf17",
+                              "name": "phoneIcon",
+                              "fill": "#3D8A5A",
+                              "content": "📞",
+                              "fontFamily": "Inter",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "text",
+                              "id": "vmnnp",
+                              "name": "phoneText",
+                              "fill": "#1A1918",
+                              "content": "+1 (555) 123-4567",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "1HvZW",
+                          "name": "contactLinkedin",
+                          "gap": 10,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "ci4hj",
+                              "name": "linkedinIcon",
+                              "fill": "#3D8A5A",
+                              "content": "💼",
+                              "fontFamily": "Inter",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "text",
+                              "id": "2c6nJ",
+                              "name": "linkedinText",
+                              "fill": "#1A1918",
+                              "content": "linkedin.com/in/jakegut",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "GouXv",
+                  "name": "cardRightSection",
+                  "width": 140,
+                  "height": "fill_container",
+                  "fill": "#3D8A5A",
+                  "layout": "vertical",
+                  "gap": 12,
+                  "padding": [
+                    24,
+                    16
+                  ],
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "fZtFL",
+                      "name": "qrCodePlaceholder",
+                      "width": 108,
+                      "height": 108,
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "CIkS7",
+                          "name": "qrText",
+                          "fill": "#9C9B99",
+                          "content": "QR",
+                          "fontFamily": "Inter",
+                          "fontSize": 24,
+                          "fontWeight": "bold"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "nufSa",
+                      "name": "scanLabel",
+                      "fill": "#FFFFFF",
+                      "content": "Scan for contact",
+                      "textAlign": "center",
+                      "fontFamily": "Inter",
+                      "fontSize": 10,
+                      "fontWeight": "semibold"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "463bw",
+          "name": "cardInfoSection",
+          "width": "fill_container",
+          "fill": "#FFFFFF",
+          "cornerRadius": 12,
+          "layout": "vertical",
+          "gap": 16,
+          "padding": 24,
+          "children": [
+            {
+              "type": "text",
+              "id": "2PvEt",
+              "name": "infoTitle",
+              "fill": "#1A1918",
+              "content": "Print-Ready Business Card",
+              "fontFamily": "Inter",
+              "fontSize": 18,
+              "fontWeight": "semibold"
+            },
+            {
+              "type": "text",
+              "id": "M8zpj",
+              "name": "infoDesc",
+              "fill": "#6D6C6A",
+              "content": "Standard size: 3.5\" × 2\" (89mm × 51mm)",
+              "fontFamily": "Inter",
+              "fontSize": 14,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "8rwlv",
+              "name": "infoFeatures",
+              "layout": "vertical",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "XlT28",
+                  "name": "feature1",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "m3f2a",
+                      "name": "feature1Icon",
+                      "fill": "#3D8A5A",
+                      "content": "✓",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "bold"
+                    },
+                    {
+                      "type": "text",
+                      "id": "CaNcR",
+                      "name": "feature1Text",
+                      "fill": "#6D6C6A",
+                      "content": "High-quality 300 DPI resolution",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Yh7QU",
+                  "name": "feature2",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "QWbW9",
+                      "name": "feature2Icon",
+                      "fill": "#3D8A5A",
+                      "content": "✓",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "bold"
+                    },
+                    {
+                      "type": "text",
+                      "id": "VX5jZ",
+                      "name": "feature2Text",
+                      "fill": "#6D6C6A",
+                      "content": "Professional layout with QR code",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "4sK69",
+                  "name": "feature3",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "62daZ",
+                      "name": "feature3Icon",
+                      "fill": "#3D8A5A",
+                      "content": "✓",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "bold"
+                    },
+                    {
+                      "type": "text",
+                      "id": "O4pCY",
+                      "name": "feature3Text",
+                      "fill": "#6D6C6A",
+                      "content": "Ready to print or share digitally",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "LrOBX",
+          "name": "actionButtonRow",
+          "width": "fill_container",
+          "gap": 12,
+          "children": [
+            {
+              "type": "frame",
+              "id": "DR8ns",
+              "name": "shareButton",
+              "fill": "#FFFFFF",
+              "cornerRadius": 8,
+              "padding": [
+                12,
+                20
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "lI35e",
+                  "name": "shareBtnText",
+                  "fill": "#1A1918",
+                  "content": "📤 Share",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "semibold"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "sUlNC",
+              "name": "printButton",
+              "fill": "#FFFFFF",
+              "cornerRadius": 8,
+              "padding": [
+                12,
+                20
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "AeDSW",
+                  "name": "printBtnText",
+                  "fill": "#1A1918",
+                  "content": "🖨️ Print",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "semibold"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "sotOm",
+              "name": "downloadButton",
+              "width": "fill_container",
+              "fill": "#3D8A5A",
+              "cornerRadius": 8,
+              "padding": [
+                12,
+                24
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "y8vzC",
+                  "name": "downloadBtnText",
+                  "fill": "#FFFFFF",
+                  "content": "⬇️ Download PDF",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "semibold"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "Nml21",
+      "x": 3840,
+      "y": 0,
+      "name": "QR Code Preview",
+      "width": 600,
+      "fill": "#F5F4F1",
+      "layout": "vertical",
+      "gap": 32,
+      "padding": 40,
+      "children": [
+        {
+          "type": "frame",
+          "id": "U5pd5",
+          "name": "qrHeader",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 8,
+          "children": [
+            {
+              "type": "text",
+              "id": "f3wqM",
+              "name": "qrTitle",
+              "fill": "#1A1918",
+              "content": "Your Contact QR Code",
+              "fontFamily": "Inter",
+              "fontSize": 28,
+              "fontWeight": "bold"
+            },
+            {
+              "type": "text",
+              "id": "86dsb",
+              "name": "qrSubtitle",
+              "fill": "#6D6C6A",
+              "content": "Share your contact information instantly",
+              "fontFamily": "Inter",
+              "fontSize": 14,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "Jih0n",
+          "name": "qrContentRow",
+          "width": "fill_container",
+          "gap": 24,
+          "children": [
+            {
+              "type": "frame",
+              "id": "ve5V1",
+              "name": "qrCardFrame",
+              "width": 280,
+              "fill": "#FFFFFF",
+              "cornerRadius": 16,
+              "layout": "vertical",
+              "padding": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "HlO3E",
+                  "name": "qrCardHeader",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "padding": [
+                    0,
+                    0,
+                    16,
+                    0
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "DaaIg",
+                      "name": "qrCardName",
+                      "fill": "#1A1918",
+                      "content": "Jake Gutierrez",
+                      "textAlign": "center",
+                      "fontFamily": "Inter",
+                      "fontSize": 18,
+                      "fontWeight": "bold"
+                    },
+                    {
+                      "type": "text",
+                      "id": "yT3lY",
+                      "name": "qrCardEmail",
+                      "fill": "#6D6C6A",
+                      "content": "g@southwestern.edu",
+                      "textAlign": "center",
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "CzE2g",
+                  "name": "qrDivider",
+                  "width": "fill_container",
+                  "height": 2,
+                  "fill": "#3D8A5A"
+                },
+                {
+                  "type": "frame",
+                  "id": "hEw6u",
+                  "name": "qrImageWrapper",
+                  "width": "fill_container",
+                  "padding": [
+                    24,
+                    0
+                  ],
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "QEgJF",
+                      "name": "qrImage",
+                      "width": 180,
+                      "height": 180,
+                      "fill": "#F5F4F1",
+                      "cornerRadius": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "QooQK",
+                          "name": "qrPlaceholder",
+                          "fill": "#9C9B99",
+                          "content": "QR Code",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "medium"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "bp5h3",
+                  "name": "qrFooter",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 12,
+                  "padding": [
+                    16,
+                    0,
+                    0,
+                    0
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "LkdGJ",
+                      "name": "qrScanText",
+                      "fill": "#3D8A5A",
+                      "content": "📱 Scan to save contact",
+                      "textAlign": "center",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "semibold"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "3wXJr",
+                      "name": "qrBadges",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "1E6kt",
+                          "name": "badge1",
+                          "fill": "#F5F4F1",
+                          "cornerRadius": 12,
+                          "padding": [
+                            4,
+                            10
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "vJIa2",
+                              "name": "badge1Text",
+                              "fill": "#6D6C6A",
+                              "content": "📞 Phone",
+                              "fontFamily": "Inter",
+                              "fontSize": 10,
+                              "fontWeight": "medium"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "dpfLU",
+                          "name": "badge2",
+                          "fill": "#F5F4F1",
+                          "cornerRadius": 12,
+                          "padding": [
+                            4,
+                            10
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "HLzKU",
+                              "name": "badge2Text",
+                              "fill": "#6D6C6A",
+                              "content": "💼 LinkedIn",
+                              "fontFamily": "Inter",
+                              "fontSize": 10,
+                              "fontWeight": "medium"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "f7lwb",
+              "name": "instructionsPanel",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "6KIwT",
+                  "name": "howToUseSection",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "AYi3j",
+                      "name": "howToTitle",
+                      "fill": "#1A1918",
+                      "content": "How to use:",
+                      "fontFamily": "Inter",
+                      "fontSize": 18,
+                      "fontWeight": "semibold"
+                    },
+                    {
+                      "type": "text",
+                      "id": "8uLku",
+                      "name": "step1",
+                      "fill": "#6D6C6A",
+                      "content": "1. Download the QR code image",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "fCJtQ",
+                      "name": "step2",
+                      "fill": "#6D6C6A",
+                      "content": "2. Add it to your resume or email signature",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "89T6K",
+                      "name": "step3",
+                      "fill": "#6D6C6A",
+                      "content": "3. Anyone can scan to save your contact",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "8vEAn",
+                  "name": "useCasesGrid",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "dINwU",
+                      "name": "useCase1",
+                      "width": "fill_container",
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 8,
+                      "gap": 10,
+                      "padding": [
+                        12,
+                        14
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "DB6RN",
+                          "name": "useCase1Icon",
+                          "fill": "#3D8A5A",
+                          "content": "📧",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "imTXi",
+                          "name": "useCase1Text",
+                          "fill": "#1A1918",
+                          "content": "Email Signature",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "medium"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "0LkIT",
+                      "name": "useCase2",
+                      "width": "fill_container",
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 8,
+                      "gap": 10,
+                      "padding": [
+                        12,
+                        14
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "hbUWl",
+                          "name": "useCase2Icon",
+                          "fill": "#3D8A5A",
+                          "content": "📄",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "TWAuh",
+                          "name": "useCase2Text",
+                          "fill": "#1A1918",
+                          "content": "Resume Header",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "medium"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "I9yl7",
+                      "name": "useCase3",
+                      "width": "fill_container",
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 8,
+                      "gap": 10,
+                      "padding": [
+                        12,
+                        14
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "7fzpL",
+                          "name": "useCase3Icon",
+                          "fill": "#3D8A5A",
+                          "content": "💼",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "7hjUm",
+                          "name": "useCase3Text",
+                          "fill": "#1A1918",
+                          "content": "Business Card",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "medium"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "MolPW",
+                      "name": "useCase4",
+                      "width": "fill_container",
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 8,
+                      "gap": 10,
+                      "padding": [
+                        12,
+                        14
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "ImuPT",
+                          "name": "useCase4Icon",
+                          "fill": "#3D8A5A",
+                          "content": "🌐",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "0XXkG",
+                          "name": "useCase4Text",
+                          "fill": "#1A1918",
+                          "content": "LinkedIn Profile",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "medium"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "ZKKGc",
+          "name": "qrActionRow",
+          "width": "fill_container",
+          "gap": 12,
+          "children": [
+            {
+              "type": "frame",
+              "id": "gcUxI",
+              "name": "qrShareBtn",
+              "fill": "#FFFFFF",
+              "cornerRadius": 8,
+              "padding": [
+                12,
+                20
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "QIzQd",
+                  "name": "qrShareText",
+                  "fill": "#1A1918",
+                  "content": "📤 Share",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "semibold"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "V9to6",
+              "name": "qrPrintBtn",
+              "fill": "#FFFFFF",
+              "cornerRadius": 8,
+              "padding": [
+                12,
+                20
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "KdOU8",
+                  "name": "qrPrintText",
+                  "fill": "#1A1918",
+                  "content": "🖨️ Print",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "semibold"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "1UxKN",
+              "name": "qrDownloadBtn",
+              "width": "fill_container",
+              "fill": "#3D8A5A",
+              "cornerRadius": 8,
+              "padding": [
+                12,
+                24
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "lDF4Q",
+                  "name": "qrDownloadText",
+                  "fill": "#FFFFFF",
+                  "content": "⬇️ Download PNG",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "semibold"
                 }
               ]
             }
