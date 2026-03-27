@@ -1,11 +1,43 @@
+/**
+ * Escape characters that have special meaning in LaTeX.
+ * Must be applied to every user-supplied string before embedding in .tex output.
+ */
+const escapeLaTeX = (str) => {
+  if (!str) return '';
+  return String(str)
+    .replace(/\\/g, '\\textbackslash{}')
+    .replace(/&/g, '\\&')
+    .replace(/%/g, '\\%')
+    .replace(/\$/g, '\\$')
+    .replace(/#/g, '\\#')
+    .replace(/_/g, '\\_')
+    .replace(/\{/g, '\\{')
+    .replace(/\}/g, '\\}')
+    .replace(/~/g, '\\textasciitilde{}')
+    .replace(/\^/g, '\\textasciicircum{}');
+};
+
 export const generateLatexResume = (data) => {
   const { personal, education, educationList, experienceList, skills, projectsList, certificationsList, showCertifications } = data;
 
-  // Extract contact info
-  const phone = personal?.phone || 'xxx-xxx-xxxx';
-  const email = personal?.email || 'email@example.com';
-  const linkedin = personal?.linkedin ? `linkedin.com/in/${personal.linkedin.split('/').pop()}` : 'linkedin.com/in/username';
-  const github = personal?.github ? `github.com/${personal.github.split('/').pop()}` : 'github.com/username';
+  // Extract contact info — escape for LaTeX safety
+  const name = escapeLaTeX(personal?.fullName || 'Your Name');
+  const phone = escapeLaTeX(personal?.phone || 'xxx-xxx-xxxx');
+  const email = personal?.email || 'email@example.com'; // used raw in \href
+  const emailDisplay = escapeLaTeX(email);
+  const linkedinRaw = personal?.linkedin
+    ? `linkedin.com/in/${personal.linkedin.replace(/https?:\/\/(www\.)?linkedin\.com\/in\//i, '').replace(/\/$/, '')}`
+    : 'linkedin.com/in/username';
+  const githubRaw = personal?.github
+    ? `github.com/${personal.github.replace(/https?:\/\/(www\.)?github\.com\//i, '').replace(/\/$/, '')}`
+    : 'github.com/username';
+  const linkedin = escapeLaTeX(linkedinRaw);
+  const github = escapeLaTeX(githubRaw);
+
+  // Helper: split bullet text and escape each line
+  const escapeBullets = (text) =>
+    (text || '').split('\n').filter(line => line.trim())
+      .map(line => escapeLaTeX(line.replace(/^[•\-\*]\s*/, '')));
 
   // Generate education section - support both educationList and single education
   const educationEntries = educationList && educationList.length > 0 ? educationList : (education ? [education] : []);
@@ -13,8 +45,8 @@ export const generateLatexResume = (data) => {
 \\section{Education}
   \\resumeSubHeadingListStart
 ${educationEntries.map(edu => `    \\resumeSubheading
-      {${edu.university || 'University Name'}}{${edu.location || 'City, State'}}
-      {${edu.degree || 'Degree'}}{${edu.startDate || 'Start'} -- ${edu.endDate || 'End'}}`).join('\n')}
+      {${escapeLaTeX(edu.university || 'University Name')}}{${escapeLaTeX(edu.location || 'City, State')}}
+      {${escapeLaTeX(edu.degree || 'Degree')}}{${escapeLaTeX(edu.startDate || 'Start')} -- ${escapeLaTeX(edu.endDate || 'End')}}`).join('\n')}
   \\resumeSubHeadingListEnd
 ` : '';
 
@@ -22,14 +54,20 @@ ${educationEntries.map(edu => `    \\resumeSubheading
   const experienceSection = experienceList && experienceList.length > 0 ? `
 \\section{Experience}
   \\resumeSubHeadingListStart
-${experienceList.map(exp => `
+${experienceList.map(exp => {
+    const bullets = escapeBullets(exp.responsibilities);
+    const bulletLines = bullets.length > 0
+      ? bullets.map(b => `        \\resumeItem{${b}}`).join('\n')
+      : '        \\resumeItem{Responsibility description}';
+    return `
     \\resumeSubheading
-      {${exp.position || 'Position'}}{${exp.startDate || 'Start'} -- ${exp.endDate || 'End'}}
-      {${exp.company || 'Company'}}{${exp.location || 'Location'}}
+      {${escapeLaTeX(exp.position || 'Position')}}{${escapeLaTeX(exp.startDate || 'Start')} -- ${escapeLaTeX(exp.endDate || 'End')}}
+      {${escapeLaTeX(exp.company || 'Company')}}{${escapeLaTeX(exp.location || 'Location')}}
       \\resumeItemListStart
-${exp.responsibilities?.split('\\n').filter(line => line.trim()).map(line => `        \\resumeItem{${line.replace(/^[•\-\*]\s*/, '')}}`).join('\n') || '        \\resumeItem{Responsibility description}'}
+${bulletLines}
       \\resumeItemListEnd
-`).join('')}
+`;
+  }).join('')}
   \\resumeSubHeadingListEnd
 ` : '';
 
@@ -37,13 +75,22 @@ ${exp.responsibilities?.split('\\n').filter(line => line.trim()).map(line => `  
   const projectsSection = projectsList && projectsList.length > 0 ? `
 \\section{Projects}
     \\resumeSubHeadingListStart
-${projectsList.map(project => `
+${projectsList.map(project => {
+    const bullets = escapeBullets(project.description);
+    const bulletLines = bullets.length > 0
+      ? bullets.map(b => `            \\resumeItem{${b}}`).join('\n')
+      : '            \\resumeItem{Project description}';
+    const dateRange = (project.startDate || project.endDate)
+      ? `${escapeLaTeX(project.startDate || '')} -- ${escapeLaTeX(project.endDate || '')}`
+      : '';
+    return `
       \\resumeProjectHeading
-          {\\textbf{${project.projectName || 'Project Name'}} $|$ \\emph{${project.technologies || 'Technologies'}}}{${project.startDate || ''} -- ${project.endDate || ''}}
+          {\\textbf{${escapeLaTeX(project.projectName || 'Project Name')}} $|$ \\emph{${escapeLaTeX(project.technologies || 'Technologies')}}}{${dateRange}}
           \\resumeItemListStart
-${project.description?.split('\\n').filter(line => line.trim()).map(line => `            \\resumeItem{${line.replace(/^[•\-\*]\s*/, '')}}`).join('\n') || '            \\resumeItem{Project description}'}
+${bulletLines}
           \\resumeItemListEnd
-`).join('')}
+`;
+  }).join('')}
     \\resumeSubHeadingListEnd
 ` : '';
 
@@ -52,7 +99,7 @@ ${project.description?.split('\\n').filter(line => line.trim()).map(line => `   
 \\section{Technical Skills}
  \\begin{itemize}[leftmargin=0.15in, label={}]
     \\small{\\item{
-${skills.languages ? `     \\textbf{Languages}{: ${skills.languages}} \\\\\n` : ''}${skills.frameworks ? `     \\textbf{Frameworks}{: ${skills.frameworks}} \\\\\n` : ''}${skills.tools ? `     \\textbf{Developer Tools}{: ${skills.tools}} \\\\\n` : ''}${skills.databases ? `     \\textbf{Libraries}{: ${skills.databases}} \\\\\n` : ''}${skills.platforms ? `     \\textbf{Enterprise Platforms}{: ${skills.platforms}}` : ''}
+${skills.languages ? `     \\textbf{Languages}{: ${escapeLaTeX(skills.languages)}} \\\\\n` : ''}${skills.frameworks ? `     \\textbf{Frameworks}{: ${escapeLaTeX(skills.frameworks)}} \\\\\n` : ''}${skills.tools ? `     \\textbf{Developer Tools}{: ${escapeLaTeX(skills.tools)}} \\\\\n` : ''}${skills.databases ? `     \\textbf{Libraries}{: ${escapeLaTeX(skills.databases)}} \\\\\n` : ''}${skills.platforms ? `     \\textbf{Enterprise Platforms}{: ${escapeLaTeX(skills.platforms)}}` : ''}
     }}
  \\end{itemize}
 ` : '';
@@ -62,13 +109,14 @@ ${skills.languages ? `     \\textbf{Languages}{: ${skills.languages}} \\\\\n` : 
 \\section{Certifications \\& Achievements}
   \\resumeSubHeadingListStart
 ${certificationsList.map(cert => {
-    const hasDescription = cert.description && cert.description.trim();
-    return `    \\resumeSubheading
-      {${cert.name || 'Certification Name'}}{${cert.date || ''}}
-      {${cert.issuer || ''}}{${cert.issuer ? '' : ''}}${hasDescription ? `
+    const bullets = escapeBullets(cert.description);
+    const bulletBlock = bullets.length > 0 ? `
       \\resumeItemListStart
-${cert.description.split('\\n').filter(line => line.trim()).map(line => `        \\resumeItem{${line.replace(/^[•\-\*]\s*/, '')}}`).join('\n')}
-      \\resumeItemListEnd` : ''}`;
+${bullets.map(b => `        \\resumeItem{${b}}`).join('\n')}
+      \\resumeItemListEnd` : '';
+    return `    \\resumeSubheading
+      {${escapeLaTeX(cert.name || 'Certification Name')}}{${escapeLaTeX(cert.date || '')}}
+      {${escapeLaTeX(cert.issuer || '')}}{}${bulletBlock}`;
   }).join('\n')}
   \\resumeSubHeadingListEnd
 ` : '';
@@ -183,10 +231,10 @@ ${cert.description.split('\\n').filter(line => line.trim()).map(line => `       
 
 %----------HEADING----------
 \\begin{center}
-    \\textbf{\\Huge \\scshape ${personal?.fullName || 'Your Name'}} \\\\ \\vspace{1pt}
-    \\small ${phone} $|$ \\href{mailto:${email}}{\\underline{${email}}} $|$
-    \\href{https://${linkedin}}{\\underline{${linkedin}}} $|$
-    \\href{https://${github}}{\\underline{${github}}}
+    \\textbf{\\Huge \\scshape ${name}} \\\\ \\vspace{1pt}
+    \\small ${phone} $|$ \\href{mailto:${email}}{\\underline{${emailDisplay}}} $|$
+    \\href{https://${linkedinRaw}}{\\underline{${linkedin}}} $|$
+    \\href{https://${githubRaw}}{\\underline{${github}}}
 \\end{center}
 
 ${educationSection}

@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import './ResumeSuggestions.css';
 
@@ -92,7 +93,8 @@ const ResumeSuggestions = ({ role, formData, experienceList, projectsList }) => 
     return suggestions;
   };
 
-  const suggestions = generateSuggestions();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const suggestions = useMemo(() => generateSuggestions(), [role, formData, experienceList, projectsList]);
 
   if (!role || suggestions.length === 0) return null;
 

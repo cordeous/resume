@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import ResumePreview from '../components/ResumePreview';
 import LanguageSwitcher from '../components/LanguageSwitcher';
@@ -11,17 +11,31 @@ import './LandingPage.css';
 const LandingPage = () => {
   const navigate = useNavigate();
   const [showExamples, setShowExamples] = useState(false);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
+  // Shared easing — ease-out-expo for confident, decisive motion
+  const easeOutExpo = [0.16, 1, 0.3, 1];
+  const easeOutQuart = [0.25, 1, 0.5, 1];
+
+  // Used as spread props on standalone elements
   const fadeIn = {
-    initial: { opacity: 0, y: 20 },
+    initial: { opacity: 0, y: 24 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.6 }
+    transition: { duration: 0.55, ease: easeOutExpo }
+  };
+
+  // Used as variants on stagger-child elements
+  const itemVariant = {
+    initial: { opacity: 0, y: 24 },
+    animate: { opacity: 1, y: 0, transition: { duration: 0.5, ease: easeOutExpo } }
   };
 
   const staggerChildren = {
+    initial: {},
     animate: {
       transition: {
-        staggerChildren: 0.1
+        staggerChildren: 0.09,
+        delayChildren: 0.05,
       }
     }
   };
@@ -39,77 +53,122 @@ const LandingPage = () => {
 
   return (
     <div className="landing-page">
+      <a href="#main-content" className="skip-link">Skip to main content</a>
+
       {/* Header */}
       <motion.header
         className="header"
-        initial={{ y: -20, opacity: 0 }}
+        initial={{ y: -16, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.5, ease: easeOutQuart }}
+        role="banner"
       >
         <div className="container header-content">
           <div className="logo"><Logo /></div>
-          <nav className="nav">
+          <nav className="nav" aria-label="Main navigation">
             <a href="#how-it-works" onClick={(e) => handleSmoothScroll(e, '#how-it-works')}>How It Works</a>
             <a href="#features" onClick={(e) => handleSmoothScroll(e, '#features')}>Features</a>
-            <a href="#pricing" onClick={(e) => handleSmoothScroll(e, '#pricing')}>Pricing</a>
           </nav>
           <div className="header-actions">
             <LanguageSwitcher />
-            <button className="sign-in-btn">Sign In</button>
+            <button
+              className="sign-in-btn"
+              onClick={() => navigate('/role-selection')}
+              aria-label="Get started building your resume"
+            >
+              Build My Resume
+            </button>
+            <button
+              className={`mobile-menu-btn${mobileNavOpen ? ' open' : ''}`}
+              aria-label={mobileNavOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              aria-expanded={mobileNavOpen}
+              aria-controls="mobile-nav"
+              onClick={() => setMobileNavOpen(o => !o)}
+            >
+              <span />
+              <span />
+              <span />
+            </button>
           </div>
         </div>
+        <AnimatePresence initial={false}>
+          {mobileNavOpen && (
+            <motion.nav
+              id="mobile-nav"
+              className="mobile-nav-drawer open"
+              aria-label="Mobile navigation"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.25, ease: [0.25, 1, 0.5, 1] }}
+              style={{ overflow: 'hidden' }}
+            >
+              <a href="#how-it-works" onClick={(e) => { handleSmoothScroll(e, '#how-it-works'); setMobileNavOpen(false); }}>How It Works</a>
+              <a href="#features" onClick={(e) => { handleSmoothScroll(e, '#features'); setMobileNavOpen(false); }}>Features</a>
+              <a href="#" onClick={(e) => { e.preventDefault(); navigate('/role-selection'); }}>Build My Resume</a>
+            </motion.nav>
+          )}
+        </AnimatePresence>
       </motion.header>
+
+      {/* Main Content */}
+      <main id="main-content">
 
       {/* Hero Section */}
       <section className="hero">
-        <div className="container hero-content">
+        <motion.div
+          className="container hero-content"
+          initial="hidden"
+          animate="show"
+          variants={{
+            hidden: {},
+            show: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } }
+          }}
+        >
           <motion.div
             className="hero-badge"
-            {...fadeIn}
+            variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: easeOutExpo } } }}
           >
-            ✨ Built with LaTeX for Perfect Typography
+            LaTeX → PDF in seconds. No design experience needed.
           </motion.div>
           <motion.h1
             className="hero-title"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            variants={{ hidden: { opacity: 0, y: 28 }, show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: easeOutExpo } } }}
           >
             Build Your Professional Resume in Minutes
           </motion.h1>
           <motion.p
             className="hero-subtitle"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: easeOutExpo } } }}
           >
             Answer a few questions and get a perfectly formatted resume using industry-standard LaTeX templates. No design experience needed.
           </motion.p>
           <motion.div
             className="hero-cta"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: easeOutExpo } } }}
           >
-            <button
+            <motion.button
               className="primary-btn"
               onClick={() => navigate('/role-selection')}
+              whileHover={{ y: -3, transition: { duration: 0.18, ease: easeOutQuart } }}
+              whileTap={{ scale: 0.97, transition: { duration: 0.1 } }}
             >
               Build My Resume →
-            </button>
-            <button className="secondary-btn" onClick={() => setShowExamples(true)}>
-              See Examples
+            </motion.button>
+            <button
+              className="examples-link"
+              onClick={() => setShowExamples(true)}
+            >
+              See examples →
             </button>
           </motion.div>
           <motion.div
             className="hero-image"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
+            variants={{ hidden: { opacity: 0, y: 36 }, show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: easeOutExpo } } }}
           >
             <ResumePreview />
           </motion.div>
-        </div>
+        </motion.div>
       </section>
 
       {/* How It Works */}
@@ -119,8 +178,8 @@ const LandingPage = () => {
             className="section-header"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.55, ease: easeOutExpo }}
           >
             <h2 className="section-title">How It Works</h2>
             <p className="section-subtitle">Three simple steps to your perfect resume</p>
@@ -135,28 +194,28 @@ const LandingPage = () => {
             {[
               {
                 num: '1',
-                title: 'Answer Questions',
-                desc: 'Fill out a guided form with your information',
+                title: 'Pick Your Role',
+                desc: 'Tell us your job title — we tailor the resume to what hiring managers expect',
                 color: '#3D8A5A'
               },
               {
                 num: '2',
-                title: 'Preview in Real-Time',
-                desc: 'See your resume update instantly as you type',
-                color: '#D89575'
+                title: 'Fill In Your Details',
+                desc: 'A guided form walks you through education, experience, and skills step by step',
+                color: '#3D8A5A'
               },
               {
                 num: '3',
                 title: 'Download & Apply',
-                desc: 'Export as PDF, LaTeX, or open in Overleaf',
+                desc: 'Export as PDF, raw LaTeX, or open directly in Overleaf',
                 color: '#3D8A5A'
               }
             ].map((step, index) => (
               <motion.div
                 key={index}
                 className="step-card"
-                variants={fadeIn}
-                whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                variants={itemVariant}
+                whileHover={{ y: -6, transition: { duration: 0.22, ease: easeOutQuart } }}
               >
                 <div className="step-num" style={{ backgroundColor: step.color }}>
                   {step.num}
@@ -167,65 +226,48 @@ const LandingPage = () => {
             ))}
           </motion.div>
 
-          {/* Add App Showcase */}
-          <AppShowcase />
         </div>
       </section>
 
-      {/* Career Benefits */}
-      <section className="career-benefits">
+      {/* Stats Bar */}
+      <section className="stats-bar">
         <div className="container">
           <motion.div
-            className="section-header"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="section-title">Why It Matters</h2>
-            <p className="section-subtitle">Get more interviews with a professional resume</p>
-          </motion.div>
-          <motion.div
-            className="benefits-grid compact"
+            className="stats-grid"
             variants={staggerChildren}
             initial="initial"
             whileInView="animate"
             viewport={{ once: true }}
           >
             {[
-              {
-                icon: '🎯',
-                title: 'Pass ATS',
-                desc: '90%+ of companies use ATS filters'
-              },
-              {
-                icon: '💼',
-                title: 'Stand Out',
-                desc: 'Professional LaTeX typography'
-              },
-              {
-                icon: '📈',
-                title: 'More Callbacks',
-                desc: '40% increase in interview requests'
-              },
-              {
-                icon: '⚡',
-                title: 'Save Time',
-                desc: 'Build in under 10 minutes'
-              }
-            ].map((benefit, index) => (
-              <motion.div
-                key={index}
-                className="benefit-card compact"
-                variants={fadeIn}
-                whileHover={{ y: -5, transition: { duration: 0.2 } }}
-              >
-                <div className="benefit-icon">{benefit.icon}</div>
-                <h3 className="benefit-title">{benefit.title}</h3>
-                <p className="benefit-desc">{benefit.desc}</p>
+              { value: '90%+', label: 'of companies use ATS filters your resume must pass' },
+              { value: '< 10 min', label: 'to build a complete, formatted resume from scratch' },
+              { value: '3 formats', label: 'PDF, LaTeX source, and one-click Overleaf import' },
+              { value: '100%', label: 'free — no account required to build or download' },
+            ].map((stat, i) => (
+              <motion.div key={i} className="stat-item" variants={itemVariant}>
+                <span className="stat-value">{stat.value}</span>
+                <span className="stat-label">{stat.label}</span>
               </motion.div>
             ))}
           </motion.div>
+        </div>
+      </section>
+
+      {/* See It In Action */}
+      <section id="showcase" className="showcase-section">
+        <div className="container">
+          <motion.div
+            className="section-header"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.55, ease: easeOutExpo }}
+          >
+            <h2 className="section-title">See It In Action</h2>
+            <p className="section-subtitle">From blank form to professional resume in minutes</p>
+          </motion.div>
+          <AppShowcase />
         </div>
       </section>
 
@@ -236,11 +278,11 @@ const LandingPage = () => {
             className="section-header"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.55, ease: easeOutExpo }}
           >
-            <h2 className="section-title">Why Choose Our Resume Builder?</h2>
-            <p className="section-subtitle">Professional results powered by LaTeX typography</p>
+            <h2 className="section-title">Everything You Need</h2>
+            <p className="section-subtitle">Built for people who want results, not another editor to learn</p>
           </motion.div>
           <motion.div
             className="features-grid simple"
@@ -284,8 +326,8 @@ const LandingPage = () => {
               <motion.div
                 key={index}
                 className="feature-card compact"
-                variants={fadeIn}
-                whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                variants={itemVariant}
+                whileHover={{ y: -6, transition: { duration: 0.22, ease: easeOutQuart } }}
               >
                 <div className="feature-icon">{feature.icon}</div>
                 <h3 className="feature-title">{feature.title}</h3>
@@ -303,28 +345,28 @@ const LandingPage = () => {
             className="final-cta-title"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.55, ease: easeOutExpo }}
           >
             Ready to Build Your Resume?
           </motion.h2>
           <motion.p
             className="final-cta-subtitle"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.55, delay: 0.09, ease: easeOutExpo }}
           >
-            Join thousands of job seekers who landed their dream jobs with our professional resumes
+            Built by engineers who got tired of fighting Word formatting. Your resume should look this good too.
           </motion.p>
           <motion.button
             className="final-cta-btn"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
-            whileTap={{ scale: 0.95 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.5, delay: 0.16, ease: easeOutExpo }}
+            whileHover={{ y: -4, scale: 1.03, transition: { duration: 0.2, ease: easeOutQuart } }}
+            whileTap={{ scale: 0.96, transition: { duration: 0.1 } }}
             onClick={() => navigate('/role-selection')}
           >
             Get Started Free
@@ -332,8 +374,10 @@ const LandingPage = () => {
         </div>
       </section>
 
+      </main>{/* end main */}
+
       {/* Footer */}
-      <footer className="footer">
+      <footer className="footer" role="contentinfo">
         <div className="container">
           <div className="footer-top">
             <div className="footer-brand">
@@ -343,14 +387,13 @@ const LandingPage = () => {
             <div className="footer-links">
               <div className="footer-col">
                 <h4 className="footer-col-title">Product</h4>
-                <a href="#features">Features</a>
-                <a href="#templates">Templates</a>
-                <a href="#pricing">Pricing</a>
+                <a href="#features" onClick={(e) => handleSmoothScroll(e, '#features')}>Features</a>
+                <a href="#how-it-works" onClick={(e) => handleSmoothScroll(e, '#how-it-works')}>How It Works</a>
               </div>
               <div className="footer-col">
-                <h4 className="footer-col-title">Company</h4>
-                <a href="#about">About</a>
-                <a href="#contact">Contact</a>
+                <h4 className="footer-col-title">Get Started</h4>
+                <a href="#" onClick={(e) => { e.preventDefault(); navigate('/role-selection'); }}>Build Resume</a>
+                <a href="#" onClick={(e) => { e.preventDefault(); setShowExamples(true); }}>See Examples</a>
               </div>
             </div>
           </div>

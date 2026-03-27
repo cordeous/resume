@@ -1,12 +1,10 @@
-import QRCode from 'qrcode';
-import { jsPDF } from 'jspdf';
-
 /**
  * Generate QR code as data URL
  * @param {Object} personalInfo - Personal information to encode in QR code
  * @returns {Promise<string>} QR code data URL
  */
 export const generateQRCode = async (personalInfo) => {
+  const QRCode = (await import('qrcode')).default;
   // Create vCard format for contact information
   const vCard = `BEGIN:VCARD
 VERSION:3.0
@@ -40,6 +38,7 @@ END:VCARD`;
  * @param {string} filename - Output filename
  */
 export const generateBusinessCard = async (personalInfo, qrCodeDataURL = null, filename = 'business-card.pdf') => {
+  const { jsPDF } = await import('jspdf');
   const doc = new jsPDF({
     orientation: 'landscape',
     unit: 'mm',

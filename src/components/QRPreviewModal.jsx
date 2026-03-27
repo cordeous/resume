@@ -1,21 +1,47 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaDownload, FaPrint, FaShareAlt } from 'react-icons/fa';
+import { showToast } from './Toast';
 import './QRPreviewModal.css';
 
 const QRPreviewModal = ({ isOpen, onClose, type, qrCodeDataURL, personalInfo, onDownload }) => {
   const [activeTab, setActiveTab] = useState('qr');
+  const modalRef = useRef(null);
+  const closeBtnRef = useRef(null);
 
   useEffect(() => {
     if (type === 'qr') setActiveTab('qr');
     if (type === 'card') setActiveTab('card');
   }, [type]);
 
+  // Focus trap and Escape key
+  useEffect(() => {
+    if (!isOpen) return;
+    if (closeBtnRef.current) closeBtnRef.current.focus();
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') { onClose(); return; }
+      if (e.key === 'Tab' && modalRef.current) {
+        const focusable = modalRef.current.querySelectorAll(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey) {
+          if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+        } else {
+          if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   const handleDownload = () => {
     onDownload();
-    // Don't close modal immediately, let user see confirmation
     setTimeout(() => onClose(), 1000);
   };
 
@@ -26,11 +52,9 @@ const QRPreviewModal = ({ isOpen, onClose, type, qrCodeDataURL, personalInfo, on
   const handleShare = async () => {
     if (navigator.share && qrCodeDataURL) {
       try {
-        // Convert data URL to blob
         const response = await fetch(qrCodeDataURL);
         const blob = await response.blob();
         const file = new File([blob], 'qr-code.png', { type: 'image/png' });
-
         await navigator.share({
           title: 'My Contact QR Code',
           text: 'Scan this QR code to get my contact information',
@@ -38,10 +62,10 @@ const QRPreviewModal = ({ isOpen, onClose, type, qrCodeDataURL, personalInfo, on
         });
       } catch (error) {
         console.log('Error sharing:', error);
-        alert('Sharing not supported on this device');
+        showToast('Sharing not supported on this device.', 'info');
       }
     } else {
-      alert('Sharing not supported on this device');
+      showToast('Sharing not supported on this device.', 'info');
     }
   };
 
@@ -53,19 +77,24 @@ const QRPreviewModal = ({ isOpen, onClose, type, qrCodeDataURL, personalInfo, on
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose}
+        aria-hidden="true"
       >
         <motion.div
+          ref={modalRef}
           className="qr-preview-modal"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="qr-modal-title"
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
           onClick={(e) => e.stopPropagation()}
         >
           <div className="qr-preview-header">
-            <h2 className="qr-preview-title">
+            <h2 id="qr-modal-title" className="qr-preview-title">
               {type === 'qr' ? 'Your Contact QR Code' : 'Your Business Card'}
             </h2>
-            <button className="qr-preview-close" onClick={onClose}>✕</button>
+            <button ref={closeBtnRef} className="qr-preview-close" onClick={onClose} aria-label="Close modal">✕</button>
           </div>
 
           <div className="qr-preview-content">

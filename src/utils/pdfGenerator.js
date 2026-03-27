@@ -1,7 +1,9 @@
-import { jsPDF } from 'jspdf';
+/** Ensure a value is a safe non-empty string for jsPDF text calls */
+const safe = (v) => (v != null && String(v).trim() ? String(v).trim() : '');
 
-export const generatePdfResume = (data) => {
-  const { personal, education, educationList, experienceList, skills, projectsList, certificationsList, showCertifications } = data;
+export const generatePdfResume = async (data) => {
+  const { jsPDF } = await import('jspdf');
+  const { personal, education, educationList, experienceList, skills, projectsList, certificationsList, showCertifications } = data || {};
 
   // Create new PDF document (Letter size: 8.5" x 11")
   const doc = new jsPDF({
@@ -34,20 +36,28 @@ export const generatePdfResume = (data) => {
   if (personal?.fullName) {
     doc.setFont('times', 'bold');
     doc.setFontSize(26);
-    doc.text(personal.fullName.toUpperCase(), pageWidth / 2, yPos, { align: 'center' });
+    const safeName = safe(personal.fullName).toUpperCase() || 'YOUR NAME';
+    doc.text(safeName, pageWidth / 2, yPos, { align: 'center' });
     yPos += 0.15;
 
-    // Contact Info
+    // Contact Info — only include non-empty fields
     doc.setFont('times', 'normal');
     doc.setFontSize(10);
-    const contactInfo = [
-      personal.phone,
-      personal.email,
-      personal.linkedin,
-      personal.github
-    ].filter(Boolean).join(' | ');
-    doc.text(contactInfo, pageWidth / 2, yPos, { align: 'center' });
-    yPos += 0.35;
+    const contactParts = [personal.phone, personal.email, personal.linkedin, personal.github]
+      .map(safe)
+      .filter(Boolean);
+    if (contactParts.length > 0) {
+      const contactInfo = contactParts.join(' | ');
+      // Split to multiple lines if too long
+      const wrapped = doc.splitTextToSize(contactInfo, rightMargin - leftMargin);
+      wrapped.forEach(line => {
+        doc.text(line, pageWidth / 2, yPos, { align: 'center' });
+        yPos += 0.14;
+      });
+      yPos += 0.1;
+    } else {
+      yPos += 0.35;
+    }
   }
 
   // Education Section - support both educationList and single education
@@ -65,16 +75,17 @@ export const generatePdfResume = (data) => {
       // University name and location
       doc.setFont('times', 'bold');
       doc.setFontSize(11);
-      doc.text(edu.university || '', leftMargin, yPos);
+      if (safe(edu.university)) doc.text(safe(edu.university), leftMargin, yPos);
       doc.setFont('times', 'italic');
-      doc.text(edu.location || '', rightMargin, yPos, { align: 'right' });
+      if (safe(edu.location)) doc.text(safe(edu.location), rightMargin, yPos, { align: 'right' });
       yPos += 0.15;
 
       // Degree and dates
       doc.setFont('times', 'italic');
       doc.setFontSize(10);
-      doc.text(edu.degree || '', leftMargin, yPos);
-      doc.text(`${edu.startDate} – ${edu.endDate}`, rightMargin, yPos, { align: 'right' });
+      if (safe(edu.degree)) doc.text(safe(edu.degree), leftMargin, yPos);
+      const dateRange = [safe(edu.startDate), safe(edu.endDate)].filter(Boolean).join(' – ');
+      if (dateRange) doc.text(dateRange, rightMargin, yPos, { align: 'right' });
       yPos += 0.25;
 
       // Add space between entries if not the last one
@@ -105,16 +116,17 @@ export const generatePdfResume = (data) => {
       // Position and dates
       doc.setFont('times', 'bold');
       doc.setFontSize(11);
-      doc.text(exp.position || '', leftMargin, yPos);
+      if (safe(exp.position)) doc.text(safe(exp.position), leftMargin, yPos);
       doc.setFont('times', 'italic');
       doc.setFontSize(10);
-      doc.text(`${exp.startDate} – ${exp.endDate}`, rightMargin, yPos, { align: 'right' });
+      const expDateRange = [safe(exp.startDate), safe(exp.endDate)].filter(Boolean).join(' – ');
+      if (expDateRange) doc.text(expDateRange, rightMargin, yPos, { align: 'right' });
       yPos += 0.15;
 
       // Company and location
       doc.setFont('times', 'italic');
-      doc.text(exp.company || '', leftMargin, yPos);
-      doc.text(exp.location || '', rightMargin, yPos, { align: 'right' });
+      if (safe(exp.company)) doc.text(safe(exp.company), leftMargin, yPos);
+      if (safe(exp.location)) doc.text(safe(exp.location), rightMargin, yPos, { align: 'right' });
       yPos += 0.15;
 
       // Responsibilities (bullets)
@@ -168,15 +180,17 @@ export const generatePdfResume = (data) => {
       // Project name and technologies
       doc.setFont('times', 'bold');
       doc.setFontSize(10);
-      const projectHeader = `${project.projectName} | `;
+      const projectName = safe(project.projectName) || 'Project';
+      const projectHeader = `${projectName} | `;
       const headerWidth = doc.getTextWidth(projectHeader);
 
       doc.text(projectHeader, leftMargin, yPos);
       doc.setFont('times', 'italic');
-      doc.text(project.technologies || '', leftMargin + headerWidth, yPos);
+      if (safe(project.technologies)) doc.text(safe(project.technologies), leftMargin + headerWidth, yPos);
 
-      if (project.startDate || project.endDate) {
-        doc.text(`${project.startDate} – ${project.endDate}`, rightMargin, yPos, { align: 'right' });
+      const projDateRange = [safe(project.startDate), safe(project.endDate)].filter(Boolean).join(' – ');
+      if (projDateRange) {
+        doc.text(projDateRange, rightMargin, yPos, { align: 'right' });
       }
       yPos += 0.15;
 
@@ -276,19 +290,19 @@ export const generatePdfResume = (data) => {
       // Certification name and date
       doc.setFont('times', 'bold');
       doc.setFontSize(11);
-      doc.text(cert.name || '', leftMargin, yPos);
-      if (cert.date) {
+      if (safe(cert.name)) doc.text(safe(cert.name), leftMargin, yPos);
+      if (safe(cert.date)) {
         doc.setFont('times', 'italic');
         doc.setFontSize(10);
-        doc.text(cert.date, rightMargin, yPos, { align: 'right' });
+        doc.text(safe(cert.date), rightMargin, yPos, { align: 'right' });
       }
       yPos += 0.15;
 
       // Issuer
-      if (cert.issuer) {
+      if (safe(cert.issuer)) {
         doc.setFont('times', 'italic');
         doc.setFontSize(10);
-        doc.text(cert.issuer, leftMargin, yPos);
+        doc.text(safe(cert.issuer), leftMargin, yPos);
         yPos += 0.15;
       }
 
@@ -326,7 +340,7 @@ export const generatePdfResume = (data) => {
   return doc;
 };
 
-export const downloadPdf = (data, filename = 'resume.pdf') => {
-  const doc = generatePdfResume(data);
+export const downloadPdf = async (data, filename = 'resume.pdf') => {
+  const doc = await generatePdfResume(data);
   doc.save(filename);
 };

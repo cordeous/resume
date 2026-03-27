@@ -45,18 +45,18 @@
 }
 
 .suggestion-missing {
-  background: #FFF3E0;
-  border-left: 3px solid #FF9800;
+  background: var(--suggestion-warning-bg);
+  border-left: 3px solid var(--suggestion-warning-border);
 }
 
 .suggestion-weak {
-  background: #E3F2FD;
-  border-left: 3px solid #2196F3;
+  background: var(--suggestion-info-bg);
+  border-left: 3px solid var(--suggestion-info-border);
 }
 
 .suggestion-tip {
-  background: #E8F5E9;
-  border-left: 3px solid var(--accent-primary);
+  background: var(--suggestion-tip-bg);
+  border-left: 3px solid var(--suggestion-tip-border);
 }
 
 .suggestion-icon {

@@ -15,7 +15,7 @@
 .builder-header-content {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 0 120px;
+  padding: 0 clamp(24px, 8vw, 120px);
   height: 80px;
   display: flex;
   align-items: center;
@@ -87,13 +87,13 @@
 
 /* Content */
 .builder-content {
-  padding: 60px 0;
+  padding: clamp(32px, 5vw, 60px) 0;
 }
 
 .builder-grid {
   display: grid;
   grid-template-columns: 1.2fr 1fr;
-  gap: 60px;
+  gap: clamp(24px, 4vw, 60px);
   align-items: start;
 }
 
@@ -142,7 +142,7 @@
 }
 
 .required {
-  color: #D08068;
+  color: var(--accent-warm);
   margin-left: 4px;
 }
 
@@ -191,6 +191,22 @@
 
 .field-input::placeholder {
   color: var(--text-tertiary);
+}
+
+.field-input--error {
+  border-color: var(--color-danger);
+}
+
+.field-input--error:focus {
+  border-color: var(--color-danger);
+  box-shadow: 0 0 0 3px var(--color-danger-bg);
+}
+
+.field-error {
+  font-size: 12px;
+  color: var(--color-danger);
+  font-weight: 500;
+  margin-top: 2px;
 }
 
 textarea.field-input {
@@ -280,7 +296,7 @@ textarea.field-input {
 }
 
 .next-btn:hover {
-  background: #2d7449;
+  background: var(--accent-primary-hover);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px var(--shadow-subtle);
 }
@@ -328,6 +344,9 @@ textarea.field-input {
   margin-bottom: 3px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  /* Prevent extremely long names from breaking layout */
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .preview-contact {
@@ -368,6 +387,9 @@ textarea.field-input {
 .preview-item-header strong {
   font-weight: 700;
   color: #000;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  min-width: 0;
 }
 
 .preview-item-subheader {
@@ -395,6 +417,8 @@ textarea.field-input {
   margin-bottom: 3px;
   position: relative;
   padding-left: 8px;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .preview-bullets div:before {
@@ -468,10 +492,6 @@ textarea.field-input {
 }
 
 @media (max-width: 768px) {
-  .builder-header-content {
-    padding: 0 24px;
-  }
-
   .home-btn {
     padding: 6px 12px;
     font-size: 12px;
@@ -486,11 +506,18 @@ textarea.field-input {
   }
 
   .progress-container {
+    max-width: none;
+    margin-left: 0;
+    flex: 1;
+  }
+
+  .progress-bar {
     display: none;
   }
 
   .progress-text {
     font-size: 12px;
+    white-space: nowrap;
   }
 
   .question-card {
@@ -515,6 +542,12 @@ textarea.field-input {
   .add-another-btn {
     width: 100%;
   }
+
+  /* Ensure touch targets are at least 44px */
+  .entry-action-btn {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
 }
 
 /* Download Modal */
@@ -524,7 +557,7 @@ textarea.field-input {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: var(--shadow-overlay);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -534,11 +567,11 @@ textarea.field-input {
 
 .modal-content {
   background: var(--bg-surface);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
   padding: 40px;
   max-width: 500px;
   width: 100%;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow-lg);
 }
 
 .modal-header {
@@ -694,7 +727,7 @@ textarea.field-input {
 
 .saved-entry-item.editing {
   border-color: var(--accent-primary);
-  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.15);
+  box-shadow: 0 0 0 2px rgba(61, 138, 90, 0.15);
 }
 
 .saved-entry-info {
@@ -758,8 +791,8 @@ textarea.field-input {
 }
 
 .entry-action-btn.delete-btn:hover:not(:disabled) {
-  border-color: #ef4444;
-  color: #ef4444;
+  border-color: var(--color-danger);
+  color: var(--color-danger);
 }
 
 .new-entry-heading {
@@ -769,4 +802,103 @@ textarea.field-input {
   letter-spacing: 0.06em;
   color: var(--text-secondary);
   margin-bottom: 4px;
+}
+
+/* Empty preview state */
+.preview-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 40px 24px;
+  text-align: center;
+  color: var(--text-tertiary);
+}
+
+.preview-empty-icon {
+  font-size: 40px;
+  opacity: 0.5;
+}
+
+.preview-empty-text {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Character counter */
+.field-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+}
+
+.char-count {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+
+.char-count--warn {
+  color: var(--accent-warm);
+}
+
+.char-count--limit {
+  color: var(--color-danger);
+  font-weight: 600;
+}
+
+/* Disable state for buttons while submitting */
+.next-btn:disabled,
+.add-another-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Draft cleared notice */
+.draft-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 8px;
+}
+
+.clear-draft-btn {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  transition: color 0.2s;
+}
+
+.clear-draft-btn:hover {
+  color: var(--color-danger);
+}
+
+/* Error shake animation — draws attention to invalid fields */
+@keyframes fieldShake {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-5px); }
+  40%       { transform: translateX(5px); }
+  60%       { transform: translateX(-4px); }
+  80%       { transform: translateX(3px); }
+}
+
+.field-input--error {
+  animation: fieldShake 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Entry editing highlight pulse */
+@keyframes editPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(61, 138, 90, 0.35); }
+  60%  { box-shadow: 0 0 0 5px rgba(61, 138, 90, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(61, 138, 90, 0); }
+}
+
+.saved-entry-item.editing {
+  animation: editPulse 0.5s ease-out forwards;
 }

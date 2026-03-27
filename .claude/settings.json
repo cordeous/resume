@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wc -l /c/Users/antoj/OneDrive/Desktop/projects/resumebuilder/resume-builder/src/**/*.css)",
+      "Bash(ls -la /c/Users/antoj/OneDrive/Desktop/projects/resumebuilder/resume-builder/*.md)",
+      "Bash(find /c/Users/antoj/OneDrive/Desktop/projects/resumebuilder/resume-builder -maxdepth 3 -type f \\\\\\(-name *.md -o -name *CLAUDE* -o -name *claude* \\\\\\))",
+      "Bash(npx vite:*)",
+      "Bash(grep -E \"\\\\.jsx$\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5173)",
+      "WebFetch(domain:localhost)"
+    ]
+  }
+}

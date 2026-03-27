@@ -238,8 +238,8 @@ const ResumeBuilderES = () => {
     window.open(overleafUrl, '_blank');
   };
 
-  const handleDownloadPdf = () => {
-    downloadPdf(getResumeData());
+  const handleDownloadPdf = async () => {
+    await downloadPdf(getResumeData());
   };
 
   const handleDownloadQRCode = async () => {

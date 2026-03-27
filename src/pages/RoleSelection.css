@@ -126,7 +126,8 @@
   border-bottom: none;
 }
 
-.role-suggestion-item:hover {
+.role-suggestion-item:hover,
+.role-suggestion-item--active {
   background: var(--accent-light);
   color: var(--accent-primary);
 }
@@ -144,7 +145,7 @@
 }
 
 .role-continue-btn:hover:not(:disabled) {
-  background: #2d7449;
+  background: var(--accent-primary-hover);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px var(--shadow-subtle);
 }
@@ -294,7 +295,33 @@
     flex-direction: column;
   }
 
+  .role-continue-btn {
+    width: 100%;
+  }
+
   .role-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .role-feedback {
+    padding: 40px 24px;
+  }
+
+  .role-feedback-title {
+    font-size: 26px;
+  }
+
+  .role-feedback-text {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .role-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .role-content {
+    padding: 24px 16px;
   }
 }
