@@ -13,6 +13,7 @@ const ResumePreviewPanel = ({
   experienceList,
   projectsList,
   certificationsList,
+  showProjects,
   showCertifications,
 }) => {
   const showEmpty = !hasContent(formData, educationList, experienceList, projectsList);
@@ -132,7 +133,7 @@ const ResumePreviewPanel = ({
           )}
 
           {/* Projects */}
-          {(projectsList.length > 0 || (formData.projects && Object.keys(formData.projects).length > 0)) && (
+          {showProjects && (projectsList.length > 0 || (formData.projects && Object.keys(formData.projects).length > 0)) && (
             <div className="preview-section-block">
               <h3 className="preview-section-title">Projects</h3>
               {projectsList.map((project, index) => (

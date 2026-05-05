@@ -54,6 +54,7 @@ export const questions = [
     id: 'projects',
     title: 'Projects',
     subtitle: 'Showcase your best work',
+    optional: true,
     fields: [
       { name: 'projectName', label: 'Project Name', type: 'text', placeholder: 'My Awesome Project', required: true },
       { name: 'technologies', label: 'Technologies Used', type: 'text', placeholder: 'React, Node.js, MongoDB', required: true },

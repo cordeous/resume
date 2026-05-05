@@ -28,6 +28,7 @@ const ResumeBuilder = () => {
   const [editingEducationIndex, setEditingEducationIndex] = useState(null);
   const [editingProjectIndex, setEditingProjectIndex] = useState(null);
   const [editingCertIndex, setEditingCertIndex] = useState(null);
+  const [showProjects, setShowProjects] = useState(false);
   const [showCertifications, setShowCertifications] = useState(false);
   const [showDownloadModal, setShowDownloadModal] = useState(false);
   const [showQRPreview, setShowQRPreview] = useState(false);
@@ -51,6 +52,7 @@ const ResumeBuilder = () => {
       if (Array.isArray(draft.experienceList)) setExperienceList(draft.experienceList);
       if (Array.isArray(draft.projectsList)) setProjectsList(draft.projectsList);
       if (Array.isArray(draft.certificationsList)) setCertificationsList(draft.certificationsList);
+      if (typeof draft.showProjects === 'boolean') setShowProjects(draft.showProjects);
       if (typeof draft.showCertifications === 'boolean') setShowCertifications(draft.showCertifications);
       // Clamp step to valid range — prevents stale index from a questions update
       if (typeof draft.currentStep === 'number') {
@@ -67,12 +69,12 @@ const ResumeBuilder = () => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify({
         formData, educationList, experienceList, projectsList,
-        certificationsList, showCertifications, currentStep,
+        certificationsList, showProjects, showCertifications, currentStep,
       }));
     } catch (_) {
       // ignore quota errors
     }
-  }, [formData, educationList, experienceList, projectsList, certificationsList, showCertifications, currentStep]);
+  }, [formData, educationList, experienceList, projectsList, certificationsList, showProjects, showCertifications, currentStep]);
 
   const currentQuestion = questions[currentStep];
   const progress = ((currentStep + 1) / questions.length) * 100;
@@ -85,6 +87,7 @@ const ResumeBuilder = () => {
     setExperienceList([]);
     setProjectsList([]);
     setCertificationsList([]);
+    setShowProjects(false);
     setShowCertifications(false);
     setCurrentStep(0);
     setFieldErrors({});
@@ -366,7 +369,8 @@ const ResumeBuilder = () => {
 
   const handleNext = () => {
     // Skip validation for optional sections that are hidden
-    const isOptionalAndHidden = currentQuestion.optional && !showCertifications;
+    const sectionVisible = currentQuestion.id === 'projects' ? showProjects : showCertifications;
+    const isOptionalAndHidden = currentQuestion.optional && !sectionVisible;
     if (!isOptionalAndHidden && !validateCurrentStep()) return;
 
     saveCurrentEntry(currentQuestion.id);
@@ -394,6 +398,7 @@ const ResumeBuilder = () => {
     experienceList,
     projectsList,
     certificationsList,
+    showProjects,
     showCertifications
   });
 
@@ -533,20 +538,25 @@ const ResumeBuilder = () => {
                 <h2 className="question-title">{currentQuestion.title}</h2>
                 <p className="question-subtitle">{currentQuestion.subtitle}</p>
 
-                {currentQuestion.optional && (
-                  <div className="form-field">
-                    <label className="field-label optional-toggle">
-                      <input
-                        type="checkbox"
-                        checked={showCertifications}
-                        onChange={(e) => setShowCertifications(e.target.checked)}
-                      />
-                      <span>Include this section in my resume</span>
-                    </label>
-                  </div>
-                )}
+                {currentQuestion.optional && (() => {
+                  const isProjects = currentQuestion.id === 'projects';
+                  const checked = isProjects ? showProjects : showCertifications;
+                  const setChecked = isProjects ? setShowProjects : setShowCertifications;
+                  return (
+                    <div className="form-field">
+                      <label className="field-label optional-toggle">
+                        <input
+                          type="checkbox"
+                          checked={checked}
+                          onChange={(e) => setChecked(e.target.checked)}
+                        />
+                        <span>Include this section in my resume</span>
+                      </label>
+                    </div>
+                  );
+                })()}
 
-                {(!currentQuestion.optional || showCertifications) && (() => {
+                {(!currentQuestion.optional || (currentQuestion.id === 'projects' ? showProjects : showCertifications)) && (() => {
                   const sectionId = currentQuestion.id;
                   const savedList =
                     sectionId === 'experience' ? experienceList :
@@ -713,17 +723,17 @@ const ResumeBuilder = () => {
                     ← Back
                   </button>
                   <div className="button-group">
-                    {currentQuestion.optional && !showCertifications && (
+                    {currentQuestion.optional && !(currentQuestion.id === 'projects' ? showProjects : showCertifications) && (
                       <button className="skip-btn" onClick={handleNext}>
                         Skip →
                       </button>
                     )}
-                    {(currentQuestion.id === 'education' || currentQuestion.id === 'experience' || currentQuestion.id === 'projects' || (currentQuestion.id === 'certifications' && showCertifications)) && (
+                    {(currentQuestion.id === 'education' || currentQuestion.id === 'experience' || (currentQuestion.id === 'projects' && showProjects) || (currentQuestion.id === 'certifications' && showCertifications)) && (
                       <button className="add-another-btn" onClick={handleAddAnother}>
                         + Add Another
                       </button>
                     )}
-                    {(!currentQuestion.optional || showCertifications) && (
+                    {(!currentQuestion.optional || (currentQuestion.id === 'projects' ? showProjects : showCertifications)) && (
                       <button
                         className="next-btn"
                         onClick={handleNext}
@@ -746,6 +756,7 @@ const ResumeBuilder = () => {
             experienceList={experienceList}
             projectsList={projectsList}
             certificationsList={certificationsList}
+            showProjects={showProjects}
             showCertifications={showCertifications}
           />
         </div>

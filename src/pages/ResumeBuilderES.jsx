@@ -23,6 +23,7 @@ const ResumeBuilderES = () => {
   const [editingEducationIndex, setEditingEducationIndex] = useState(null);
   const [editingProjectIndex, setEditingProjectIndex] = useState(null);
   const [editingCertIndex, setEditingCertIndex] = useState(null);
+  const [showProjects, setShowProjects] = useState(false);
   const [showCertifications, setShowCertifications] = useState(false);
   const [showDownloadModal, setShowDownloadModal] = useState(false);
   const [showQRPreview, setShowQRPreview] = useState(false);
@@ -230,6 +231,7 @@ const ResumeBuilderES = () => {
       experienceList,
       projectsList,
       certificationsList,
+      showProjects,
       showCertifications
     };
   };
@@ -347,20 +349,25 @@ const ResumeBuilderES = () => {
                 <h2 className="question-title">{currentQuestion.title}</h2>
                 <p className="question-subtitle">{currentQuestion.subtitle}</p>
 
-                {currentQuestion.optional && (
-                  <div className="form-field">
-                    <label className="field-label optional-toggle">
-                      <input
-                        type="checkbox"
-                        checked={showCertifications}
-                        onChange={(e) => setShowCertifications(e.target.checked)}
-                      />
-                      <span>Incluir esta sección en mi currículum</span>
-                    </label>
-                  </div>
-                )}
+                {currentQuestion.optional && (() => {
+                  const isProjects = currentQuestion.id === 'projects';
+                  const checked = isProjects ? showProjects : showCertifications;
+                  const setChecked = isProjects ? setShowProjects : setShowCertifications;
+                  return (
+                    <div className="form-field">
+                      <label className="field-label optional-toggle">
+                        <input
+                          type="checkbox"
+                          checked={checked}
+                          onChange={(e) => setChecked(e.target.checked)}
+                        />
+                        <span>Incluir esta sección en mi currículum</span>
+                      </label>
+                    </div>
+                  );
+                })()}
 
-                {(!currentQuestion.optional || showCertifications) && (() => {
+                {(!currentQuestion.optional || (currentQuestion.id === 'projects' ? showProjects : showCertifications)) && (() => {
                   const sectionId = currentQuestion.id;
                   const savedList =
                     sectionId === 'experience' ? experienceList :
@@ -475,17 +482,17 @@ const ResumeBuilderES = () => {
                     ← Atrás
                   </button>
                   <div className="button-group">
-                    {currentQuestion.optional && !showCertifications && (
+                    {currentQuestion.optional && !(currentQuestion.id === 'projects' ? showProjects : showCertifications) && (
                       <button className="skip-btn" onClick={handleNext}>
                         Omitir →
                       </button>
                     )}
-                    {(currentQuestion.id === 'education' || currentQuestion.id === 'experience' || currentQuestion.id === 'projects' || (currentQuestion.id === 'certifications' && showCertifications)) && (
+                    {(currentQuestion.id === 'education' || currentQuestion.id === 'experience' || (currentQuestion.id === 'projects' && showProjects) || (currentQuestion.id === 'certifications' && showCertifications)) && (
                       <button className="add-another-btn" onClick={handleAddAnother}>
                         + Agregar Otro
                       </button>
                     )}
-                    {(!currentQuestion.optional || showCertifications) && (
+                    {(!currentQuestion.optional || (currentQuestion.id === 'projects' ? showProjects : showCertifications)) && (
                       <button className="next-btn" onClick={handleNext}>
                         {currentStep < questionsES.length - 1 ? 'Siguiente →' : 'Descargar Currículum'}
                       </button>
@@ -603,7 +610,7 @@ const ResumeBuilderES = () => {
                 )}
 
                 {/* Projects */}
-                {(projectsList.length > 0 || (formData.projects && Object.keys(formData.projects).length > 0)) && (
+                {showProjects && (projectsList.length > 0 || (formData.projects && Object.keys(formData.projects).length > 0)) && (
                   <div className="preview-section-block">
                     <h3 className="preview-section-title">Proyectos</h3>
                     {projectsList.map((project, index) => (

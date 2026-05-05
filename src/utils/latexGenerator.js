@@ -18,7 +18,7 @@ const escapeLaTeX = (str) => {
 };
 
 export const generateLatexResume = (data) => {
-  const { personal, education, educationList, experienceList, skills, projectsList, certificationsList, showCertifications } = data;
+  const { personal, education, educationList, experienceList, skills, projectsList, certificationsList, showProjects, showCertifications } = data;
 
   // Extract contact info — escape for LaTeX safety
   const name = escapeLaTeX(personal?.fullName || 'Your Name');
@@ -78,7 +78,7 @@ ${bulletLines}
 ` : '';
 
   // Generate projects section
-  const projectsSection = projectsList && projectsList.length > 0 ? `
+  const projectsSection = showProjects && projectsList && projectsList.length > 0 ? `
 \\section{Projects}
     \\resumeSubHeadingListStart
 ${projectsList.map(project => {

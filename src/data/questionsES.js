@@ -54,6 +54,7 @@ export const questionsES = [
     id: 'projects',
     title: 'Proyectos',
     subtitle: 'Muestra tu mejor trabajo',
+    optional: true,
     fields: [
       { name: 'projectName', label: 'Nombre del Proyecto', type: 'text', placeholder: 'Mi Proyecto Increíble', required: true },
       { name: 'technologies', label: 'Tecnologías Utilizadas', type: 'text', placeholder: 'React, Node.js, MongoDB', required: true },
