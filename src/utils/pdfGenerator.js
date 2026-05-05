@@ -12,13 +12,15 @@ export const generatePdfResume = async (data) => {
     format: 'letter'
   });
 
-  let yPos = 0.55; // Start position from top (in inches)
-  const leftMargin = 0.6;
-  const rightMargin = 7.9; // 8.5 - 0.6
+  let yPos = 0.65; // Start position from top (in inches)
+  const leftMargin = 0.65;
+  const rightMargin = 7.85; // 8.5 - 0.65
   const pageWidth = 8.5;
-  const lineHeight = 0.14;
-  const sectionGap = 0.08;
-  const entryGap = 0.06;
+  const lineHeight = 0.175;   // space between lines within a block
+  const sectionGap = 0.22;   // space between sections
+  const entryGap = 0.18;     // space between entries within a section
+  const bulletIndent = 0.22; // bullet left indent
+  const bulletText = 0.38;   // bullet text start
 
   // Helper function to add text
   const addText = (text, x, y, options = {}) => {
@@ -41,7 +43,7 @@ export const generatePdfResume = async (data) => {
     doc.setFontSize(22);
     const safeName = safe(personal.fullName).toUpperCase() || 'YOUR NAME';
     doc.text(safeName, pageWidth / 2, yPos, { align: 'center' });
-    yPos += 0.22;
+    yPos += 0.28;
 
     // Contact Info — only include non-empty fields
     doc.setFont('times', 'normal');
@@ -56,7 +58,7 @@ export const generatePdfResume = async (data) => {
         doc.text(line, pageWidth / 2, yPos, { align: 'center' });
         yPos += lineHeight;
       });
-      yPos += sectionGap;
+      yPos += 0.1;
     } else {
       yPos += 0.1;
     }
@@ -154,14 +156,14 @@ export const generatePdfResume = async (data) => {
 
         bullets.forEach(bullet => {
           const cleanBullet = bullet.replace(/^[•\-\*]\s*/, '');
-          const lines = doc.splitTextToSize(cleanBullet, rightMargin - leftMargin - 0.2);
+          const lines = doc.splitTextToSize(cleanBullet, rightMargin - leftMargin - bulletText);
 
           lines.forEach((line, lineIndex) => {
             if (lineIndex === 0) {
-              doc.text('•', leftMargin + 0.1, yPos);
-              doc.text(line, leftMargin + 0.25, yPos);
+              doc.text('•', leftMargin + bulletIndent, yPos);
+              doc.text(line, leftMargin + bulletText, yPos);
             } else {
-              doc.text(line, leftMargin + 0.25, yPos);
+              doc.text(line, leftMargin + bulletText, yPos);
             }
             yPos += lineHeight;
           });
@@ -170,6 +172,7 @@ export const generatePdfResume = async (data) => {
 
       yPos += entryGap;
     });
+    yPos += sectionGap - entryGap; // net section gap after last entry
   }
 
   // Projects Section
@@ -219,14 +222,14 @@ export const generatePdfResume = async (data) => {
 
         bullets.forEach(bullet => {
           const cleanBullet = bullet.replace(/^[•\-\*]\s*/, '');
-          const lines = doc.splitTextToSize(cleanBullet, rightMargin - leftMargin - 0.2);
+          const lines = doc.splitTextToSize(cleanBullet, rightMargin - leftMargin - bulletText);
 
           lines.forEach((line, lineIndex) => {
             if (lineIndex === 0) {
-              doc.text('•', leftMargin + 0.1, yPos);
-              doc.text(line, leftMargin + 0.25, yPos);
+              doc.text('•', leftMargin + bulletIndent, yPos);
+              doc.text(line, leftMargin + bulletText, yPos);
             } else {
-              doc.text(line, leftMargin + 0.25, yPos);
+              doc.text(line, leftMargin + bulletText, yPos);
             }
             yPos += lineHeight;
           });
@@ -235,6 +238,7 @@ export const generatePdfResume = async (data) => {
 
       yPos += entryGap;
     });
+    yPos += sectionGap - entryGap;
   }
 
   // Technical Skills Section
@@ -280,6 +284,7 @@ export const generatePdfResume = async (data) => {
       });
       yPos += lineHeight;
     });
+    yPos += sectionGap - lineHeight;
   }
 
   // Certifications & Achievements Section
@@ -331,14 +336,14 @@ export const generatePdfResume = async (data) => {
 
         bullets.forEach(bullet => {
           const cleanBullet = bullet.replace(/^[•\-\*]\s*/, '');
-          const lines = doc.splitTextToSize(cleanBullet, rightMargin - leftMargin - 0.2);
+          const lines = doc.splitTextToSize(cleanBullet, rightMargin - leftMargin - bulletText);
 
           lines.forEach((line, lineIndex) => {
             if (lineIndex === 0) {
-              doc.text('•', leftMargin + 0.1, yPos);
-              doc.text(line, leftMargin + 0.25, yPos);
+              doc.text('•', leftMargin + bulletIndent, yPos);
+              doc.text(line, leftMargin + bulletText, yPos);
             } else {
-              doc.text(line, leftMargin + 0.25, yPos);
+              doc.text(line, leftMargin + bulletText, yPos);
             }
             yPos += lineHeight;
           });
