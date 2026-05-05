@@ -3,7 +3,7 @@ const safe = (v) => (v != null && String(v).trim() ? String(v).trim() : '');
 
 export const generatePdfResume = async (data) => {
   const { jsPDF } = await import('jspdf');
-  const { personal, education, educationList, experienceList, skills, projectsList, certificationsList, showCertifications } = data || {};
+  const { personal, education, educationList, experienceList, skills, projectsList, certificationsList, showProjects, showCertifications } = data || {};
 
   // Create new PDF document (Letter size: 8.5" x 11")
   const doc = new jsPDF({
@@ -12,10 +12,13 @@ export const generatePdfResume = async (data) => {
     format: 'letter'
   });
 
-  let yPos = 0.7; // Start position from top (in inches)
-  const leftMargin = 0.7;
-  const rightMargin = 7.8; // 8.5 - 0.7
+  let yPos = 0.55; // Start position from top (in inches)
+  const leftMargin = 0.6;
+  const rightMargin = 7.9; // 8.5 - 0.6
   const pageWidth = 8.5;
+  const lineHeight = 0.14;
+  const sectionGap = 0.08;
+  const entryGap = 0.06;
 
   // Helper function to add text
   const addText = (text, x, y, options = {}) => {
@@ -35,10 +38,10 @@ export const generatePdfResume = async (data) => {
   // Header - Name
   if (personal?.fullName) {
     doc.setFont('times', 'bold');
-    doc.setFontSize(26);
+    doc.setFontSize(22);
     const safeName = safe(personal.fullName).toUpperCase() || 'YOUR NAME';
     doc.text(safeName, pageWidth / 2, yPos, { align: 'center' });
-    yPos += 0.15;
+    yPos += 0.22;
 
     // Contact Info — only include non-empty fields
     doc.setFont('times', 'normal');
@@ -48,15 +51,14 @@ export const generatePdfResume = async (data) => {
       .filter(Boolean);
     if (contactParts.length > 0) {
       const contactInfo = contactParts.join(' | ');
-      // Split to multiple lines if too long
       const wrapped = doc.splitTextToSize(contactInfo, rightMargin - leftMargin);
       wrapped.forEach(line => {
         doc.text(line, pageWidth / 2, yPos, { align: 'center' });
-        yPos += 0.14;
+        yPos += lineHeight;
       });
-      yPos += 0.1;
+      yPos += sectionGap;
     } else {
-      yPos += 0.35;
+      yPos += 0.1;
     }
   }
 
@@ -69,7 +71,7 @@ export const generatePdfResume = async (data) => {
     doc.text('EDUCATION', leftMargin, yPos);
     doc.setLineWidth(0.01);
     doc.line(leftMargin, yPos + 0.05, rightMargin, yPos + 0.05);
-    yPos += 0.25;
+    yPos += 0.18;
 
     educationEntries.forEach((edu, index) => {
       // University name and location
@@ -78,23 +80,38 @@ export const generatePdfResume = async (data) => {
       if (safe(edu.university)) doc.text(safe(edu.university), leftMargin, yPos);
       doc.setFont('times', 'italic');
       if (safe(edu.location)) doc.text(safe(edu.location), rightMargin, yPos, { align: 'right' });
-      yPos += 0.15;
+      yPos += lineHeight;
 
-      // Degree and dates
+      // Degree (with GPA inline) and dates
       doc.setFont('times', 'italic');
       doc.setFontSize(10);
-      if (safe(edu.degree)) doc.text(safe(edu.degree), leftMargin, yPos);
+      const degreeText = safe(edu.degree) + (safe(edu.gpa) ? ` | GPA: ${safe(edu.gpa)}` : '');
+      if (degreeText) doc.text(degreeText, leftMargin, yPos);
       const dateRange = [safe(edu.startDate), safe(edu.endDate)].filter(Boolean).join(' – ');
       if (dateRange) doc.text(dateRange, rightMargin, yPos, { align: 'right' });
-      yPos += 0.25;
+      yPos += lineHeight;
 
-      // Add space between entries if not the last one
-      if (index < educationEntries.length - 1) {
-        yPos += 0.05;
+      // Relevant Coursework
+      if (safe(edu.coursework)) {
+        doc.setFont('times', 'normal');
+        doc.setFontSize(10);
+        const label = 'Relevant Coursework: ';
+        const labelWidth = doc.getTextWidth(label);
+        doc.setFont('times', 'bold');
+        doc.text(label, leftMargin, yPos);
+        doc.setFont('times', 'normal');
+        const wrapped = doc.splitTextToSize(safe(edu.coursework), rightMargin - leftMargin - labelWidth);
+        wrapped.forEach((line, i) => {
+          doc.text(line, i === 0 ? leftMargin + labelWidth : leftMargin, yPos);
+          if (i < wrapped.length - 1) yPos += lineHeight;
+        });
+        yPos += lineHeight;
       }
+
+      if (index < educationEntries.length - 1) yPos += entryGap;
     });
 
-    yPos += 0.05;
+    yPos += sectionGap;
   }
 
   // Experience Section
@@ -104,7 +121,7 @@ export const generatePdfResume = async (data) => {
     doc.text('EXPERIENCE', leftMargin, yPos);
     doc.setLineWidth(0.01);
     doc.line(leftMargin, yPos + 0.05, rightMargin, yPos + 0.05);
-    yPos += 0.25;
+    yPos += 0.18;
 
     experienceList.forEach((exp, index) => {
       // Check if we need a new page
@@ -121,13 +138,13 @@ export const generatePdfResume = async (data) => {
       doc.setFontSize(10);
       const expDateRange = [safe(exp.startDate), safe(exp.endDate)].filter(Boolean).join(' – ');
       if (expDateRange) doc.text(expDateRange, rightMargin, yPos, { align: 'right' });
-      yPos += 0.15;
+      yPos += lineHeight;
 
       // Company and location
       doc.setFont('times', 'italic');
       if (safe(exp.company)) doc.text(safe(exp.company), leftMargin, yPos);
       if (safe(exp.location)) doc.text(safe(exp.location), rightMargin, yPos, { align: 'right' });
-      yPos += 0.15;
+      yPos += lineHeight;
 
       // Responsibilities (bullets)
       if (exp.responsibilities) {
@@ -146,17 +163,17 @@ export const generatePdfResume = async (data) => {
             } else {
               doc.text(line, leftMargin + 0.25, yPos);
             }
-            yPos += 0.15;
+            yPos += lineHeight;
           });
         });
       }
 
-      yPos += 0.1;
+      yPos += entryGap;
     });
   }
 
   // Projects Section
-  if (projectsList && projectsList.length > 0) {
+  if (showProjects && projectsList && projectsList.length > 0) {
     // Check if we need a new page
     if (yPos > 9.5) {
       doc.addPage();
@@ -168,7 +185,7 @@ export const generatePdfResume = async (data) => {
     doc.text('PROJECTS', leftMargin, yPos);
     doc.setLineWidth(0.01);
     doc.line(leftMargin, yPos + 0.05, rightMargin, yPos + 0.05);
-    yPos += 0.25;
+    yPos += 0.18;
 
     projectsList.forEach((project) => {
       // Check if we need a new page
@@ -192,7 +209,7 @@ export const generatePdfResume = async (data) => {
       if (projDateRange) {
         doc.text(projDateRange, rightMargin, yPos, { align: 'right' });
       }
-      yPos += 0.15;
+      yPos += lineHeight;
 
       // Project description (bullets)
       if (project.description) {
@@ -211,12 +228,12 @@ export const generatePdfResume = async (data) => {
             } else {
               doc.text(line, leftMargin + 0.25, yPos);
             }
-            yPos += 0.15;
+            yPos += lineHeight;
           });
         });
       }
 
-      yPos += 0.1;
+      yPos += entryGap;
     });
   }
 
@@ -233,7 +250,7 @@ export const generatePdfResume = async (data) => {
     doc.text('TECHNICAL SKILLS', leftMargin, yPos);
     doc.setLineWidth(0.01);
     doc.line(leftMargin, yPos + 0.05, rightMargin, yPos + 0.05);
-    yPos += 0.25;
+    yPos += 0.18;
 
     doc.setFont('times', 'normal');
     doc.setFontSize(10);
@@ -257,11 +274,11 @@ export const generatePdfResume = async (data) => {
         if (index === 0) {
           doc.text(textLine, leftMargin + labelWidth, yPos);
         } else {
-          yPos += 0.15;
+          yPos += lineHeight;
           doc.text(textLine, leftMargin, yPos);
         }
       });
-      yPos += 0.15;
+      yPos += lineHeight;
     });
   }
 
@@ -278,7 +295,7 @@ export const generatePdfResume = async (data) => {
     doc.text('CERTIFICATIONS & ACHIEVEMENTS', leftMargin, yPos);
     doc.setLineWidth(0.01);
     doc.line(leftMargin, yPos + 0.05, rightMargin, yPos + 0.05);
-    yPos += 0.25;
+    yPos += 0.18;
 
     certificationsList.forEach((cert, index) => {
       // Check if we need a new page
@@ -296,14 +313,14 @@ export const generatePdfResume = async (data) => {
         doc.setFontSize(10);
         doc.text(safe(cert.date), rightMargin, yPos, { align: 'right' });
       }
-      yPos += 0.15;
+      yPos += lineHeight;
 
       // Issuer
       if (safe(cert.issuer)) {
         doc.setFont('times', 'italic');
         doc.setFontSize(10);
         doc.text(safe(cert.issuer), leftMargin, yPos);
-        yPos += 0.15;
+        yPos += lineHeight;
       }
 
       // Description (bullets)
@@ -323,17 +340,12 @@ export const generatePdfResume = async (data) => {
             } else {
               doc.text(line, leftMargin + 0.25, yPos);
             }
-            yPos += 0.15;
+            yPos += lineHeight;
           });
         });
       }
 
-      yPos += 0.1;
-
-      // Add space between entries if not the last one
-      if (index < certificationsList.length - 1) {
-        yPos += 0.05;
-      }
+      if (index < certificationsList.length - 1) yPos += entryGap;
     });
   }
 
