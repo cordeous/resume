@@ -54,9 +54,14 @@ const ResumePreviewPanel = ({
                     <span className="preview-date">{edu.location}</span>
                   </div>
                   <div className="preview-item-subheader">
-                    <span>{edu.degree}</span>
+                    <span>{edu.degree}{edu.gpa ? ` | GPA: ${edu.gpa}` : ''}</span>
                     <span className="preview-date">{edu.startDate} – {edu.endDate}</span>
                   </div>
+                  {edu.coursework && (
+                    <div className="preview-bullets">
+                      <span><strong>Relevant Coursework:</strong> {edu.coursework}</span>
+                    </div>
+                  )}
                 </div>
               ))}
               {formData.education && Object.keys(formData.education).length > 0 && (
@@ -66,11 +71,16 @@ const ResumePreviewPanel = ({
                     <span className="preview-date">{formData.education.location}</span>
                   </div>
                   <div className="preview-item-subheader">
-                    <span>{formData.education.degree || 'Degree'}</span>
+                    <span>{formData.education.degree || 'Degree'}{formData.education.gpa ? ` | GPA: ${formData.education.gpa}` : ''}</span>
                     <span className="preview-date">
                       {formData.education.startDate && `${formData.education.startDate} – ${formData.education.endDate || 'Present'}`}
                     </span>
                   </div>
+                  {formData.education.coursework && (
+                    <div className="preview-bullets">
+                      <span><strong>Relevant Coursework:</strong> {formData.education.coursework}</span>
+                    </div>
+                  )}
                 </div>
               )}
             </div>

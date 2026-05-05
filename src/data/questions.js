@@ -22,6 +22,7 @@ export const questions = [
       { name: 'startDate', label: 'Start Date', type: 'text', placeholder: 'Aug. 2018', required: true },
       { name: 'endDate', label: 'End Date', type: 'text', placeholder: 'May 2021', required: true },
       { name: 'gpa', label: 'GPA (optional)', type: 'text', placeholder: '3.8/4.0', required: false },
+      { name: 'coursework', label: 'Relevant Coursework (optional)', type: 'textarea', placeholder: 'Data Structures, Algorithms, Operating Systems, Machine Learning', required: false, rows: 2 },
     ]
   },
   {

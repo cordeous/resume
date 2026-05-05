@@ -7,7 +7,10 @@
       "Bash(npx vite:*)",
       "Bash(grep -E \"\\\\.jsx$\")",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5173)",
-      "WebFetch(domain:localhost)"
+      "WebFetch(domain:localhost)",
+      "Bash(dir /s \"c:\\\\Users\\\\antoj\\\\OneDrive\\\\Desktop\\\\projects\\\\resumebuilder\\\\resume-builder\")",
+      "Bash(xargs grep -l \"createContext\\\\|useReducer\\\\|Provider\\\\|export.*Context\")",
+      "Bash(Select-Object -First 30)"
     ]
   }
 }

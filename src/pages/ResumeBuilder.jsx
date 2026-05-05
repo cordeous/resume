@@ -115,6 +115,7 @@ const ResumeBuilder = () => {
     startDate: 30,
     endDate: 30,
     gpa: 20,
+    coursework: 500,
     company: 150,
     position: 150,
     responsibilities: 2000,
@@ -262,29 +263,54 @@ const ResumeBuilder = () => {
 
   const handleEditEntry = (sectionId, index) => {
     if (sectionId === 'experience') {
+      const entryToEdit = experienceList[index];
       if (formData.experience && Object.keys(formData.experience).length > 0 && editingExperienceIndex === null) {
-        setExperienceList(prev => sortExperience([...prev, formData.experience]));
+        // Save unsaved form data first, then find the target entry's new index after sort
+        const newList = sortExperience([...experienceList, formData.experience]);
+        const newIndex = newList.indexOf(entryToEdit);
+        setExperienceList(newList);
+        setFormData(prev => ({ ...prev, experience: entryToEdit }));
+        setEditingExperienceIndex(newIndex);
+      } else {
+        setFormData(prev => ({ ...prev, experience: entryToEdit }));
+        setEditingExperienceIndex(index);
       }
-      setFormData(prev => ({ ...prev, experience: experienceList[index] }));
-      setEditingExperienceIndex(index);
     } else if (sectionId === 'education') {
+      const entryToEdit = educationList[index];
       if (formData.education && Object.keys(formData.education).length > 0 && editingEducationIndex === null) {
-        setEducationList(prev => [...prev, formData.education]);
+        const newList = [...educationList, formData.education];
+        const newIndex = newList.indexOf(entryToEdit);
+        setEducationList(newList);
+        setFormData(prev => ({ ...prev, education: entryToEdit }));
+        setEditingEducationIndex(newIndex);
+      } else {
+        setFormData(prev => ({ ...prev, education: entryToEdit }));
+        setEditingEducationIndex(index);
       }
-      setFormData(prev => ({ ...prev, education: educationList[index] }));
-      setEditingEducationIndex(index);
     } else if (sectionId === 'projects') {
+      const entryToEdit = projectsList[index];
       if (formData.projects && Object.keys(formData.projects).length > 0 && editingProjectIndex === null) {
-        setProjectsList(prev => [...prev, formData.projects]);
+        const newList = [...projectsList, formData.projects];
+        const newIndex = newList.indexOf(entryToEdit);
+        setProjectsList(newList);
+        setFormData(prev => ({ ...prev, projects: entryToEdit }));
+        setEditingProjectIndex(newIndex);
+      } else {
+        setFormData(prev => ({ ...prev, projects: entryToEdit }));
+        setEditingProjectIndex(index);
       }
-      setFormData(prev => ({ ...prev, projects: projectsList[index] }));
-      setEditingProjectIndex(index);
     } else if (sectionId === 'certifications') {
+      const entryToEdit = certificationsList[index];
       if (formData.certifications && Object.keys(formData.certifications).length > 0 && editingCertIndex === null) {
-        setCertificationsList(prev => [...prev, formData.certifications]);
+        const newList = [...certificationsList, formData.certifications];
+        const newIndex = newList.indexOf(entryToEdit);
+        setCertificationsList(newList);
+        setFormData(prev => ({ ...prev, certifications: entryToEdit }));
+        setEditingCertIndex(newIndex);
+      } else {
+        setFormData(prev => ({ ...prev, certifications: entryToEdit }));
+        setEditingCertIndex(index);
       }
-      setFormData(prev => ({ ...prev, certifications: certificationsList[index] }));
-      setEditingCertIndex(index);
     }
   };
 

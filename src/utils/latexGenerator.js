@@ -44,9 +44,15 @@ export const generateLatexResume = (data) => {
   const educationSection = educationEntries.length > 0 ? `
 \\section{Education}
   \\resumeSubHeadingListStart
-${educationEntries.map(edu => `    \\resumeSubheading
+${educationEntries.map(edu => {
+    const gpaLine = edu.gpa ? ` \\textit{GPA: ${escapeLaTeX(edu.gpa)}}` : '';
+    const courseworkLine = edu.coursework
+      ? `\n      \\resumeItem{\\textbf{Relevant Coursework:} ${escapeLaTeX(edu.coursework)}}`
+      : '';
+    return `    \\resumeSubheading
       {${escapeLaTeX(edu.university || 'University Name')}}{${escapeLaTeX(edu.location || 'City, State')}}
-      {${escapeLaTeX(edu.degree || 'Degree')}}{${escapeLaTeX(edu.startDate || 'Start')} -- ${escapeLaTeX(edu.endDate || 'End')}}`).join('\n')}
+      {${escapeLaTeX(edu.degree || 'Degree')}${gpaLine}}{${escapeLaTeX(edu.startDate || 'Start')} -- ${escapeLaTeX(edu.endDate || 'End')}}${courseworkLine ? `\n      \\resumeItemListStart${courseworkLine}\n      \\resumeItemListEnd` : ''}`;
+  }).join('\n')}
   \\resumeSubHeadingListEnd
 ` : '';
 
